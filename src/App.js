@@ -2,6 +2,7 @@ import Login from "./pages/Login";
 import React from 'react';
 import ManagerHome from "./pages/ManagerHome";
 import OperatorHome from "./pages/OperatorHome";
+import Tool from "./pages/Tool";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/OperatorHome" element={<OperatorHome />} />
+          <Route exact path="/Tool" element={<Tool />} />
         </Routes>
       </Router>
     </div>

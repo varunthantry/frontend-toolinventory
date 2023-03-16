@@ -2,6 +2,7 @@ import React from 'react'
 
 export default function Navbar() {
   return (
+  
   <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top ">
     <div class="container-fluid">
       <button
@@ -20,18 +21,19 @@ export default function Navbar() {
           <li class="nav-item active">
             <a class="nav-link " aria-current="page" href="#"><p class="text-white">Home</p></a>
           </li>
-          <li class="nav-item">
+          {/* <li class="nav-item">
             <a class="nav-link" href="#"><p class="text-white">Home</p></a>
+          </li> */}
+          <li class="nav-item">
+            <a class="nav-link" href="#"><p class="text-white">Tools</p></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><p class="text-white">Home</p></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><p class="text-white">Home</p></a>
+            <a class="nav-link" href="#"><p class="text-white">Ledger</p></a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  
   )
 }
