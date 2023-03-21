@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../layout/navbar'
+import Navbar from '../layout/navbarAdmin'
 import ToolItem from '../layout/toolItem'
 // import "./style.css"
 
@@ -9,7 +9,7 @@ export default function tool() {
       
       
       <Navbar />
-      <div >
+      <div className='pt-5'>
         <ToolItem />
       </div>
       

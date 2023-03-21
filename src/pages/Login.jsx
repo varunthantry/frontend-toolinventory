@@ -34,6 +34,7 @@ function Login() {
         <MDBDropdownMenu>
           <MDBDropdownItem link>Operator</MDBDropdownItem>
           <MDBDropdownItem link>Manager</MDBDropdownItem>
+          <MDBDropdownItem link>Admin</MDBDropdownItem>
           <MDBDropdownItem divider />
         </MDBDropdownMenu>
       </MDBDropdown>
