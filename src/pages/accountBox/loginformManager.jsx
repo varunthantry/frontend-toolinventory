@@ -10,10 +10,20 @@ import {
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function LoginFormManager(props) {
   const { switchToUser, switchToAdmin } = useContext(AccountContext);
   let navigate = useNavigate();
+
+  const notifyLoginManager = () => {
+    
+    toast("Logged In Successfully as Manager 👍");
+      setTimeout(()=>{
+        navigate("/Manager")
+      },2000);
+  }
 
   return (
     <BoxContainer>
@@ -25,7 +35,9 @@ export function LoginFormManager(props) {
     
       {/* <MutedLink href="#">Forget your password?</MutedLink> */}
       <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit" onClick={() => navigate("/Manager")}>Signin</SubmitButton>
+      <SubmitButton type="submit" onClick={notifyLoginManager}>Signin</SubmitButton>
+      <ToastContainer />
+
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
         {/* Don't have an accoun?{" "} */}

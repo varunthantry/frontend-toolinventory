@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import AllManager from './AllManager';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Navbar(props) {
   let navigate = useNavigate();
@@ -15,6 +17,15 @@ export default function Navbar(props) {
   const changeStateAdmin = () => {
     setAdmin(<AllManager setAdmin={setAdmin} />)
     setShowAdd(true);
+  }
+
+  const notifyLogoutAdmin = () => {
+
+    toast("Logged Out Successfully 👍");
+    setTimeout(()=>{
+      navigate("/")
+    },2000);
+
   }
 
   return (
@@ -58,10 +69,11 @@ export default function Navbar(props) {
                 {/* <b class="nav mx-1 my-4 text-black"><AccountCircleIcon />Varun</b> */}
             </li>
             <li class="nav-item">
-                <button type="submit" class="nav-link btn navi text-black" onClick={() => navigate("/")}>
+                <button type="submit" class="nav-link btn navi text-black" onClick={notifyLogoutAdmin}>
                 <LogoutIcon />
                 {/* <b class="navbutton">Logout</b> */}
                 </button>
+                <ToastContainer />
             </li>
         </ul>
 

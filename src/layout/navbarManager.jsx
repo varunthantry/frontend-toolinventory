@@ -55,6 +55,8 @@ import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {  useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function NavbarManager(props) {
   let navigate = useNavigate();
@@ -81,7 +83,15 @@ export default function NavbarManager(props) {
   const changeStateLedger = () => {
     setManager(<Ledger setManager={setManager} />)
   }
+  
+  const notifyLogoutManager = () => {
 
+    toast("Logged Out Successfully 👍");
+    setTimeout(()=>{
+      navigate("/")
+    },2000);
+    
+  }
   
   return (
     <div class="container">
@@ -156,10 +166,12 @@ export default function NavbarManager(props) {
                 {/* <b class="nav mx-1 my-4 text-black"><AccountCircleIcon />Varun</b> */}
             </li>
             <li class="nav-item">
-                <button type="submit" class="nav-link btn navi text-black" onClick={() => navigate("/")}>
+                <button type="submit" class="nav-link btn navi text-black" onClick={notifyLogoutManager}>
                 <LogoutIcon />
                 {/* <b class="navbutton">Logout</b> */}
                 </button>
+                <ToastContainer />
+                
             </li>
         </ul>
       </div>
