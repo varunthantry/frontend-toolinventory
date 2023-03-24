@@ -40,33 +40,52 @@
 // }
 
 
-import React, {useState} from 'react'
+
+import React from 'react'
 import AllOperator from './AllOperator'
 import AllTool from './AllTool';
-
+import Ledger from './Ledger';
+import "../pages/css/style.css"
+import HomeIcon from '@mui/icons-material/Home';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import BookIcon from '@mui/icons-material/Book';
+import PersonIcon from '@mui/icons-material/Person';
+import ManagerApproval from './ManagerApproval';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {  useNavigate } from 'react-router-dom';
 
 export default function NavbarManager(props) {
-
+  let navigate = useNavigate();
+ 
   const setManager = props.setManager;
-  const addOperatorShow = props.addOperatoShow;
-  const setAddOperatorShow = props.setAddOperatorShow;
+  // const addOperatorShow = props.addOperatoShow;
+  // const setAddOperatorShow = props.setAddOperatorShow;
 
   // const [addOperatoShow, setAddOperatorShow] = useState(true);
 
-  const changestateOperator = () => {
-    {setManager(<AllOperator setManager={setManager} />)}
-    setAddOperatorShow(!addOperatorShow)
+  const changeStatehome = () => {
+    setManager(<ManagerApproval />)
+  }
+
+  const changeStateOperator = () => {
+    setManager(<AllOperator setManager={setManager} />)
+    // setAddOperatorShow(!addOperatorShow)
   }
 
   const changeStateTool = () => {
-    {setManager(<AllTool setManager={setManager} />)}
+    setManager(<AllTool setManager={setManager} />)
   }
   
+  const changeStateLedger = () => {
+    setManager(<Ledger setManager={setManager} />)
+  }
 
   
   return (
     <div class="container">
-      <nav class=" navbar-expand-lg navbar-light bg-primary fixed-top    ">
+      <nav class=" navbar-expand-lg navbar-light bg-white fixed-top rounded-7 my-1 mx-1 ">
     <div class="container-fluid">
       <button
         class="navbar-toggler"
@@ -82,33 +101,66 @@ export default function NavbarManager(props) {
       <div class="collapse navbar-collapse " id="navbarExample01">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item active">
-            <a class="nav-link " aria-current="page" href="/Manager"><p class="text-white">Manager Home</p></a>
+          
+            {/* <a class="nav-link " aria-current="page" href="/Manager"><p class="text-black"><HomeIcon /> Home</p></a> */}
+            <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStatehome}>
+            <HomeIcon /> 
+            <b class="navbutton">Home</b></button>
+           
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="#" onClick={changeStateTool}><p class="text-white">Tools</p></a>
+            {/* <a class="nav-link dd" href="#" onClick={changeStateTool}><p class="text-black">
+            <ConstructionIcon />
+            Tools</p></a> */}
+
+            <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStateTool}>
+            <ConstructionIcon />
+            <b class="navbutton">Tools</b></button>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="#"><p class="text-white">Ledger</p></a>
+            {/* <a class="nav-link" href="#" onClick={changeStateLedger}><p class="text-black">
+            <BookIcon />Ledger</p></a> */}
+
+            <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStateLedger}>
+            <BookIcon />
+            <b class="navbutton">Ledger</b></button>
           </li>
 
           <li class="nav-item ">
-            {/* <a class="nav-link" href="#"  onClick={() => {setManager(<AllOperator setManager={setManager} />)}}><p class="text-white">All Operator</p></a> */}
-            <a class="nav-link" href="#"  onClick={changestateOperator}><p class="text-white">All Operator</p></a>
+          
+            {/* <a class="nav-link" href="#"  onClick={changestateOperator}><p class="text-black">
+            <PersonIcon />Operator</p></a> */}
+
+            <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStateOperator}>
+            <PersonIcon />
+            <b class="navbutton">Operator</b></button>
           </li>
 
-          {/* <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Link
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-               
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li> */}
+          <li class="nav-item">
+            {/* <a class="nav-link" href="#"  onClick={() => {setManager(<AllOperator setManager={setManager} />)}}><p class="text-white">All Operator</p></a> */}
+            {/* <a class="nav-link" href="#"  onClick={changeStatehome}><p class="text-black">
+            <PersonIcon />tool Request</p></a> */}
 
+            <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStatehome}>
+            <HomeRepairServiceIcon />
+            <b class="navbutton">Tool Request</b></button>
+          </li>
+
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class="nav-item mx-1">
+                <h5 class="nav-link text-black" href="#"><AccountCircleIcon /> Manager_Varun</h5>
+                {/* <b class="nav mx-1 my-4 text-black"><AccountCircleIcon />Varun</b> */}
+            </li>
+            <li class="nav-item">
+                <button type="submit" class="nav-link btn navi text-black" onClick={() => navigate("/")}>
+                <LogoutIcon />
+                {/* <b class="navbutton">Logout</b> */}
+                </button>
+            </li>
         </ul>
       </div>
     </div>

@@ -1,0 +1,33 @@
+body{
+    background: rgb(240, 202, 53);
+    /* background-image: url("./background_tools2.png"); */
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+}
+
+.tooladd{
+    padding-top: 30px;
+    /* margin-top: 500px; */
+}
+
+.heading{
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+}
+
+.navi {
+    background: rgb(240, 202, 53);
+    font-size: 15px;
+}
+
+.navi:hover{
+    background: white;
+}
+
+.navbutton{
+    /* padding-top: 40px; */
+    padding-left: 10px;
+}
+
+.name{
+    margin-top: 200px;
+}
+
