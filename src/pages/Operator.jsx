@@ -1,12 +1,13 @@
 import React from 'react'
-import Navbar from "../layout/navbarAdmin"
+
+import NavbarOperator from '../layout/navbarOperator'
 import "./css/style.css"
 
 export default function Operator() {
   return (
     <div>
       <div> 
-        <Navbar />
+        <NavbarOperator />
       </div>
       
 
