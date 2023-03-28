@@ -28,7 +28,7 @@ export default function AddTool(props) {
             <div class="form-group row">
               <label for="inputName3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Tool Name</b></h6></label>
               <div class="col-sm-10">
-                <input type="name" class="form-control" id="inputName3" placeholder="Name" />
+                <input type="name" class="form-control" id="inputName3" placeholder="Tool Name" />
               </div>
             </div>
     
@@ -38,12 +38,13 @@ export default function AddTool(props) {
                 <input type="numeric" class="form-control" id="input3" placeholder="Units" />
               </div>
             </div>
-            {/* <div class="form-group row">
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+            
+            <div class="form-group row">
+              <label for="input3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Machine Name</b></h6></label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Password" />
+                <input type="name" class="form-control" id="inputName3" placeholder="Machine Name" />
               </div>
-            </div> */}
+            </div>
           
             <div class="form-group row my-5">
              

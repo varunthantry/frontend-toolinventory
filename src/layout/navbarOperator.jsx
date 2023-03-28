@@ -1,6 +1,6 @@
 import React from 'react'
 import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
+// import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -48,8 +48,8 @@ export default function NavbarOperator(props) {
                 {/* <a class="nav-link" href="/Admin"><p class="text-black">All Manager</p></a> */}
   
                 <button type="submit" class="nav-link btn navi mx-1 my-4 text-black">
-                <PersonIcon />
-                <b class="navbutton">Manager</b></button>
+                {/* <PersonIcon /> */}
+                <b class="navbutton">Return Tool</b></button>
               </li>
              
             </ul>

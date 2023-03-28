@@ -1,6 +1,6 @@
 import React from 'react'
-
 import NavbarOperator from '../layout/navbarOperator'
+import SelectTools from '../layout/SelectTools'
 import "./css/style.css"
 
 export default function Operator() {
@@ -12,10 +12,12 @@ export default function Operator() {
       
 
       <div class='pt-5'>
-           <h1>Operator body</h1>
+           {/* <h1>Operator body</h1> */}
+
+           <SelectTools />
       </div>
 
-      </div>
+    </div>
     
   )
 }
