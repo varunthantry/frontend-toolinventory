@@ -11,6 +11,7 @@ import Modal from "./modal/Modal";
 import Manager from "./pages/Manager";
 import AllOperator from "./layout/AllOperator";
 import EditManager from "./layout/EditManager";
+import ToolRequestOperator from "./layout/ToolRequestOperator";
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
           <Route exact path="/AllOperator" element={<AllOperator />} />
           <Route exact path="/ManagerApproval" element={<ManagerApproval />} />
           <Route exact path="/Modal" element={<Modal />} />
+
+          <Route exact path="/Toolrequest" element={<ToolRequestOperator />} />
          
         </Routes>
       </Router>

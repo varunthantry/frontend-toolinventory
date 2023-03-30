@@ -6,10 +6,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SelectTools from './SelectTools';
+import ToolRequestOperator from './ToolRequestOperator';
 
 export default function NavbarOperator(props) {
     let navigate = useNavigate();
-  
+    const setOperator = props.setOperator;
+
     const notifyLogoutAdmin = () => {
   
       toast("Logged Out Successfully 👍");
@@ -17,6 +20,15 @@ export default function NavbarOperator(props) {
         navigate("/")
       },2000);
   
+    }
+
+    const changeStateRequest = () => {
+
+      setOperator(<SelectTools />)
+    }
+
+    const changeStateReturn = () => {
+      setOperator(<ToolRequestOperator />)
     }
   
     return (
@@ -37,32 +49,35 @@ export default function NavbarOperator(props) {
           <div class="collapse navbar-collapse " id="navbarExample01">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item active">
-                {/* <a class="nav-link " aria-current="page" href="/Admin"><p class="text-black">Home</p></a> */}
   
-                <button type="submit" class="nav-link btn navi mx-1 my-4 text-black">
+                <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStateReturn}>
                 <HomeIcon /> 
                 <b class="navbutton">Home</b></button>
               </li>
              
               <li class="nav-item">
-                {/* <a class="nav-link" href="/Admin"><p class="text-black">All Manager</p></a> */}
   
-                <button type="submit" class="nav-link btn navi mx-1 my-4 text-black">
-                {/* <PersonIcon /> */}
+                <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStateReturn}>
                 <b class="navbutton">Return Tool</b></button>
               </li>
+
+              <li class="nav-item">
+  
+                <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStateRequest}>
+                <b class="navbutton">Request Tool</b></button>
+              </li>
+
+              
              
             </ul>
   
             <ul class="navbar-nav">
               <li class="nav-item mx-1">
                   <h5 class="nav-link text-black" href="#"><AccountCircleIcon /> Operator_Sridevi</h5>
-                  {/* <b class="nav mx-1 my-4 text-black"><AccountCircleIcon />Varun</b> */}
               </li>
               <li class="nav-item">
                   <button type="submit" class="nav-link btn navi text-black" onClick={notifyLogoutAdmin}>
                   <LogoutIcon />
-                  {/* <b class="navbutton">Logout</b> */}
                   </button>
                   <ToastContainer />
               </li>

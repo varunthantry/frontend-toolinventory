@@ -1,20 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavbarOperator from '../layout/navbarOperator'
-import SelectTools from '../layout/SelectTools'
+import ToolRequestOperator from '../layout/ToolRequestOperator'
 import "./css/style.css"
 
 export default function Operator() {
+
+  const [operator, setOperator] = useState(<ToolRequestOperator />)
   return (
     <div>
       <div> 
-        <NavbarOperator />
+        <NavbarOperator setOperator={setOperator} />
       </div>
       
 
-      <div class='pt-5'>
-           {/* <h1>Operator body</h1> */}
+      <div class='pt-2'>
 
-           <SelectTools />
+           {operator}
       </div>
 
     </div>

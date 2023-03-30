@@ -46,7 +46,7 @@ import AllOperator from './AllOperator'
 import AllTool from './AllTool';
 import Ledger from './Ledger';
 import "../pages/css/style.css"
-import HomeIcon from '@mui/icons-material/Home';
+// import HomeIcon from '@mui/icons-material/Home';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import BookIcon from '@mui/icons-material/Book';
 import PersonIcon from '@mui/icons-material/Person';
@@ -57,6 +57,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {  useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AllToolType from "./AllToolType";
+// import Searchbar from './Searchbar';
+
 
 export default function NavbarManager(props) {
   let navigate = useNavigate();
@@ -82,6 +85,10 @@ export default function NavbarManager(props) {
   
   const changeStateLedger = () => {
     setManager(<Ledger setManager={setManager} />)
+  }
+
+  const changeStatetooltype = () => {
+    setManager(<AllToolType setManager={setManager} />)
   }
   
   const notifyLogoutManager = () => {
@@ -110,14 +117,13 @@ export default function NavbarManager(props) {
       </button>
       <div class="collapse navbar-collapse " id="navbarExample01">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
+          {/* <li class="nav-item active">
           
-            {/* <a class="nav-link " aria-current="page" href="/Manager"><p class="text-black"><HomeIcon /> Home</p></a> */}
             <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStatehome}>
             <HomeIcon /> 
             <b class="navbutton">Home</b></button>
            
-          </li>
+          </li> */}
           
           <li class="nav-item">
             {/* <a class="nav-link dd" href="#" onClick={changeStateTool}><p class="text-black">
@@ -158,6 +164,19 @@ export default function NavbarManager(props) {
             <b class="navbutton">Tool Request</b></button>
           </li>
 
+          <li class="nav-item">
+  
+                <button type="submit" class="nav-link btn navi mx-1 my-4 text-black" onClick={changeStatetooltype}>
+                <b class="navbutton">Tool Type</b></button>
+              </li>
+
+            
+            {/* <li class="nav-item">
+              <div class='nav-link navi mx-1 my-4 text-black rounded-7'>
+             <Searchbar />
+             
+             </div>
+            </li> */}
         </ul>
 
         <ul class="navbar-nav">

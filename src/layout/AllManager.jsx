@@ -1,14 +1,16 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-// import EditManager from './EditOperator'
+import SearchIcon from '@mui/icons-material/Search';
 import { getAllManager } from '../services/UserService';
-// import AddManager from './AddManager';
+
 
 export default function AllManager(props) {
 
     let navigate = useNavigate;
     // const setAdmin = props.setAdmin;
     const data = getAllManager();
+
+    const [searchTerm, setSearchTerm] = useState("");
   return (
     <div>
         {/* <div>
@@ -18,6 +20,21 @@ export default function AllManager(props) {
             </button>
 
         </div> */}
+
+
+        <div class='nav-link navi mx-1 my-4 text-black rounded-7'>
+             {/* <Searchbar /> */}
+
+             <input type="text" placeholder="Search...." class="rounded-7" 
+                onChange={(event) => {
+                    setSearchTerm(event.target.value);
+                }}
+             />
+            <SearchIcon />
+             
+        </div>
+
+        <h3 class='heading pt-3 text-black'>Managers</h3>
         <div className='py-4 mx-5'>
             <table className="table heading shadow bg-white rounded-7">
                 <thead>

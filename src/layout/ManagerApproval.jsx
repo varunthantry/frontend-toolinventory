@@ -1,16 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Modal from '../modal/Modal';
 import "../modal/Modal.css"
 import { getAllManagerApproval } from '../services/AllManagerApproval';
+// import Searchbar from './Searchbar';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 const data = getAllManagerApproval();
 
 const ManagerApproval = () => {
+
+    const [searchTerm, setSearchTerm] = useState("");
     return (
     
     // <Modal />
     <div>
-        <h3 class='heading pt-5 text-black'>Tool Request</h3>
+        <div class='nav-link navi mx-1 my-4 text-black rounded-7'>
+             {/* <Searchbar /> */}
+
+             <input type="text" placeholder="Search...." class="rounded-7" 
+                onChange={(event) => {
+                    setSearchTerm(event.target.value);
+                }}
+             />
+            <SearchIcon />
+             
+        </div>
+        <h3 class='heading pt-3 text-black'>Tool Request</h3>
+        
         <div className='py-4 mx-5'>
             <table className="table  shadow bg-white rounded-7">
                 <thead>
@@ -24,7 +41,16 @@ const ManagerApproval = () => {
                 <tbody>
 
                         {
-                            data.map((dat, index)=>(
+                            data.filter((dat)=> {
+                                if(searchTerm === ""){
+                                    return dat
+                                }else if(dat.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                    return dat
+                                }else if(dat.unit.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                    return dat
+                                }
+                                
+                            }).map((dat, index)=>(
                                 <tr>
                                     <th scope="row" key={index}><b>{index+1}</b></th>
                                     <td><b>{dat.name}</b></td>

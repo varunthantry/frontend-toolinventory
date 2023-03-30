@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AllTool from './AllTool';
 import "../pages/css/style.css"
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export default function AddTool(props) {
 
@@ -18,13 +19,31 @@ export default function AddTool(props) {
     },3000);
     
     // setManager(<AllTool setManager={setManager} />)
-    // navigate(-1);
+
   }
 
   
     return (
         <div className='container table tooladd shadow  bg-light rounded-7'>
           <form>
+            
+            <div class="form-group row">
+              <label for="inputName3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Select Tool Type</b></h6></label>
+              <div class="col-sm-10">
+                <Dropdown className="d-inline">
+                        <Dropdown.Toggle id="dropdown-autoclose-true">
+                        Select Tool Type
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                        <Dropdown.Item href="#" value="tooltype1">Tool type1</Dropdown.Item>
+                        <Dropdown.Item href="#" value="tooltype2">Tooltype 2</Dropdown.Item>
+                        <Dropdown.Item href="#" value="tooltype3">Tooltype 3</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+              </div>
+            </div>
+
             <div class="form-group row">
               <label for="inputName3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Tool Name</b></h6></label>
               <div class="col-sm-10">
