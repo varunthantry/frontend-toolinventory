@@ -1,11 +1,22 @@
-import React,{useState} from 'react'
-import { getLedgerDetails } from '../services/LedgerService';
+import React,{useState, useEffect} from 'react'
+import {getLedgerDetails} from '../services/LedgerService';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function Ledger() {
 
     const [searchTerm, setSearchTerm] = useState("");
-  const data = getLedgerDetails();
+//   const data = getLedgerDetails();
+
+    const [data, setData] = useState([])
+    useEffect(() =>{
+        getLedgerDetails().then((res)=>{ 
+                setData(res);
+                console.log(res);
+            }).catch((err)=>{
+                console.log(err);
+            })
+    }, [])
+
   return (
 
     <div>
@@ -25,11 +36,14 @@ export default function Ledger() {
             <table className="table  shadow bg-white rounded-7">
                 <thead>
                     <tr>
-                    <th scope="col"><h3>Operator Id</h3></th>
-                    <th scope="col"><h3>Operator Name</h3></th>
+                    <th scope="col"><h3>Machine Id</h3></th>
                     <th scope="col"><h3>Machine Name</h3></th>
-                    <th scope="col"><h3>Tool Type Name</h3></th>
-                    <th scope="col"><h3>Tool Id</h3></th>
+                    <th scope="col"><h3>Operator Name</h3></th>
+                    <th scope="col"><h3>User Id</h3></th>
+                    <th scope="col"><h5>Tool Type Name</h5></th>
+                    {/* <th scope="col"><h3>Tool Id</h3></th> */}
+                    <th scope="col"><h3>In use</h3></th>
+                    <th scope="col"><h3>Approval Id</h3></th>
                     <th scope="col"><h3>Take DateTime</h3></th>
                     <th scope="col"><h3>Return DateTime</h3></th>
                     </tr>
@@ -52,13 +66,16 @@ export default function Ledger() {
                                 
                             }).map((dat, index)=>(
                             <tr>
-                                <th scope="row" key={index}><b>{dat.operator_id}</b></th>
-                                <td><b>{dat.operator_name}</b></td>
-                                <td><b>{dat.machine_name}</b></td>
-                                <td><b>{dat.tool_type_name}</b></td>
-                                <td><b>{dat.tool_id}</b></td>
-                                <td><b>{dat.start_time}</b></td>
-                                <td><b>{dat.end_time}</b></td>
+                                <th scope="row" key={index}><b>{dat.machineId}</b></th>
+                                <td><b>{dat.machineName}</b></td>
+                                <td><b>{dat.userName}</b></td>
+                                <td><b>{dat.showUserId}</b></td>
+                                <td><b>{dat.toolTypeName}</b></td>
+                                {/* <td><b>{dat.tool_id}</b></td> */}
+                                <td><b>{String(dat.isInUse)}</b></td>
+                                <td><b>{dat.approvalId}</b></td>
+                                <td><b>{dat.startDateTime}</b></td>
+                                <td><b>{dat.returnDateTime}</b></td>
                             
 
                             </tr>

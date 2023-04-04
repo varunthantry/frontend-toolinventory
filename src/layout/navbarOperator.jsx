@@ -15,10 +15,14 @@ export default function NavbarOperator(props) {
 
     const notifyLogoutAdmin = () => {
   
-      toast("Logged Out Successfully 👍");
-      setTimeout(()=>{
-        navigate("/")
-      },2000);
+      // toast("Logged Out Successfully 👍");
+      // setTimeout(()=>{
+      //   navigate("/")
+      // },2000);
+
+      localStorage.clear();
+    navigate("/")
+    toast.info("Logged Out")
   
     }
 

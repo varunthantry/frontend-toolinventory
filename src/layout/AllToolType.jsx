@@ -10,26 +10,15 @@ export default function AllToolType(props) {
     const setManager = props.setManager;
 
     const [data, setData] = useState([])
-    useEffect(() => {
-    //  getAllToolType().then((res)=>{
-    //     console.log(res);
-    //  }).catch((err)=>{
-    //     console.log(err)
-    //  })
-
-            getTool();
+    useEffect(() =>{
+            getAllToolType().then((res)=>{
+                setData(res);
+                console.log(res);
+            }).catch((err)=>{
+                console.log(err);
+            })
     }, [])
 
-
-    const getTool = () =>{
-        fetch("https://localhost:8989/users",{
-            method : "GET"
-        }).then((res)=>{
-            console.log("res",res);
-        }).catch((err)=>{
-            console.log(err);
-        })
-    }
     
 
     // const [data, setData] = useState([]);
@@ -85,7 +74,7 @@ export default function AllToolType(props) {
                                 
                             }).map((dat, index)=>(
                               <tr>
-                                  <th scope="row" key={index}><b>{dat.id}</b></th>
+                                  <th scope="row" key={index}><b>{index+1}</b></th>
                                   <td><b>{dat.name}</b></td>
                                  
                                  

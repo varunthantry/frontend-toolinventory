@@ -1,16 +1,50 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search';
-import { getAllManager } from '../services/UserService';
+import { getAllManager, getDeleteManager } from '../services/UserService';
 
 
 export default function AllManager(props) {
 
     let navigate = useNavigate;
     // const setAdmin = props.setAdmin;
-    const data = getAllManager();
+
+    // const data = getAllManager();
+
+  
+
+    const [data, setData] = useState([])
+    
+    useEffect(() =>{
+            !localStorage.getItem("token") ? navigate("/") : navigate("/Admin")
+            getAllManager().then((res)=>{
+                setData(res);
+                console.log(res);
+            }).catch((err)=>{
+                console.log(err);
+            })
+    }, [])
+
+    const deleteManager = (id) => {
+        getDeleteManager(id).then((res)=>{
+            
+            console.log("successfully Deleted Manager");
+            navigate("/Admin")
+            
+          }).catch((err)=>{
+            console.log("erroor login", err);
+          })
+    }
+
+
+
+    const Role = "MANAGER"
+
 
     const [searchTerm, setSearchTerm] = useState("");
+
+
+
   return (
     <div>
         {/* <div>
@@ -42,19 +76,32 @@ export default function AllManager(props) {
                         <th scope="col">#</th>
                         <th scope="col"><h3>Manager Name</h3></th>
                         <th scope="col"><h3>Username</h3></th>
-                        <th scope="col"><h3>Password</h3></th>
+                        {/* <th scope="col"><h3>Password</h3></th> */}
                         <th scope="col"><h3>Action</h3></th>
                     </tr>
                 </thead>
                 <tbody>
 
                         {
-                            data.map((dat, index)=>(
+                            data.filter((dat)=> {
+                                if(searchTerm === "" && Role === dat.role){
+                                    return dat
+                                }else if(dat.name.toLowerCase().includes(searchTerm.toLowerCase()) && Role === dat.role) {
+                                    return dat
+                                }else if(dat.email.toLowerCase().includes(searchTerm.toLowerCase()) && Role === dat.role) {
+                                    return dat
+                                }else if(dat.id.toLowerCase().includes(searchTerm.toLowerCase()) && Role === dat.role) {
+                                    return dat
+                                }
+
+                    
+                                
+                            }).map((dat, index)=>(
                                 <tr>
-                                    <th scope="row" key={index}><b>{dat.id}</b></th>
+                                    <th scope="row" key={index}><b>{index+1}</b></th>
                                     <td><b>{dat.name}</b></td>
-                                    <td><b>{dat.username}</b></td>
-                                    <td><b>{dat.password}</b></td>
+                                    <td><b>{dat.email}</b></td>
+                                    {/* <td><b>{dat.password}</b></td> */}
                                 
                                     <td>
                                     
@@ -66,9 +113,9 @@ export default function AllManager(props) {
 
                                         <Link className='btn btn-outline-primary mx-2'
                                         // to="" onClick={() => {setAdd(<EditManager />)}}
-                                        to="/editManager" onClick={() => navigate("/editManager")}
+                                        to={`/editManager?id=${dat?.id}`}
                                         >Edit</Link>
-                                        <button className='btn btn-danger mx-2'
+                                        <button className='btn btn-danger mx-2' onClick={() => deleteManager(dat?.id)}
                                         >Delete</button>
                                         
                                     </td>

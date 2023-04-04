@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import { getAllOperator } from '../services/OperatorService';
+import { getAllOperator, getDeleteOperator } from '../services/OperatorService';
 import SearchIcon from '@mui/icons-material/Search';
 
 import AddOperator from './AddOperator'
@@ -9,7 +9,35 @@ import EditOperator from './EditOperator'
 export default function AllOperator(props) {
 
     const setManager = props.setManager;
-    const data = getAllOperator();
+    // const data = getAllOperator();
+
+    const [data, setData] = useState([])
+    
+    useEffect(() =>{
+            getAllOperator().then((res)=>{
+                setData(res);
+                console.log(res);
+            }).catch((err)=>{
+                console.log(err);
+            })
+    }, [])
+
+    const deleteOperator = (id) => {
+        getDeleteOperator(id).then((res)=>{
+            
+            console.log("successfully Deleted Operator");
+            // navigate("/Admin")
+            
+          }).catch((err)=>{
+            console.log("erroor login", err);
+          })
+    }
+
+
+
+    const Role = "OPERATOR"
+
+
     const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -43,9 +71,10 @@ export default function AllOperator(props) {
                 <thead>
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col"><h3>Operator Name</h3></th>
+                     <th scope="col"><h3>Title</h3></th>
+                    <th scope="col"><h3>Name</h3></th>
                     <th scope="col"><h3>Username</h3></th>
-                    <th scope="col"><h3>Password</h3></th>
+                   
                     <th scope="col"><h3>Action</h3></th>
                     </tr>
                 </thead>
@@ -53,20 +82,21 @@ export default function AllOperator(props) {
 
                     {
                         data.filter((dat)=> {
-                                if(searchTerm === ""){
+                                if(searchTerm === "" && Role === dat.role){
                                     return dat
-                                }else if(dat.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                }else if(dat.name.toLowerCase().includes(searchTerm.toLowerCase()) && Role === dat.role) {
                                     return dat
-                                }else if(dat.username.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                }else if(dat.email.toLowerCase().includes(searchTerm.toLowerCase()) && Role === dat.role) {
                                     return dat
                                 }
                                 
                             }).map((dat, index)=>(
                             <tr>
-                                <th scope="row" key={index}><b>{dat.id}</b></th>
+                                <th scope="row" key={index}><b>{index+1}</b></th>
+                                <td><b>{dat.title}</b></td>
                                 <td><b>{dat.name}</b></td>
-                                <td><b>{dat.username}</b></td>
-                                <td><b>{dat.password}</b></td>
+                                <td><b>{dat.email}</b></td>
+                                
                             
                                 <td>
                                 
@@ -77,9 +107,10 @@ export default function AllOperator(props) {
                                     onClick={()=>deleteUser(user.id)}>Delete</button> */}
 
                                     <Link className='btn btn-outline-primary mx-2'
-                                    onClick={() => setManager(<EditOperator setManager={setManager} />)}
+                                    onClick={() => setManager(<EditOperator setManager={setManager} id={dat.id} />)}
                                     >Edit</Link>
-                                    <button className='btn btn-danger mx-2'
+
+                                    <button className='btn btn-danger mx-2' onClick={() => deleteOperator(dat?.id)}
                                     >Delete</button>
                                     
                                 </td>

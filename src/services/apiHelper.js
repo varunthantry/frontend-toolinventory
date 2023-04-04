@@ -6,7 +6,7 @@ export const apiHelper = axios.create({
    });
    
  apiHelper.interceptors.request.use((requestOptions) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("token");
     const tempHeaders = { ...requestOptions?.headers };
     if (token) {
     tempHeaders["Authorization"] = `Bearer ${token}`;

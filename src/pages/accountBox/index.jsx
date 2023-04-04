@@ -165,8 +165,8 @@ export function AccountBox(props) {
             {active === "signinUser" && <HeaderContainer>
             
                 <HeaderText>Welcome</HeaderText>
-                <HeaderText>Back User</HeaderText>
-                <SmallText>Sign-in to continue as User!</SmallText>
+                <HeaderText>Back</HeaderText>
+                <SmallText>Sign-in </SmallText>
             </HeaderContainer>}
             {active === "signinManager" && <HeaderContainer>
                 <HeaderText>Welcome</HeaderText>

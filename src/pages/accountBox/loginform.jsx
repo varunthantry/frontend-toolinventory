@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect,useState } from "react";
 import {
   BoldLink,
   BoxContainer,
@@ -12,45 +12,117 @@ import { AccountContext } from "./accountContext";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { getUserLogin, getUserMe } from "../../services/LoginService";
+
+
 
 export function LoginFormUser(props) {
   const { switchToManager, switchToAdmin } = useContext(AccountContext);
 
   let navigate = useNavigate();
 
-  const notifyOperatorLogin = () => {
- 
-    toast("Logged In Successfully as Operator 👍");
-    setTimeout(()=>{
-      navigate("/Operator")
-    },2000);
-    
+  const [login, setlogin] = useState({
+
+  })
+
+
+  useEffect(() => {
+    let isLogin = false;
+   localStorage.getItem("token") ? isLogin = true : isLogin = false;
+
+   if(isLogin){
+    getUserMe().then((res)=>{
+      localStorage.setItem("currentUser", res);
+
+      if(res.role === "OPERATOR"){
+        navigate("/Operator");
+      }
+      else if(res.role === "ADMIN"){
+        navigate("/Admin");
+      }
+      else if(res.role === "MANAGER"){
+        navigate("/Manager");
+      }
+
+    }).catch((err)=>{
+      console.log("r",err);
+    })
+   }
+  }, [])
+  
+
+  const onInputChange=(e)=>{
+
+    setlogin({...login, [e.target.name]:e.target.value})
   }
 
+  const getUserDetails = ()=>{
+    getUserMe().then((res)=>{
+      localStorage.setItem("currentUser", res);
+
+      if(res.role === "OPERATOR"){
+        navigate("/Operator");
+      }
+      else if(res.role === "ADMIN"){
+        navigate("/Admin");
+      }
+      else if(res.role === "MANAGER"){
+        navigate("/Manager");
+      }
+
+    }).catch((err)=>{
+      console.log("r",err);
+    })
+  }
+
+
+
+  
+
+  const notifyOperatorLogin = () => {
+    getUserLogin(login).then((res)=>{
+      localStorage.setItem("token", res?.accessToken)
+      console.log(res?.accessToken);
+      getUserDetails();
+    }).catch((err)=>{
+      console.log("erroor login", err);
+    })
+  }
+
+
+
   return (
-    <BoxContainer>
+    <form>
+    <BoxContainer >
       <FormContainer>
-        <Input type="text" placeholder="Username" />
-        <Input type="password" placeholder="Password" />
+        <Input type={"text"} name="username" placeholder="Username" value={login?.username}
+                onChange={(e)=>onInputChange(e)} />
+        <Input type={"password"} name="password" placeholder="Password" value={login?.password}
+                onChange={(e)=>onInputChange(e)} />
     </FormContainer>
       <Marginer direction="vertical" margin={5} />
     
       {/* <MutedLink href="#">Forget your password?</MutedLink> */}
       <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit" onClick={notifyOperatorLogin}>Signin</SubmitButton>
+      <SubmitButton type="button" onClick={notifyOperatorLogin}>Signin</SubmitButton>
       <ToastContainer />
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
+
+
+
         {/* Don't have an accoun?{" "} */}
-        <BoldLink href="#" onClick={switchToManager}>
+        {/* <BoldLink href="#" onClick={switchToManager}>
           Sign-in as Manager
-        </BoldLink>
+        </BoldLink> */}
         
-        <BoldLink href="#" onClick={switchToAdmin}>
+        {/* <BoldLink href="#" onClick={switchToAdmin}>
           Sign-in as Admin
-        </BoldLink>
+        </BoldLink> */}
       </MutedLink>
       
     </BoxContainer>
+    </form>
   );
 }

@@ -1,0 +1,21 @@
+.card{
+    cursor: pointer;
+}
+
+.card:hover{
+   
+    transform: translateY(20px);
+    /* transform: translateX(20px); */
+    transition: 0.2s all;
+}
+
+
+/* Grid padding */
+.car{
+    padding: 50px 50px 50px 50px;
+}
+
+.toolselect{
+    margin-left: 300px;
+    margin-top: 30px;
+}

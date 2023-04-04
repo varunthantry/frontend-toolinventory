@@ -12,6 +12,8 @@ import Manager from "./pages/Manager";
 import AllOperator from "./layout/AllOperator";
 import EditManager from "./layout/EditManager";
 import ToolRequestOperator from "./layout/ToolRequestOperator";
+import PopupToolSelect from "./layout/PopupToolSelect";
+
 
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
           <Route exact path="/Modal" element={<Modal />} />
 
           <Route exact path="/Toolrequest" element={<ToolRequestOperator />} />
+          <Route exact path="/popupselecttool" element={<PopupToolSelect />} />
          
         </Routes>
       </Router>

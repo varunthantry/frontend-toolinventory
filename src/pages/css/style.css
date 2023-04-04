@@ -1,7 +1,8 @@
 body{
     background: rgb(240, 202, 53);
     /* background-image: url("./background_tools2.png"); */
-    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    /* font-family: “Comic Sans MS”, “Comic Sans”, cursive; */
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .tooladd{
@@ -10,7 +11,8 @@ body{
 }
 
 .heading{
-    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    /* font-family: “Comic Sans MS”, “Comic Sans”, cursive; */
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .navi {

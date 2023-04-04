@@ -91,13 +91,10 @@ export default function NavbarManager(props) {
     setManager(<AllToolType setManager={setManager} />)
   }
   
-  const notifyLogoutManager = () => {
-
-    toast("Logged Out Successfully 👍");
-    setTimeout(()=>{
-      navigate("/")
-    },2000);
-    
+  const notifyLogoutManager = () => { 
+    localStorage.clear();
+    navigate("/")
+    toast.info("Logged Out")
   }
   
   return (

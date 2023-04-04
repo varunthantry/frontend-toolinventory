@@ -32,8 +32,7 @@ export default function Admin() {
         <div>
           {showAdd === true ? <button class="ml-2 btn btn-danger btn-sm pt-4 mt-5 mx-5" 
           // onClick={() => setAdmin(<AddManager setAdmin={setAdmin} />)}
-          onClick={changestate}
-          >
+          onClick={changestate}>
               <b>Add New Manager</b>
           </button> 
 
