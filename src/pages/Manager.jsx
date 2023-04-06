@@ -1,12 +1,18 @@
-import React from 'react'
-import { useState } from 'react';
-import ManagerApproval from '../layout/ManagerApproval'
-import NavbarManager from '../layout/navbarManager'
+import React, { useEffect } from "react";
+import { useState } from "react";
+import ManagerApproval from "../layout/ManagerApproval";
+import NavbarManager from "../layout/navbarManager";
 // import AddManager from '../layout/AddManager';
 // import EditManager from '../layout/EditManager';
-import "./css/style.css"
+import "./css/style.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Manager() {
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    !localStorage.getItem("token") ? navigate("/") : navigate("/Manager");
+  });
 
   const [manager, setManager] = useState(<ManagerApproval />);
   // const [addOperatorShow, setAddOperatorShow] = useState(false);
@@ -30,12 +36,11 @@ export default function Manager() {
       ) }
 
       </div> */}
-        
 
-        <div class="pt-2 my-4">
-          {/* <ManagerApproval /> */}
-          {manager}
-        </div>
+      <div class="pt-2 my-4">
+        {/* <ManagerApproval /> */}
+        {manager}
+      </div>
     </div>
-  )
+  );
 }

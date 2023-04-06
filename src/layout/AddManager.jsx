@@ -1,126 +1,159 @@
-import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import AllManager from './AllManager';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { getAddManager } from '../services/AddManagerService';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getAddManager } from "../services/AddManagerService";
 
 export default function AddManager(props) {
-    // const setAdmin = props.setAdmin;
-    const setShowAdd = props.setShowAdd;
+  // const setAdmin = props.setAdmin;
+  const setShowAdd = props.setShowAdd;
 
-    let navigate = useNavigate();
+  let navigate = useNavigate();
 
-    const [addManager, setAddManager] = useState({
-      title : "",
-      name : "",
-      email : "",
-      phoneNumber : ""
-  })
+  const [addManager, setAddManager] = useState({
+    title: "",
+    name: "",
+    email: "",
+    phoneNumber: "",
+  });
 
-  // useEffect(()=>{
-  //   console.log(addManager)
-  // }, [])
+  useEffect(() => {
+    // console.log(addManager)
+    !localStorage.getItem("token") ? navigate("/") : navigate("/Admin");
+  }, []);
 
-  const onInputChange=(e)=>{
+  const onInputChange = (e) => {
+    setAddManager({ ...addManager, [e.target.name]: e.target.value });
+  };
 
-    setAddManager({...addManager, [e.target.name]:e.target.value})
-  }
+  const changestateCancel = () => {
+    // setAdmin(<AllManager setAdmin={setAdmin} />)
 
+    navigate("/Admin");
+    setShowAdd(true);
+  };
 
+  const changestateAdd = () => {
+    // setAdmin(<AllManager setAdmin={setAdmin} />)
 
-    const changestateCancel = () => {
-      // setAdmin(<AllManager setAdmin={setAdmin} />)
-      
-      navigate("/Admin")
-      setShowAdd(true);
-    }
+    // toast("New Manager Created 👍");
+    // setTimeout(()=>{
+    //   navigate("/Admin")
 
-    const changestateAdd = () => {
-      // setAdmin(<AllManager setAdmin={setAdmin} />)
+    // setShowAdd(true);
+    // },3000);
 
-
-      // toast("New Manager Created 👍");
-      // setTimeout(()=>{
-      //   navigate("/Admin")
-       
-        // setShowAdd(true);
-      // },3000);
-
-      getAddManager(addManager).then((res)=>{
-        localStorage.setItem("token", res?.accessToken)
+    getAddManager(addManager)
+      .then((res) => {
+        localStorage.setItem("token", res?.accessToken);
         console.log("successfully add Manager");
-        navigate("/Admin")
+        navigate("/Admin");
         setShowAdd(true);
-      }).catch((err)=>{
-        console.log("erroor login", err);
       })
-      
-      
-    }
+      .catch((err) => {
+        console.log("erroor login", err);
+      });
+  };
 
-    return (
-      <div className='container my-4 pt-4 table shadow  bg-light rounded-7'>
-        <form>
-
+  return (
+    <div className="container my-4 pt-4 table shadow  bg-light rounded-7">
+      <form>
         <div class="form-group row">
-          <label for="inputId3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Title</b></h6></label>
+          <label for="inputId3" class="col-sm-2 col-form-label">
+            <h6 class="text-black">
+              <b>Title</b>
+            </h6>
+          </label>
           <div class="col-sm-10">
-            <input type="id" 
-            class="form-control" 
-            id="inputId3" 
-            placeholder="Title" 
-            name="title"
-            value={addManager?.title}
-            onChange={(e)=>onInputChange(e)}
+            <input
+              type="id"
+              class="form-control"
+              id="inputId3"
+              placeholder="Title"
+              name="title"
+              value={addManager?.title}
+              onChange={(e) => onInputChange(e)}
             />
           </div>
         </div>
-          <div class="form-group row">
-            <label for="inputName3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Name</b></h6></label>
-            <div class="col-sm-10">
-              <input type="name" class="form-control" id="inputName3" placeholder="Name" 
-                 name="name"
-             value={addManager?.name}
-            onChange={(e)=>onInputChange(e)}
-              />
-            </div>
+        <div class="form-group row">
+          <label for="inputName3" class="col-sm-2 col-form-label">
+            <h6 class="text-black">
+              <b>Name</b>
+            </h6>
+          </label>
+          <div class="col-sm-10">
+            <input
+              type="name"
+              class="form-control"
+              id="inputName3"
+              placeholder="Name"
+              name="name"
+              value={addManager?.name}
+              onChange={(e) => onInputChange(e)}
+            />
           </div>
-  
-          <div class="form-group row">
-            <label for="inputEmail3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Email</b></h6></label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email" 
-                 name="email"
-             value={addManager?.email}
-            onChange={(e)=>onInputChange(e)}
-              />
-            </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">
+            <h6 class="text-black">
+              <b>Email</b>
+            </h6>
+          </label>
+          <div class="col-sm-10">
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail3"
+              placeholder="Email"
+              name="email"
+              value={addManager?.email}
+              onChange={(e) => onInputChange(e)}
+            />
           </div>
-          <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Phone No.</b></h6></label>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="Phone No." 
-                 name="phoneNumber"
-             value={addManager?.phoneNumber}
-            onChange={(e)=>onInputChange(e)}
-              />
-            </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword3" class="col-sm-2 col-form-label">
+            <h6 class="text-black">
+              <b>Phone No.</b>
+            </h6>
+          </label>
+          <div class="col-sm-10">
+            <input
+              type="password"
+              class="form-control"
+              id="inputPassword3"
+              placeholder="Phone No."
+              name="phoneNumber"
+              value={addManager?.phoneNumber}
+              onChange={(e) => onInputChange(e)}
+            />
           </div>
-        
-          <div class="form-group row my-5">
-           
-            <div>
-              <button type="submit" class="btn btn-danger mx-2" 
-              onClick={changestateCancel}><b>Cancel</b></button>
-  
-              <button type="submit" class="btn btn-primary mx-2"
-              onClick={changestateAdd}><b>Add</b></button>
-              <ToastContainer />
-            </div>
+        </div>
+
+        <div class="form-group row my-5">
+          <div>
+            <button
+              type="submit"
+              class="btn btn-danger mx-2"
+              onClick={changestateCancel}
+            >
+              <b>Cancel</b>
+            </button>
+
+            <button
+              type="submit"
+              class="btn btn-primary mx-2"
+              onClick={changestateAdd}
+            >
+              <b>Add</b>
+            </button>
+            <ToastContainer />
           </div>
+        </div>
       </form>
-    
-      </div>
-    )
+    </div>
+  );
 }

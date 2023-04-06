@@ -1,6 +1,5 @@
 import { apiHelper } from "./apiHelper";
 
-
 export const getAddManager = async (data) => {
   try {
     const response = await apiHelper.post(`/users`, data);
@@ -9,4 +8,4 @@ export const getAddManager = async (data) => {
     console.log("error while running", err);
     return await Promise.reject(err);
   }
- };
+};

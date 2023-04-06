@@ -17,7 +17,6 @@ const BoxContainer = styled.div`
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
   position: relative;
   overflow: hidden;
- 
 `;
 
 const TopContainer = styled.div`
@@ -41,13 +40,15 @@ const BackDrop = styled(motion.div)`
   top: -290px;
   left: -70px;
   background: rgb(241, 196, 15);
-  ${'' /* background: #EDC7B7; */}
+  ${"" /* background: #EDC7B7; */}
   background: linear-gradient(
     58deg,
     rgba(241, 196, 15, 1) 20%,
     rgba(243, 172, 18, 1) 100%
-    ${'' /* #EDC7B7 20%,
-    #EDC7B7 100% */}
+    ${
+    "" /* #EDC7B7 20%,
+    #EDC7B7 100% */
+  }
   );
 `;
 
@@ -114,80 +115,79 @@ const expandingTransition = {
 };
 
 export function AccountBox(props) {
-    const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setExpanded] = useState(false);
 
-    const [active, setActive] = useState("signinUser")
+  const [active, setActive] = useState("signinUser");
 
-    const playExpandingAnimation = () => {
-        setExpanded(true);
-        setTimeout(() => {
-            setExpanded(false);
-        }, expandingTransition.duration * 1000 - 1500);
-    }
+  const playExpandingAnimation = () => {
+    setExpanded(true);
+    setTimeout(() => {
+      setExpanded(false);
+    }, expandingTransition.duration * 1000 - 1500);
+  };
 
-    const switchToManager = () => {
-        playExpandingAnimation();
-        setTimeout(() => {
-            setActive("signinManager")
-        }, 400);
-        
-    }
+  const switchToManager = () => {
+    playExpandingAnimation();
+    setTimeout(() => {
+      setActive("signinManager");
+    }, 400);
+  };
 
-    const switchToUser = () => {
-        playExpandingAnimation();
-        setTimeout(() => {
-            setActive("signinUser")
-        }, 400);
-        
-    }
+  const switchToUser = () => {
+    playExpandingAnimation();
+    setTimeout(() => {
+      setActive("signinUser");
+    }, 400);
+  };
 
-    const switchToAdmin = () => {
-        playExpandingAnimation();
-        setTimeout(() => {
-            setActive("signinAdmin")
-        }, 400);
-        
-    }
+  const switchToAdmin = () => {
+    playExpandingAnimation();
+    setTimeout(() => {
+      setActive("signinAdmin");
+    }, 400);
+  };
 
-    const contextValue = {switchToManager, switchToUser, switchToAdmin};
+  const contextValue = { switchToManager, switchToUser, switchToAdmin };
 
-    return (
+  return (
     <AccountContext.Provider value={contextValue}>
-    <BoxContainer>
+      <BoxContainer>
         <TopContainer>
-            <BackDrop 
+          <BackDrop
             initial={false}
-            animate={isExpanded ? "expanded" : "collapsed"} 
+            animate={isExpanded ? "expanded" : "collapsed"}
             variants={backdropVariants}
             transition={expandingTransition}
-            />
-            <BigHeaderText>Tool Inventory</BigHeaderText>
-            {active === "signinUser" && <HeaderContainer>
-            
-                <HeaderText>Welcome</HeaderText>
-                <HeaderText>Back</HeaderText>
-                <SmallText>Sign-in </SmallText>
-            </HeaderContainer>}
-            {active === "signinManager" && <HeaderContainer>
-                <HeaderText>Welcome</HeaderText>
-                <HeaderText>Back Manager</HeaderText>
-                <SmallText>Sign-in to continue as Manager!</SmallText>
-            </HeaderContainer>}
-            {active === "signinAdmin" && <HeaderContainer>
-                <HeaderText>Welcome</HeaderText>
-                <HeaderText>Back Admin</HeaderText>
-                <SmallText>Sign-in to continue as Admin!</SmallText>
-            </HeaderContainer>}
-
+          />
+          <BigHeaderText>Tool Inventory</BigHeaderText>
+          {active === "signinUser" && (
+            <HeaderContainer>
+              <HeaderText>Welcome</HeaderText>
+              <HeaderText>Back</HeaderText>
+              <SmallText>Sign-in </SmallText>
+            </HeaderContainer>
+          )}
+          {active === "signinManager" && (
+            <HeaderContainer>
+              <HeaderText>Welcome</HeaderText>
+              <HeaderText>Back Manager</HeaderText>
+              <SmallText>Sign-in to continue as Manager!</SmallText>
+            </HeaderContainer>
+          )}
+          {active === "signinAdmin" && (
+            <HeaderContainer>
+              <HeaderText>Welcome</HeaderText>
+              <HeaderText>Back Admin</HeaderText>
+              <SmallText>Sign-in to continue as Admin!</SmallText>
+            </HeaderContainer>
+          )}
         </TopContainer>
         <InnerContainer>
-           
-           {active === "signinUser" && <LoginFormUser />}
-           {active === "signinManager" && <LoginFormManager />}
-           {active === "signinAdmin" && <LoginFormAdmin />}
-
+          {active === "signinUser" && <LoginFormUser />}
+          {active === "signinManager" && <LoginFormManager />}
+          {active === "signinAdmin" && <LoginFormAdmin />}
         </InnerContainer>
-    </BoxContainer>
+      </BoxContainer>
     </AccountContext.Provider>
-    )
+  );
 }

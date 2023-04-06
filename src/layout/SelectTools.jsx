@@ -3,7 +3,6 @@
 
 // function SelectTools() {
 
-  
 //   return (
 //     <div className='container table down shadow  bg-light rounded-7 pt-5'>
 
@@ -32,9 +31,8 @@
 //                     <Dropdown.Item href="#">tool 3</Dropdown.Item>
 //                     </Dropdown.Menu>
 
-                
 //                 </Dropdown>
-                
+
 //                 <div >
 //                     {/* <button type="submit" class="nav-link btn navi mx-5 my-4 text-black ">
 //                     <b class="navbutton">Request Tool</b></button> */}
@@ -43,57 +41,54 @@
 //                     <b class="navbutton">Request Tool</b></button>
 //                 </div>
 //             </div>
-//           </form>  
+//           </form>
 //        </div>
 
-    
 //   )
 // }
 
 // export default SelectTools;
 
-
-
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import "./css/cards.css";
-import Cards from './Cards';
-import { Grid} from '@mui/material';
-import { getSelectTools } from '../services/AllSelectTools';
-// import { useState, useEffect } from 'react';
-// import { getMachines } from '../services/AllSelectTools';
-
+import Cards from "./Cards";
+import { Grid } from "@mui/material";
+import { getMachines } from "../services/AllSelectTools";
+import { useNavigate } from "react-router-dom";
 
 export default function SelectTools() {
+  let navigate = useNavigate();
+  // const data = getSelectTools();
 
-   const data = getSelectTools();
-
-  //  const [data, setData] = useState([])
-  //   useEffect(() =>{
-  //           getMachines().then((res)=>{
-  //               setData(res);
-  //               console.log(res);
-  //           }).catch((err)=>{
-  //               console.log(err);
-  //           })
-  //   }, [])
-
-
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    !localStorage.getItem("token") ? navigate("/") : navigate("/Operator");
+    getMachines()
+      .then((res) => {
+        setData(res);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div>
-
-   <Grid container spacing={4} className="car">
-    {data.map((data, id)=>(
-
-        <Grid item xs={12} sm={6} md={4} key={data.id}>
-
-            <Cards machine_name={data.name} description={data.description} tool_used={data.tool_used} image={data.image} available={data.available} />
-        </Grid>
-
-    ))
-    }
-    </Grid>
+      <Grid container spacing={4} className="car">
+        {data.map((data, id) => (
+          <Grid item xs={12} sm={6} md={4} key={data.id}>
+            <Cards
+              machine_id={data.id}
+              machine_name={data.name}
+              description={data.description}
+              available={data.available}
+              //   tool_used={data.tool_used}
+              //   image={data.image}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </div>
-    
-  )
+  );
 }
