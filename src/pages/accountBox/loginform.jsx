@@ -77,6 +77,7 @@ export function LoginFormUser(props) {
       })
       .catch((err) => {
         console.log("r", err);
+        toast.info("Login Error");
       });
   };
 
@@ -93,6 +94,8 @@ export function LoginFormUser(props) {
       })
       .catch((err) => {
         console.log("erroor login", err);
+        toast.info("Login Error");
+        navigate("/")
       });
   };
 

@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { getAllReturnTools } from "../services/ToolRequestService";
+// import { Link, useNavigate } from "react-router-dom";
+import { getAllReturnTools, ReturnTools } from "../services/ToolRequestService";
+import { Modal, ModalBody, Col, Row, ModalHeader } from "reactstrap";
+import { ContactlessOutlined } from "@material-ui/icons";
 
 export default function ToolRequestOperator() {
   // const data = getToolRequest();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+
+  const [modal, setmodal] = useState(false);
+
+  const [toolIdName, setToolIdName] = useState({});
+
+  const [toolUsedtimes, setToolUsedtimes] = useState({})
+
+  // const [ledgerid, setToolLedgerId] = useState();
+
+  const [returntools,setReturnTools] = useState({
+    approvalId :"",
+    toolUsed : {}
+  })
 
   const [data, setData] = useState([]);
   useEffect(() => {
+    // console.log(ledgerid)
+    // setReturnTools({...returntools,["toolLedgerId"]: ledgerid})
     loadReturnTools();
   }, []);
+
+  
 
   const loadReturnTools = () => {
     getAllReturnTools()
@@ -23,11 +42,44 @@ export default function ToolRequestOperator() {
       });
   };
 
+  const changeStateReturnTool = (idname, approvalid) => {
+    setmodal(true);
+    setToolIdName(idname);
+    // setToolLedgerId(approvalid)
+    // console.log(ledgerid)
+    setReturnTools({...returntools,["approvalId"]: approvalid})
+    
+    // console.log("gggg", idname)
+  };
 
-  const ReturnToolsPage = (Id,Toolsid) => {
+  const onValueChange = (source, value) => {
+    console.log(source, "source", value);
+    const temp = { ...toolUsedtimes };
+    temp[source] = value;
+    setToolUsedtimes(temp);
+    const temp1 = { ...returntools };
+    temp1["toolUsed"] = temp;
+    setReturnTools(temp1);
+    // console.log(returntools)
+  };
 
-    navigate("/ReturnTools", {state : {id: Id} }, {state:{toolsid : Toolsid}})
-  }
+  useEffect(() => {
+    console.log("Toolllluuused",toolUsedtimes);
+  }, [toolUsedtimes]);
+
+  const onSumitReturnTools = () => {
+    // console.log("hhhh", toolIdName);
+    console.log(returntools)
+    ReturnTools(returntools)
+      .then((res) => {
+        
+        console.log("Successfully Returned The Tools")
+      })
+      .catch((err) => {
+        console.log("erroor login", err);
+      });
+      setmodal(false);
+  };
 
   const Status = "APPROVED";
 
@@ -45,9 +97,7 @@ export default function ToolRequestOperator() {
               <th scope="col">
                 <h3>Tool Name : Units</h3>
               </th>
-              {/* <th scope="col">
-                <h3>Units</h3>
-              </th> */}
+
               <th scope="col">
                 <h3>Return Requests</h3>
               </th>
@@ -70,26 +120,71 @@ export default function ToolRequestOperator() {
                   </td>
 
                   <td>
-                    {/* <b>{Object.keys(dat.toolTypeNameAndUnits)}</b>
-                    <b> : </b>
-                    <b>{Object.values(dat.toolTypeNameAndUnits)}</b> */}
-
                     {Object.keys(dat?.toolTypeNameAndUnits).map((k) => (
                       <b>
                         {k + " : " + dat?.toolTypeNameAndUnits[k]} <br />
                       </b>
                     ))}
                   </td>
+                  
 
                   <td>
-                    <button className="btn btn-outline-primary mx-2" onClick={()=> ReturnToolsPage(dat?.id, dat?.toolIds)}>Return</button>
-                  
+                    <button
+                      className="btn btn-outline-primary mx-2"
+                      onClick={() => {changeStateReturnTool(dat?.toolIdAndName, dat?.id)}}
+                    >
+                      Return
+                    </button>
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
+
+      <Modal size="lg" isOpen={modal} toggle={() => setmodal(!modal)}>
+        <ModalHeader toggle={() => setmodal(!modal)}>
+          Enter No. of times Tool used
+        </ModalHeader>
+        <ModalBody>
+          {/* <form> */}
+          {Object.keys(toolIdName).map((k) => (
+              <Row>
+                <Col lg={12}>
+                  <div class="form-group row">
+                    <label for="inputName3" class="col-sm-2 col-form-label">
+                      <h6 class="text-black">
+                        <b>{toolIdName[k]}</b>
+                        
+                      </h6>
+                    </label>
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        name={k}
+                        onChange={(e) => {
+                          // console.log(e, "ggggg");
+                          onValueChange(e.target.name, e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            ))}
+
+            <button
+              type="submit"
+              class="btn navi toolselect text-black"
+              onClick={onSumitReturnTools}
+            >
+              <b class="navbutton">submit</b>
+            </button>
+          {/* </form> */}
+        </ModalBody>
+      </Modal>
     </div>
   );
 }
