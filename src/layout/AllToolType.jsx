@@ -70,12 +70,14 @@ export default function AllToolType(props) {
         <table className="table  shadow bg-white rounded-7">
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">
-                <h3>Tool Type Name</h3>
+                <h5>S No.</h5>
               </th>
               <th scope="col">
-                <h3>Action</h3>
+                <h5>Tool Type Name</h5>
+              </th>
+              <th scope="col">
+                <h5>Action</h5>
               </th>
             </tr>
           </thead>

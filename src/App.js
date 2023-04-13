@@ -1,9 +1,9 @@
 import Login from "./pages/Login";
-import React from 'react';
+import React from "react";
 import Operator from "./pages/Operator";
 // import Tool from "./pages/Tool";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css';
+import "./App.css";
 import Admin from "./pages/Admin";
 import Ledger from "./layout/Ledger";
 import ManagerApproval from "./layout/ManagerApproval";
@@ -12,9 +12,7 @@ import Manager from "./pages/Manager";
 import AllOperator from "./layout/AllOperator";
 import EditManager from "./layout/EditManager";
 import ToolRequestOperator from "./layout/ToolRequestOperator";
-import PopupToolSelect from "./layout/PopupToolSelect";
-
-
+import ReturnToolsOperator from "./layout/ReturnToolsOperator";
 
 function App() {
   return (
@@ -28,16 +26,13 @@ function App() {
           <Route exact path="/Ledger" element={<Ledger />} />
           <Route exact path="/Manager" element={<Manager />} />
 
-
           <Route exact path="/editManager" element={<EditManager />} />
-          
+          <Route exact path="/ReturnTools" element={<ReturnToolsOperator />} />
           <Route exact path="/AllOperator" element={<AllOperator />} />
           <Route exact path="/ManagerApproval" element={<ManagerApproval />} />
           <Route exact path="/Modal" element={<Modal />} />
 
           <Route exact path="/Toolrequest" element={<ToolRequestOperator />} />
-          <Route exact path="/popupselecttool" element={<PopupToolSelect />} />
-         
         </Routes>
       </Router>
     </div>

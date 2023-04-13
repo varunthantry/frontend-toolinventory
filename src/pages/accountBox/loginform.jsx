@@ -15,7 +15,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { getUserLogin, getUserMe } from "../../services/LoginService";
 
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import "../css/login.css"
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+
 export function LoginFormUser(props) {
+  const [loginloader, setloginloader] = useState(true);
+
   const { switchToManager, switchToAdmin } = useContext(AccountContext);
 
   let navigate = useNavigate();
@@ -54,12 +62,17 @@ export function LoginFormUser(props) {
       .then((res) => {
         localStorage.setItem("currentUser", res);
 
+        console.log(res?.name);
+
+        toast.info("Login Successfully 👍");
+        setloginloader(true);
         if (res.role === "OPERATOR") {
           navigate("/Operator");
         } else if (res.role === "ADMIN") {
           navigate("/Admin");
         } else if (res.role === "MANAGER") {
-          navigate("/Manager");
+          // navigate(`/Manager?name=${res?.name}`);
+          navigate(`/Manager`);
         }
       })
       .catch((err) => {
@@ -68,11 +81,14 @@ export function LoginFormUser(props) {
   };
 
   const notifyOperatorLogin = () => {
+    setloginloader(false);
+
     getUserLogin(login)
       .then((res) => {
         localStorage.setItem("token", res?.accessToken);
 
         console.log(res?.accessToken);
+
         getUserDetails();
       })
       .catch((err) => {
@@ -80,45 +96,92 @@ export function LoginFormUser(props) {
       });
   };
 
+  const [show, setShow] = useState(false);
+  const handleShow = () => {
+    setShow(!show);
+  };
+
   return (
-    <form>
-      <BoxContainer>
-        <FormContainer>
-          <Input
-            type={"text"}
-            name="username"
-            placeholder="Username"
-            value={login?.username}
-            onChange={(e) => onInputChange(e)}
-          />
-          <Input
-            type={"password"}
-            name="password"
-            placeholder="Password"
-            value={login?.password}
-            onChange={(e) => onInputChange(e)}
-          />
-        </FormContainer>
-        <Marginer direction="vertical" margin={5} />
+    <div>
+      {loginloader ? (
+        <form>
+          <BoxContainer>
+            <FormContainer>
+              <Input
+                type={"email"}
+                name="username"
+                placeholder="Username"
+                value={login?.username}
+                onChange={(e) => onInputChange(e)}
+              />
+              <Input
+                type={show ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={login?.password}
+                onChange={(e) => onInputChange(e)}
+              />
+              <label1 className="label" onClick={handleShow}>{show ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}</label1>
+            </FormContainer>
+            <Marginer direction="vertical" margin={5} />
 
-        {/* <MutedLink href="#">Forget your password?</MutedLink> */}
-        <Marginer direction="vertical" margin="1.6em" />
-        <SubmitButton type="button" onClick={notifyOperatorLogin}>
-          Signin
-        </SubmitButton>
-        <ToastContainer />
-        <Marginer direction="vertical" margin="1em" />
-        <MutedLink href="#">
-          {/* Don't have an accoun?{" "} */}
-          {/* <BoldLink href="#" onClick={switchToManager}>
-          Sign-in as Manager
-        </BoldLink> */}
+            {/* <MutedLink href="#">Forget your password?</MutedLink> */}
+            <Marginer direction="vertical" margin="1.6em" />
+            <SubmitButton type="button" onClick={notifyOperatorLogin}>
+              Signin
+            </SubmitButton>
+            <ToastContainer />
+            <Marginer direction="vertical" margin="1em" />
+          </BoxContainer>
+        </form>
+      ) : (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
+    </div>
 
-          {/* <BoldLink href="#" onClick={switchToAdmin}>
-          Sign-in as Admin
-        </BoldLink> */}
-        </MutedLink>
-      </BoxContainer>
-    </form>
+    // <form>
+    //   <BoxContainer>
+    //     <FormContainer>
+    //       <Input
+    //         type={"text"}
+    //         name="username"
+    //         placeholder="Username"
+    //         value={login?.username}
+    //         onChange={(e) => onInputChange(e)}
+    //       />
+    //       <Input
+    //         type={"password"}
+    //         name="password"
+    //         placeholder="Password"
+    //         value={login?.password}
+    //         onChange={(e) => onInputChange(e)}
+    //       />
+    //     </FormContainer>
+    //     <Marginer direction="vertical" margin={5} />
+
+    //     {/* <MutedLink href="#">Forget your password?</MutedLink> */}
+    //     <Marginer direction="vertical" margin="1.6em" />
+    //     <SubmitButton type="button" onClick={notifyOperatorLogin}>
+    //       Signin
+    //     </SubmitButton>
+    //     <ToastContainer />
+    //     <Marginer direction="vertical" margin="1em" />
+    //     <MutedLink href="#">
+    //       {/* Don't have an accoun?{" "} */}
+    //       {/* <BoldLink href="#" onClick={switchToManager}>
+    //       Sign-in as Manager
+    //     </BoldLink> */}
+
+    //       {/* <BoldLink href="#" onClick={switchToAdmin}>
+    //       Sign-in as Admin
+    //     </BoldLink> */}
+    //     </MutedLink>
+    //   </BoxContainer>
+    // </form>
   );
 }

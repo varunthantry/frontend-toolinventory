@@ -13,37 +13,44 @@ export default function CardsManagerMachines(props) {
 
   const [datatoolType, setDataToolType] = useState([]);
 
-  const [addTool, setAddTool] = useState({});
+  const [toolInput, setToolInput] = useState({});
+  const [addTool, setAddTool] = useState({
+    machineId: "",
+    tools: {},
+  });
+  const [toolidd, setToolIdd] = useState();
 
   const [modal, setmodal] = useState(false);
   const [selecttooltypeebutton, settooltypeebutton] =
     useState("Select Tool Type");
 
-  // const [datatoolT, setDataToolT] = useState([]);
+  useEffect(() => {
+    getToolType(machine_id);
+
+    setAddTool({ ...addTool, ["machineId"]: machine_id });
+  }, []);
+
+  // const changHandler = (e) => {
+  //   setToolInput({ ...toolInput, [e.target.name]: e.target.value });
+  //   console.log(toolInput);
+  // };
+
+  const onValueChange = (source, value) => {
+    console.log(source, "source", value);
+    const temp = { ...toolInput };
+    temp[source] = value;
+    setToolInput(temp);
+    const temp1 = { ...addTool };
+    temp1["tools"] = temp;
+    setAddTool(temp1);
+  };
 
   useEffect(() => {
-    // getAllToolTypeSelect(machine_id)
-    //   .then((res) => {
-    //     setDataToolT(res);
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log("rrr", err);
-    //   });
-
-    getToolType(machine_id);
-  }, []);
+    console.log("Toollll", toolInput);
+  }, [toolInput]);
 
   const changeStateAdd = () => {
     setmodal(true);
-    // getAllToolTypeSelect(machine_id)
-    //   .then((res) => {
-    //     setDataToolType(res);
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
 
     getToolType(machine_id);
   };
@@ -61,15 +68,22 @@ export default function CardsManagerMachines(props) {
 
   const selectToolType = (name, id) => {
     settooltypeebutton(name);
+    setToolIdd(id);
   };
 
   const added = () => {
+    // setAddTool({ ...addTool, ["tools"]: toolInput });
+    // console.log("toolInput", toolInput);
+    // console.log(addTool);
+
     getAddTool(addTool)
       .then((res) => {
         console.log("successfully add Tool");
+        console.log(addTool);
       })
       .catch((err) => {
         console.log("erroor login", err);
+        console.log(addTool);
       });
   };
 
@@ -89,7 +103,7 @@ export default function CardsManagerMachines(props) {
           <p class="card-text">
             Tool used :-{" "}
             {datatoolType.map((x, index) => (
-              <>{x.name}, </>
+              <>{x.name} <br/> </>
             ))}
           </p>
           <button
@@ -135,7 +149,7 @@ export default function CardsManagerMachines(props) {
                   </h6>
                 </label>
                 <div class="col-sm-10 ">
-                  <Dropdown className="d-inline">
+                  <Dropdown className="d-inline yy">
                     <Dropdown.Toggle id="dropdown-autoclose-true">
                       {selecttooltypeebutton}
                     </Dropdown.Toggle>
@@ -164,11 +178,14 @@ export default function CardsManagerMachines(props) {
                 <div class="col-sm-10">
                   <input
                     type="numeric"
-                    name="units"
-                    //   onChange={(event) => setUnits(event.target.value)}
                     class="form-control"
                     id="input3"
                     placeholder="Units"
+                    name={toolidd}
+                    onChange={(e) => {
+                      console.log(e, "ggg");
+                      onValueChange(e.target.name, e.target.value);
+                    }}
                   />
                 </div>
               </div>

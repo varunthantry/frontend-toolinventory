@@ -81,19 +81,21 @@ export default function AllOperator(props) {
         <table className="table  shadow bg-white rounded-7">
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">
-                <h3>Title</h3>
+                <h5>S No.</h5>
               </th>
               <th scope="col">
-                <h3>Name</h3>
+                <h5>Title</h5>
               </th>
               <th scope="col">
-                <h3>Username</h3>
+                <h5>Name</h5>
+              </th>
+              <th scope="col">
+                <h5>Username</h5>
               </th>
 
               <th scope="col">
-                <h3>Action</h3>
+                <h5>Action</h5>
               </th>
             </tr>
           </thead>

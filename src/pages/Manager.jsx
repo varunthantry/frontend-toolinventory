@@ -5,10 +5,13 @@ import NavbarManager from "../layout/navbarManager";
 // import AddManager from '../layout/AddManager';
 // import EditManager from '../layout/EditManager';
 import "./css/style.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Manager() {
   let navigate = useNavigate();
+
+  // const location = useLocation();
+  // let name = new URLSearchParams(location.search).get("name");
 
   useEffect(() => {
     !localStorage.getItem("token") ? navigate("/") : navigate("/Manager");

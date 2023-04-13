@@ -1,27 +1,34 @@
-import React , {useState} from 'react'
-import Myapproval from './ShowModal';
-import "./Modal.css"
+import React, { useState } from "react";
+import Myapproval from "./ShowModal";
+import "./Modal.css";
 
 const Modal = (props) => {
+  const data = props.data;
 
-    const [approval, setApproval] = useState(false);
+  const [approval, setApproval] = useState(false);
 
-    const closeApproval = () => {
-        setApproval(false)
-    }
+  const closeApproval = () => {
+    setApproval(false);
+  };
 
-    const name = props.data.name;
-    const unit = props.data.unit;
+  // const name = props.data.name;
+  // const unit = props.data.unit;
 
-    
- 
   return (
     <>
-        <button className='modal-btn' onClick={() => setApproval(true)}>Show</button>
-        {approval && <Myapproval closeApproval={closeApproval} name={name} unit={unit} />}
+      <button className="modal-btn" onClick={() => setApproval(true)}>
+        Show
+      </button>
+      {approval && (
+        <Myapproval
+          closeApproval={closeApproval}
+          //  name={name} unit={unit}
+          data={data}
+        />
+      )}
     </>
-  )
-}
+  );
+};
 
 // const Myapproval = (props) => {
 //   useEffect(()=>{
@@ -32,9 +39,9 @@ const Modal = (props) => {
 //   },[])
 
 //   return(
-      
+
 //       <>
-      
+
 //           <div className="modal-wrapper" onClick={props.closeApproval}></div>
 //           <div className="modal-container">
 //               <h2>{props.name}</h2>
@@ -46,17 +53,15 @@ const Modal = (props) => {
 //               quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
 //               placeat tempora vitae enim incidunt porro fuga ea. */}
 //               Operator is asking for {props.name} - {props.unit} Units
-              
+
 //               </p>
-              
 
 //           <button className='mx-2 modal-btn' onClick={props.closeApproval}>Accept</button>
 //           <button className="modal-btn" onClick={props.closeApproval}>Decline</button>
 //           </div>
 //       </>
-      
+
 //   );
 // };
 
 export default Modal;
-

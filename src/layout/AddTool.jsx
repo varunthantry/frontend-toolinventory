@@ -84,6 +84,7 @@ export default function AddTool(props) {
     getAddTool(addTool)
       .then((res) => {
         // localStorage.setItem("token", res?.accessToken)
+        toast.info("Tools Added 👍");
         console.log("successfully add Tool");
         setManager(<AllTool setManager={setManager} />);
       })

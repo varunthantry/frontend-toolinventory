@@ -48,6 +48,7 @@ export default function AddManager(props) {
       .then((res) => {
         localStorage.setItem("token", res?.accessToken);
         console.log("successfully add Manager");
+        toast.info("New Manager Created 👍");
         navigate("/Admin");
         setShowAdd(true);
       })

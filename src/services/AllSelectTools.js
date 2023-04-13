@@ -56,3 +56,13 @@ export const getToolTypeused = async (id) => {
     return await Promise.reject(err);
   }
 };
+
+export const RequestTool = async (data) => {
+  try {
+    const response = await apiHelper.post(`/approval/raise-request`, data);
+    return await Promise.resolve(response.data);
+  } catch (err) {
+    console.log("error while running", err);
+    return await Promise.reject(err);
+  }
+};
