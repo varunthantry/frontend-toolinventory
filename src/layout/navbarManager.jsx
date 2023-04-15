@@ -56,6 +56,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AllToolType from "./AllToolType";
 import { getUserMe } from "../services/LoginService";
+import Loader from "../Loader/Loader";
 // import Searchbar from './Searchbar';
 
 export default function NavbarManager(props) {
@@ -71,6 +72,8 @@ export default function NavbarManager(props) {
   // const [addOperatoShow, setAddOperatorShow] = useState(true);
 
   const [name, setName] = useState("Manager");
+
+  const [loader, setLoader] = useState(true);
 
   const changeStatehome = () => {
     setManager(<ManagerApproval />);
@@ -95,22 +98,31 @@ export default function NavbarManager(props) {
 
   const notifyLogoutManager = () => {
     localStorage.clear();
-    navigate("/");
     toast.info("Logged Out");
+    navigate("/");
+    
   };
 
   useEffect(() => {
+
+    // setLoader(false);
     getUserMe()
       .then((res) => {
         setName(res?.name);
       })
       .catch((err) => {
         console.log("r", err);
-      });
+      })
+      // .finally(()=>{
+      //   setLoader(true);
+
+      // })
   });
 
   return (
     <div class="container">
+
+{/* {loader ? ( */}
       <nav class=" navbar-expand-lg navbar-light bg-white fixed-top rounded-7 my-1 mx-1 ">
         <div class="container-fluid">
           <button
@@ -232,6 +244,10 @@ export default function NavbarManager(props) {
           </div>
         </div>
       </nav>
+
+      {/* ) : (
+       <Loader />
+      )} */}
     </div>
   );
 }

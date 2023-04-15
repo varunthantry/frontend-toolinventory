@@ -1,15 +1,16 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-// import AllOperator from './AllOperator';
-import { useParams } from "react-router-dom";
 import "../pages/css/style.css";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getManagerDetails, getEditManager } from "../services/EditManager";
+import Loader from "../Loader/Loader";
 
 export default function EditManager() {
   let navigate = useNavigate();
+
+  const [loader, setLoader] = useState(true);
 
   const location = useLocation();
   let id = new URLSearchParams(location.search).get("id");
@@ -30,34 +31,51 @@ export default function EditManager() {
   };
 
   const changeeditManager = () => {
+
+    setLoader(false);
     getEditManager(editManager, id)
       .then((res) => {
-        // sessionStorage.setItem("token", res?.accessToken)
-        // console.log(res?.accessToken)
+       
         toast.info("Edited Successfully");
-        navigate("/Admin");
+        // navigate("/Admin");
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
+
+      navigate("/Admin");
   };
 
   const loadManager = () => {
+
+    setLoader(false);
     getManagerDetails(id)
       .then((res) => {
-        // console.log(res?.accessToken)
         setEditManager(res);
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   return (
-    <>
+    <div>
+
+
       <h3 class="heading pt-5 text-black">Edit Manager</h3>
+
+      {loader ? (
+
       <div className="container my-5 pt-5 table shadow  bg-light rounded-7">
-        <form>
+        <form >
           <div class="form-group row">
             <label for="inputId3" class="col-sm-2 col-form-label">
               <h6 class="text-black">
@@ -113,20 +131,7 @@ export default function EditManager() {
               />
             </div>
           </div>
-          {/* <div class="form-group row">
-          <label for="inputPassword3" class="col-sm-2 col-form-label"><h6 class="text-black"><b>Phone No.</b></h6></label>
-          <div class="col-sm-10">
-            <input 
-            type="text" 
-            class="form-control" 
-            id="inputPassword3" 
-            placeholder="Phone No." 
-            name="phoneNumber" 
-            value={editManager?.phoneNumber}
-            onChange={(e)=>onInputChange(e)}
-            />
-          </div>
-        </div> */}
+          
 
           <div class="form-group row my-5">
             <div>
@@ -150,6 +155,10 @@ export default function EditManager() {
           </div>
         </form>
       </div>
-    </>
+
+      ) : (
+       <Loader />
+      )}
+    </div>
   );
 }

@@ -4,9 +4,12 @@ import "react-toastify/dist/ReactToastify.css";
 import "../pages/css/style.css";
 import AllToolType from "./AllToolType";
 import { getAddToolType } from "../services/AllToolType";
+import Loader from "../Loader/Loader";
 
 export default function AddToolType(props) {
   const setManager = props.setManager;
+
+  const [loader, setLoader] = useState(true);
 
   const [addtooltype, setAddtooltype] = useState({
     name: "",
@@ -22,6 +25,8 @@ export default function AddToolType(props) {
     //   setManager(<AllToolType setManager={setManager} />)
     // },3000);
 
+    setLoader(false);
+
     getAddToolType(addtooltype)
       .then((res) => {
         // localStorage.setItem("token", res?.accessToken)
@@ -32,11 +37,16 @@ export default function AddToolType(props) {
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+      }).finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   return (
     <div className="container my-5 pt-5 table shadow  bg-light rounded-7 aded">
+
+     {loader ? (
       <form>
         <div class="form-group row">
           <label for="inputName3" class="col-sm-2 col-form-label">
@@ -80,6 +90,10 @@ export default function AddToolType(props) {
           </div>
         </div>
       </form>
+
+      ) : (
+       <Loader />
+      )}
     </div>
   );
 }

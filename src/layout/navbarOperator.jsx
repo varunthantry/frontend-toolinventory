@@ -9,10 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 import SelectTools from "./SelectTools";
 import ToolRequestOperator from "./ToolRequestOperator";
 import { getUserMe } from "../services/LoginService";
+import Loader from "../Loader/Loader";
 
 export default function NavbarOperator(props) {
   let navigate = useNavigate();
   const setOperator = props.setOperator;
+
+  const [loader, setLoader] = useState(true);
 
   const [name, setName] = useState("Operator");
 
@@ -28,13 +31,19 @@ export default function NavbarOperator(props) {
   };
 
   useEffect(() => {
+
+    // setLoader(false);
     getUserMe()
       .then((res) => {
         setName(res?.name);
       })
       .catch((err) => {
         console.log("r", err);
-      });
+      })
+      // .finally(()=>{
+      //   setLoader(true);
+
+      // })
   });
 
   const changeStateRequest = () => {
@@ -47,6 +56,8 @@ export default function NavbarOperator(props) {
 
   return (
     <div class="container">
+
+{/* {loader ? ( */}
       <nav class=" navbar-expand-lg navbar-light bg-white fixed-top rounded-7 my-1 mx-1">
         <div class="container-fluid">
           <button
@@ -114,6 +125,10 @@ export default function NavbarOperator(props) {
           </div>
         </div>
       </nav>
+
+      {/* ) : (
+       <Loader />
+      )} */}
     </div>
   );
 }

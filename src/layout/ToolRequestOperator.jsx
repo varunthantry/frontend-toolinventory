@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import { getAllReturnTools, ReturnTools } from "../services/ToolRequestService";
 import { Modal, ModalBody, Col, Row, ModalHeader } from "reactstrap";
-import { ContactlessOutlined } from "@material-ui/icons";
+import Loader from "../Loader/Loader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function ToolRequestOperator() {
   // const data = getToolRequest();
 
   // const navigate = useNavigate();
+
+  const [loader, setLoader] = useState(true);
 
   const [modal, setmodal] = useState(false);
 
@@ -32,6 +37,8 @@ export default function ToolRequestOperator() {
   
 
   const loadReturnTools = () => {
+
+    setLoader(false);
     getAllReturnTools()
       .then((res) => {
         setData(res);
@@ -39,7 +46,11 @@ export default function ToolRequestOperator() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   const changeStateReturnTool = (idname, approvalid) => {
@@ -70,14 +81,20 @@ export default function ToolRequestOperator() {
   const onSumitReturnTools = () => {
     // console.log("hhhh", toolIdName);
     console.log(returntools)
+
+    setLoader(false);
     ReturnTools(returntools)
       .then((res) => {
-        
+        toast.info("Successfully Returned The Tools👍");
         console.log("Successfully Returned The Tools")
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
       setmodal(false);
   };
 
@@ -85,7 +102,12 @@ export default function ToolRequestOperator() {
 
   return (
     <div>
+
+
       <h3 class="heading pt-5 text-black">Return Tool</h3>
+
+      {loader ? (
+
       <div className="py-4 mx-5">
         <table className="table heading shadow bg-white rounded-7">
           <thead>
@@ -142,6 +164,10 @@ export default function ToolRequestOperator() {
         </table>
       </div>
 
+      ) : (
+       <Loader />
+      )}
+
       <Modal size="lg" isOpen={modal} toggle={() => setmodal(!modal)}>
         <ModalHeader toggle={() => setmodal(!modal)}>
           Enter No. of times Tool used
@@ -182,6 +208,7 @@ export default function ToolRequestOperator() {
             >
               <b class="navbutton">submit</b>
             </button>
+            <ToastContainer />
           {/* </form> */}
         </ModalBody>
       </Modal>

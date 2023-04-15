@@ -4,16 +4,21 @@ import "../modal/Modal.css";
 import { getAllApprovalRequest } from "../services/AllManagerApproval";
 // import Searchbar from './Searchbar';
 import SearchIcon from "@mui/icons-material/Search";
+import Loader from "../Loader/Loader";
 
 // const data = getAllManagerApproval();
 
 const ManagerApproval = () => {
   const [data, setData] = useState([]);
+
+  const [loginloader, setloginloader] = useState(true);
+
   useEffect(() => {
     loadApprovalRequest();
   }, []);
 
   const loadApprovalRequest = () => {
+    setloginloader(false);
     getAllApprovalRequest()
       .then((res) => {
         setData(res);
@@ -21,7 +26,9 @@ const ManagerApproval = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      }).finally(()=>{
+        setloginloader(true);
+      })
   };
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,6 +37,9 @@ const ManagerApproval = () => {
   return (
     // <Modal />
     <div>
+
+{loginloader ? (
+  <div>
       <div class="nav-link navi mx-1 my-4 text-black rounded-7">
         {/* <Searchbar /> */}
 
@@ -62,12 +72,12 @@ const ManagerApproval = () => {
                 <h5>Machine Name</h5>
               </th>
               <th scope="col">
-                <h5>Tool Name</h5>
+                <h5>Tool Name : Units</h5>
               </th>
 
-              <th scope="col">
+              {/* <th scope="col">
                 <h5>Units</h5>
-              </th>
+              </th> */}
               <th scope="col">
                 <h5>Request At</h5>
               </th>
@@ -82,6 +92,21 @@ const ManagerApproval = () => {
                 if (searchTerm === "" && Status === dat.status) {
                   return dat;
                 }
+                else if (
+                  dat.userName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) && Status === dat.status
+                ) {
+                  return dat;
+                }
+                else if (
+                  dat.machineName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) && Status === dat.status
+                ) {
+                  return dat;
+                }
+                
               })
               .map((dat, index) => (
                 <tr>
@@ -89,7 +114,7 @@ const ManagerApproval = () => {
                     <b>{index + 1}</b>
                   </th>
                   <td>
-                    <b>{}</b>
+                    <b>{dat.userName}</b>
                   </td>
 
                   <td>
@@ -98,11 +123,15 @@ const ManagerApproval = () => {
                   <td>
                     <b>{dat.machineName}</b>
                   </td>
-                  <td>
+                  {/* <td>
                     <b>{}</b>
-                  </td>
+                  </td> */}
                   <td>
-                    <b>{}</b>
+                    {Object.keys(dat?.toolTypeNameAndUnits).map((k) => (
+                      <b>
+                        {k + " : " + dat?.toolTypeNameAndUnits[k]} <br />
+                      </b>
+                    ))}
                   </td>
                   <td>
                     <b>{dat.requestAt}</b>
@@ -122,6 +151,11 @@ const ManagerApproval = () => {
           </tbody>
         </table>
       </div>
+      </div>
+
+      ) : (
+       <Loader />
+      )}
     </div>
   );
 };

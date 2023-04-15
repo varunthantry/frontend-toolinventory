@@ -55,14 +55,19 @@ import Cards from "./Cards";
 import { Grid } from "@mui/material";
 import { getMachines } from "../services/AllSelectTools";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 export default function SelectTools() {
   let navigate = useNavigate();
   // const data = getSelectTools();
 
+  const [loader, setLoader] = useState(true);
+
   const [data, setData] = useState([]);
   useEffect(() => {
     !localStorage.getItem("token") ? navigate("/") : navigate("/Operator");
+
+    setLoader(false);
     getMachines()
       .then((res) => {
         setData(res);
@@ -70,11 +75,17 @@ export default function SelectTools() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   }, []);
 
   return (
     <div>
+
+{loader ? (
       <Grid container spacing={4} className="car">
         {data.map((data, id) => (
           <Grid item xs={12} sm={6} md={4} key={data.id}>
@@ -89,6 +100,10 @@ export default function SelectTools() {
           </Grid>
         ))}
       </Grid>
+
+      ) : (
+       <Loader />
+      )}
     </div>
   );
 }

@@ -4,6 +4,9 @@ import { Modal, ModalBody, Col, Row } from "reactstrap";
 import { ModalHeader } from "reactstrap";
 import { getToolTypeused, RequestTool } from "../services/AllSelectTools";
 import Dropdown from "react-bootstrap/Dropdown";
+import Loader from "../Loader/Loader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Cards(props) {
   const machine_id = props.machine_id;
@@ -14,6 +17,8 @@ export default function Cards(props) {
   const available = props.available;
 
   // const [tooltypedropdown, setTooltypedropdown] = useState("Select Tools");
+
+  const [loader, setLoader] = useState(true);
 
   const [toolInput, setToolInput] = useState({});
 
@@ -61,6 +66,8 @@ export default function Cards(props) {
   };
 
   const ToolTypeused = (machine_id) => {
+
+    setLoader(false);
     getToolTypeused(machine_id)
       .then((res) => {
         setToolUsed(res);
@@ -68,7 +75,11 @@ export default function Cards(props) {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   // const onInputChange = (e) => {
@@ -79,14 +90,22 @@ export default function Cards(props) {
   const OnRequestTools = () => {
     // e.preventDefault();
 
+    setLoader(false);
+
     RequestTool(toolsrequest)
       .then((res) => {
+
+        toast.info("Successfully requested👍");
         console.log("Successfully requested");
         console.log(toolsrequest);
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   // const selectToolType = (id, name) => {
@@ -96,6 +115,8 @@ export default function Cards(props) {
 
   return (
     <div>
+
+  {loader ? (
       <div class="card">
         <img
           class="card-img-top"
@@ -127,6 +148,10 @@ export default function Cards(props) {
           </button>
         </div>
       </div>
+
+      ) : (
+       <Loader />
+      )}
 
       <Modal size="lg" isOpen={modal} toggle={() => setmodal(!modal)}>
         <ModalHeader toggle={() => setmodal(!modal)}>
@@ -208,9 +233,12 @@ export default function Cards(props) {
             >
               <b class="navbutton">submit</b>
             </button>
+            <ToastContainer />
           </form>
         </ModalBody>
       </Modal>
+
+      
     </div>
   );
 }

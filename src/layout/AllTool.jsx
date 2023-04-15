@@ -77,16 +77,21 @@ import { Grid } from "@mui/material";
 // import { getSelectTools } from "../services/AllSelectTools";
 import { getAllMachineSelect } from "../services/AllToolService";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 export default function SelectTools() {
   let navigate = useNavigate();
 
   //   const data = getSelectTools();
 
+  const [loginloader, setloginloader] = useState(true);
+
   const [datamachine, setDataMachine] = useState([]);
 
   useEffect(() => {
     !localStorage.getItem("token") ? navigate("/") : navigate("/Manager");
+
+    setloginloader(false);
     getAllMachineSelect()
       .then((res) => {
         setDataMachine(res);
@@ -94,11 +99,16 @@ export default function SelectTools() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      }).finally(()=>{
+        setloginloader(true);
+
+      })
   }, []);
 
   return (
     <div>
+
+{loginloader ? (
       <Grid container spacing={4} className="car">
         {datamachine.map((data, id) => (
           <Grid item xs={12} sm={6} md={4} key={data.id}>
@@ -113,6 +123,10 @@ export default function SelectTools() {
           </Grid>
         ))}
       </Grid>
+
+      ) : (
+       <Loader />
+      )}
     </div>
   );
 }

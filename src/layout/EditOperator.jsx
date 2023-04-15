@@ -12,6 +12,8 @@ export default function EditOperator(props) {
 
   //   const {id} = useParams();
 
+  const [loader, setLoader] = useState(true);
+
   const setManager = props.setManager;
   const id = props.id;
 
@@ -36,6 +38,8 @@ export default function EditOperator(props) {
     // setManager(<AllOperator setManager={setManager} />)
     // },3000);
 
+    setLoader(false);
+
     getEditOperator(editOperator, id)
       .then((res) => {
         // sessionStorage.setItem("token", res?.accessToken)
@@ -47,17 +51,29 @@ export default function EditOperator(props) {
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+        toast.info("Error Occured");
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   const loadOperator = () => {
+
+    setLoader(false);
     getOperatorDetails(id)
       .then((res) => {
         setEditOperator(res);
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+        toast.info("Error Occured");
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   return (
@@ -130,6 +146,7 @@ export default function EditOperator(props) {
             >
               <b>Cancel</b>
             </button>
+            <ToastContainer />
 
             <button
               type="submit"

@@ -4,12 +4,17 @@ import { Modal, ModalBody, Col, Row } from "reactstrap";
 import { ModalHeader } from "reactstrap";
 import { getAllToolTypeSelect, getAddTool } from "../services/AllToolService";
 import Dropdown from "react-bootstrap/Dropdown";
+import Loader from "../Loader/Loader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CardsManagerMachines(props) {
   const machine_id = props.machine_id;
   const machine_name = props.machine_name;
   const description = props.description;
   const available = props.available;
+
+  const [loader, setLoader] = useState(true);
 
   const [datatoolType, setDataToolType] = useState([]);
 
@@ -56,6 +61,8 @@ export default function CardsManagerMachines(props) {
   };
 
   const getToolType = (machine_id) => {
+
+    setLoader(false);
     getAllToolTypeSelect(machine_id)
       .then((res) => {
         setDataToolType(res);
@@ -63,7 +70,11 @@ export default function CardsManagerMachines(props) {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   const selectToolType = (name, id) => {
@@ -76,19 +87,28 @@ export default function CardsManagerMachines(props) {
     // console.log("toolInput", toolInput);
     // console.log(addTool);
 
+    setLoader(false);
+
     getAddTool(addTool)
       .then((res) => {
+        toast.info("Successfully add Tool");
         console.log("successfully add Tool");
         console.log(addTool);
       })
       .catch((err) => {
         console.log("erroor login", err);
         console.log(addTool);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   return (
     <div>
+
+{loader ? (
       <div class="card">
         <img
           class="card-img-top"
@@ -117,6 +137,10 @@ export default function CardsManagerMachines(props) {
           </button>
         </div>
       </div>
+
+      ) : (
+       <Loader />
+      )}
 
       <Modal size="lg" isOpen={modal} toggle={() => setmodal(!modal)}>
         <ModalHeader toggle={() => setmodal(!modal)}>Add Tool</ModalHeader>
@@ -197,6 +221,7 @@ export default function CardsManagerMachines(props) {
             >
               <b class="navbutton">submit</b>
             </button>
+            <ToastContainer />
           </form>
         </ModalBody>
       </Modal>

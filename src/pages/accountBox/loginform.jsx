@@ -96,7 +96,9 @@ export function LoginFormUser(props) {
         console.log("erroor login", err);
         toast.info("Login Error");
         navigate("/")
-      });
+      }).finally(() => {
+        setloginloader(true);
+      })
   };
 
   const [show, setShow] = useState(false);
@@ -124,17 +126,30 @@ export function LoginFormUser(props) {
                 value={login?.password}
                 onChange={(e) => onInputChange(e)}
               />
-              <label1 className="label" onClick={handleShow}>{show ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}</label1>
+              <label className="eyebutton" onClick={handleShow}>{show ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}</label>
             </FormContainer>
             <Marginer direction="vertical" margin={5} />
 
-            {/* <MutedLink href="#">Forget your password?</MutedLink> */}
+          
             <Marginer direction="vertical" margin="1.6em" />
             <SubmitButton type="button" onClick={notifyOperatorLogin}>
               Signin
             </SubmitButton>
             <ToastContainer />
             <Marginer direction="vertical" margin="1em" />
+
+
+            {/* <MutedLink href="#">
+        
+          <BoldLink href="#" onClick={switchToManager}>
+           Sign-in as Manager
+         </BoldLink> 
+
+            <BoldLink href="#" onClick={switchToAdmin}>
+           Sign-in as Admin
+         </BoldLink> 
+         </MutedLink> */}
+
           </BoxContainer>
         </form>
       ) : (

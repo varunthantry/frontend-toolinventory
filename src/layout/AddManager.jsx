@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAddManager } from "../services/AddManagerService";
+import Loader from "../Loader/Loader";
 
 export default function AddManager(props) {
   // const setAdmin = props.setAdmin;
   const setShowAdd = props.setShowAdd;
 
   let navigate = useNavigate();
+
+  const [loginloader, setloginloader] = useState(true);
 
   const [addManager, setAddManager] = useState({
     title: "",
@@ -44,9 +47,11 @@ export default function AddManager(props) {
     // setShowAdd(true);
     // },3000);
 
+    setloginloader(false);
+
     getAddManager(addManager)
       .then((res) => {
-        localStorage.setItem("token", res?.accessToken);
+        // localStorage.setItem("token", res?.accessToken);
         console.log("successfully add Manager");
         toast.info("New Manager Created 👍");
         navigate("/Admin");
@@ -54,11 +59,17 @@ export default function AddManager(props) {
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+      }).finally(()=>{
+        setloginloader(true);
+
+      })
   };
 
   return (
+
+    
     <div className="container my-4 pt-4 table shadow  bg-light rounded-7">
+    {loginloader ? (
       <form>
         <div class="form-group row">
           <label for="inputId3" class="col-sm-2 col-form-label">
@@ -123,7 +134,7 @@ export default function AddManager(props) {
           </label>
           <div class="col-sm-10">
             <input
-              type="password"
+              type="text"
               class="form-control"
               id="inputPassword3"
               placeholder="Phone No."
@@ -155,6 +166,10 @@ export default function AddManager(props) {
           </div>
         </div>
       </form>
+      
+      ) : (
+       <Loader />
+      )}
     </div>
   );
 }

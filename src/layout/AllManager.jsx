@@ -2,17 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { getAllManager, getDeleteManager } from "../services/UserService";
+import Loader from "../Loader/Loader";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
-export default function AllManager(props) {
+export default function AllManager() {
   let navigate = useNavigate;
   // const setAdmin = props.setAdmin;
 
   // const data = getAllManager();
 
+  const [loader, setLoader] = useState(true);
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    !localStorage.getItem("token") ? navigate("/") : navigate("/Admin");
+    // !localStorage.getItem("token") ? navigate("/") : navigate("/Admin");
+     
+    loadManager();
+  }, []);
+
+  const loadManager = () => {
+
+    setLoader(false);
     getAllManager()
       .then((res) => {
         setData(res);
@@ -20,18 +32,27 @@ export default function AllManager(props) {
       })
       .catch((err) => {
         console.log(err);
-      });
-  }, []);
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
+  } 
 
   const deleteManager = (id) => {
+    setLoader(false);
     getDeleteManager(id)
       .then((res) => {
         console.log("successfully Deleted Manager");
         navigate("/Admin");
+        loadManager();
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+      }).finally(()=>{
+        setLoader(true);
+        loadManager();
+      })
   };
 
   const Role = "MANAGER";
@@ -39,28 +60,27 @@ export default function AllManager(props) {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
+   
+   
     <div>
-      {/* <div>
-            <button class="ml-2 btn btn-danger btn-sm pt-4 mt-5 mx-5" 
-            onClick={() => setAdmin(<AddManager setAdmin={setAdmin} />)}>
-                <b>Add New Manager</b>
-            </button>
 
-        </div> */}
+    {loader ? (
+     
 
-      <div class="nav-link navi mx-1 my-4 text-black rounded-7">
-        {/* <Searchbar /> */}
+        <div>
 
-        <input
-          type="text"
-          placeholder="Search...."
-          class="rounded-7"
-          onChange={(event) => {
-            setSearchTerm(event.target.value);
-          }}
-        />
-        <SearchIcon />
-      </div>
+        <div class="nav-link navi mx-1 my-4 text-black rounded-7">
+        
+          <input
+            type="text"
+            placeholder="Search...."
+            class="rounded-7"
+            onChange={(event) => {
+              setSearchTerm(event.target.value);
+            }}
+          />
+          <SearchIcon />
+        </div>
 
       <h3 class="heading pt-3 text-black">Managers</h3>
       <div className="py-4 mx-5">
@@ -76,7 +96,7 @@ export default function AllManager(props) {
               <th scope="col">
                 <h5>Username</h5>
               </th>
-              {/* <th scope="col"><h3>Password</h3></th> */}
+           
               <th scope="col">
                 <h5>Action</h5>
               </th>
@@ -115,18 +135,11 @@ export default function AllManager(props) {
                   <td>
                     <b>{dat.email}</b>
                   </td>
-                  {/* <td><b>{dat.password}</b></td> */}
-
+                 
                   <td>
-                    {/* <Link className='btn btn-outline-primary mx-2'
-                                        to={`/edituser/${user.id}`}
-                                        >Edit</Link>
-                                        <button className='btn btn-danger mx-2'
-                                        onClick={()=>deleteUser(user.id)}>Delete</button> */}
 
                     <Link
                       className="btn btn-outline-primary mx-2"
-                      // to="" onClick={() => {setAdd(<EditManager />)}}
                       to={`/editManager?id=${dat?.id}`}
                     >
                       Edit
@@ -143,6 +156,12 @@ export default function AllManager(props) {
           </tbody>
         </table>
       </div>
+      </div>
+
+      ) : (
+       <Loader />
+      )}
     </div>
+    
   );
 }

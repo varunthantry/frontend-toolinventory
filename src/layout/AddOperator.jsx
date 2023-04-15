@@ -4,9 +4,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../pages/css/style.css";
 import { getAddOperator } from "../services/AddOperatorService";
+import Loader from "../Loader/Loader";
 
 export default function AddOperator(props) {
   const setManager = props.setManager;
+
+  const [loader, setLoader] = useState(true);
 
   const [addOperator, setAddOperator] = useState({
     title: "",
@@ -29,6 +32,8 @@ export default function AddOperator(props) {
     //   setManager(<AllOperator setManager={setManager} />)
     // },3000);
 
+    setLoader(false);
+
     getAddOperator(addOperator)
       .then((res) => {
         localStorage.setItem("token", res?.accessToken);
@@ -39,11 +44,17 @@ export default function AddOperator(props) {
       })
       .catch((err) => {
         console.log("erroor login", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
   };
 
   return (
     <div className="container my-5 pt-5 table shadow  bg-light rounded-7 aded">
+
+{loader ? (
       <form>
         <div class="form-group row">
           <label for="inputId3" class="col-sm-2 col-form-label">
@@ -142,6 +153,10 @@ export default function AddOperator(props) {
           </div>
         </div>
       </form>
+
+      ) : (
+       <Loader />
+      )}
     </div>
   );
 }
