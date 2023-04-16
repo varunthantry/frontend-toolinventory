@@ -113,15 +113,18 @@ const Myapproval = (props) => {
           ))}
         </p>
 
+            
+        
+        
+        <button className="modal-btn" onClick={() => RejectRequest(data.id)}>
+          Decline
+        </button>
+
         <button
           className="mx-2 modal-btn"
           onClick={() => ApproveRequest(data.id)}
         >
           Accept
-        </button>
-        <ToastContainer />
-        <button className="modal-btn" onClick={() => RejectRequest(data.id)}>
-          Decline
         </button>
         <ToastContainer />
       </div>

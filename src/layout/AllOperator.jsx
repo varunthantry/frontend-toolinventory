@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAllOperator, getDeleteOperator } from "../services/OperatorService";
 import SearchIcon from "@mui/icons-material/Search";
+import "./css/button.css"
 
 import AddOperator from "./AddOperator";
 import EditOperator from "./EditOperator";
@@ -156,16 +157,16 @@ export default function AllOperator(props) {
                                         <button className='btn btn-danger mx-2'
                                         onClick={()=>deleteUser(user.id)}>Delete</button> */}
 
-                        <Link
-                          className="btn btn-outline-primary mx-2"
+                        <button
+                          className="btn btn-outline-primary mx-2 blue-button"
                           onClick={() =>
                             setManager(
                               <EditOperator setManager={setManager} id={dat.id} />
                             )
                           }
                         >
-                          Edit
-                        </Link>
+                          <b className="blue-button-name">Edit</b>
+                        </button>
 
                         <button
                           className="btn btn-danger mx-2"

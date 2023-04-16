@@ -5,6 +5,7 @@ import { Modal, ModalBody, Col, Row, ModalHeader } from "reactstrap";
 import Loader from "../Loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./css/button.css"
 
 
 export default function ToolRequestOperator() {
@@ -112,16 +113,18 @@ export default function ToolRequestOperator() {
         <table className="table heading shadow bg-white rounded-7">
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">
-                <h3>Machine Name</h3>
+                <h5>S No.</h5>
               </th>
               <th scope="col">
-                <h3>Tool Name : Units</h3>
+                <h5>Machine Name</h5>
+              </th>
+              <th scope="col">
+                <h5>Tool Name : Units</h5>
               </th>
 
               <th scope="col">
-                <h3>Return Requests</h3>
+                <h5>Return Requests</h5>
               </th>
             </tr>
           </thead>
@@ -152,10 +155,10 @@ export default function ToolRequestOperator() {
 
                   <td>
                     <button
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-outline-primary mx-2 blue-button"
                       onClick={() => {changeStateReturnTool(dat?.toolIdAndName, dat?.id)}}
                     >
-                      Return
+                      <b className="blue-button-name">Return</b>
                     </button>
                   </td>
                 </tr>

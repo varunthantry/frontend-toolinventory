@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { getAllManager, getDeleteManager } from "../services/UserService";
 import Loader from "../Loader/Loader";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+import "./css/button.css"
 
 export default function AllManager() {
   let navigate = useNavigate;
@@ -139,10 +138,10 @@ export default function AllManager() {
                   <td>
 
                     <Link
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-outline-primary mx-2 blue-button"
                       to={`/editManager?id=${dat?.id}`}
                     >
-                      Edit
+                      <b className="blue-button-name">Edit</b>
                     </Link>
                     <button
                       className="btn btn-danger mx-2"
