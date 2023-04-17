@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { getLedgerDetails } from "../services/LedgerService";
+import { getLedgerDetails, getSearchLedger } from "../services/LedgerService";
 import SearchIcon from "@mui/icons-material/Search";
 import Loader from "../Loader/Loader";
 
 export default function Ledger() {
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
 
   const [loader, setLoader] = useState(true);
   //   const data = getLedgerDetails();
 
   const [data, setData] = useState([]);
+  const [values, setvalues] = useState("")
+ 
   useEffect(() => {
 
     setLoader(false);
@@ -27,6 +29,31 @@ export default function Ledger() {
       })
   }, []);
 
+  useEffect(()=>{
+    search(values)
+  }, [values])
+
+
+  const search = (query) => {
+    console.log("ffff", query)
+
+    // setvalues(e.target.value)
+    setLoader(false);
+
+    getSearchLedger(query)
+    .then((res) => {
+      setData(res);
+      console.log("qqqq",res);
+    })
+    .catch((err) => {
+      console.log("eee", err);
+    })
+    .finally(()=>{
+      setLoader(true);
+      // e.focus();
+    })
+  }
+
   return (
     <div>
 
@@ -36,11 +63,18 @@ export default function Ledger() {
             {/* <Searchbar /> */}
 
             <input
+            key="search-field"
               type="text"
               placeholder="Search...."
               class="rounded-7"
-              onChange={(event) => {
-                setSearchTerm(event.target.value);
+              autoFocus="true"
+              // onChange={(event) => {
+              //   setSearchTerm(event.target.value);
+              // }}
+              value = {values}
+              onChange={(e) => {
+                
+                setvalues(e.target.value)
               }}
             />
             <SearchIcon />
@@ -86,28 +120,6 @@ export default function Ledger() {
 
               <tbody>
                 {data
-                  .filter((dat) => {
-                    if (searchTerm === "") {
-                      return dat;
-                    } else if (
-                      dat.userName.toLowerCase().includes(searchTerm.toLowerCase())
-                    ) {
-                      return dat;
-                    } else if (
-                      dat.machineName.toLowerCase().includes(searchTerm.toLowerCase())
-                    ) {
-                      return dat;
-                    }  else if (
-                      dat.showUserId.toLowerCase().includes(searchTerm.toLowerCase())
-                    ) {
-                      return dat;
-                    }
-                    else if (
-                      String(dat.isInUse).toLowerCase().includes(searchTerm.toLowerCase())
-                    ) {
-                      return dat;
-                    }
-                  })
                   .map((dat, index) => (
                     <tr>
                     <td>

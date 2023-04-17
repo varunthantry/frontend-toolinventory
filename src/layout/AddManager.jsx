@@ -54,8 +54,9 @@ export default function AddManager(props) {
         // localStorage.setItem("token", res?.accessToken);
         console.log("successfully add Manager");
         toast.info("New Manager Created 👍");
-        navigate("/Admin");
+        
         setShowAdd(true);
+        // navigate("/Admin");
       })
       .catch((err) => {
         console.log("erroor login", err);
@@ -63,6 +64,8 @@ export default function AddManager(props) {
         setloginloader(true);
 
       })
+      navigate("/Admin");
+      window.location.reload();
   };
 
   return (

@@ -36,7 +36,7 @@ export default function AddOperator(props) {
 
     getAddOperator(addOperator)
       .then((res) => {
-        localStorage.setItem("token", res?.accessToken);
+        // localStorage.setItem("token", res?.accessToken);
         toast.info("New Operator Created 👍");
         console.log("successfully add Operator");
 

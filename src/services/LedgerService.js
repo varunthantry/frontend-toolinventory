@@ -53,3 +53,13 @@ export const getLedgerDetails = async () => {
   return await Promise.reject(err);
   }
  };
+
+ export const getSearchLedger = async (query) => {
+  try {
+  const response = await apiHelper.get(`/toolLedger?q=${query}`);
+  return await Promise.resolve(response.data);
+  } catch (err) {
+  console.log("error while running", err);
+  return await Promise.reject(err);
+  }
+ };
