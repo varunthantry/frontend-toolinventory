@@ -8,6 +8,7 @@ import {
 import Loader from "../Loader/Loader";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 // const Myapproval = ({closeApproval}) => {
 //     useEffect(()=>{
@@ -48,7 +49,7 @@ const Myapproval = (props) => {
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    console.log(data);
+    console.log("MODAL",data);
     document.body.style.overflowY = "hidden";
     return () => {
       document.body.style.overflowY = "scroll";
@@ -102,7 +103,15 @@ const Myapproval = (props) => {
     <div>
       <div className="modal-wrapper" onClick={props.closeApproval}></div>
       <div className="modal-container">
-        <h2>{data.userName}</h2>
+
+      
+      <Link class="rr text-black " data-dismiss="modal" onClick={props.closeApproval}><span aria-hidden="true">&times;</span></Link>
+      {/* <button type="button" class="btn-close btn-sm rr " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> */}
+        <h4><b>{data.userName}</b></h4> 
+        
+        
         <p>
          
           Operator {data.userName} is asking for <br />

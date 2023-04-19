@@ -6,6 +6,7 @@ import Loader from "../Loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./css/button.css"
+import { getUserMe } from "../services/LoginService";
 
 
 export default function ToolRequestOperator() {
@@ -21,6 +22,8 @@ export default function ToolRequestOperator() {
 
   const [toolUsedtimes, setToolUsedtimes] = useState({})
 
+  const [userid, setUserId] = useState("");
+
   // const [ledgerid, setToolLedgerId] = useState();
 
   const [returntools,setReturnTools] = useState({
@@ -33,8 +36,26 @@ export default function ToolRequestOperator() {
     // console.log(ledgerid)
     // setReturnTools({...returntools,["toolLedgerId"]: ledgerid})
     loadReturnTools();
+    userDetails();
+
   }, []);
 
+  const userDetails = () => {
+    setLoader(false);
+    getUserMe()
+      .then((res) => {
+        setUserId(res?.id)
+        // console.log("llll",res);
+        // console.log("jjj",userid)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
+  }
   
 
   const loadReturnTools = () => {
@@ -94,7 +115,8 @@ export default function ToolRequestOperator() {
       })
       .finally(()=>{
         setLoader(true);
-
+        loadReturnTools();
+        window.location.reload();
       })
       setmodal(false);
   };
@@ -131,7 +153,7 @@ export default function ToolRequestOperator() {
           <tbody>
             {data
               .filter((dat) => {
-                if (Status === dat.status) {
+                if (Status === dat.status && userid === dat?.userId) {
                   return dat;
                 }
               })

@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import NavbarOperator from "../layout/navbarOperator";
 import ToolRequestOperator from "../layout/ToolRequestOperator";
 import "./css/style.css";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 export default function Operator() {
   let navigate = useNavigate();
+
+ 
+
   useEffect(() => {
     !localStorage.getItem("token") ? navigate("/") : navigate("/Operator");
   }, []);

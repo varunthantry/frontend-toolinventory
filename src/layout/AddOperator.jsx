@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../pages/css/style.css";
 import { getAddOperator } from "../services/AddOperatorService";
 import Loader from "../Loader/Loader";
+import Dropdown from "react-bootstrap/Dropdown";
 
 export default function AddOperator(props) {
   const setManager = props.setManager;
@@ -24,6 +25,8 @@ export default function AddOperator(props) {
 
   const onInputChange = (e) => {
     setAddOperator({ ...addOperator, [e.target.name]: e.target.value });
+
+    console.log(addOperator)
   };
 
   const AddOperator = () => {
@@ -51,6 +54,66 @@ export default function AddOperator(props) {
       })
   };
 
+
+  const [emailinput, setEmailInput] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+
+  const changeEmail = (e) => {
+      setEmailInput(e.target.value)
+     
+      emailValidation()
+  }
+
+  const emailValidation = () => {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (regEx.test(emailinput)) {
+      setEmailMessage("Email is Valid");
+
+      setEmailMessage("");
+    } else if (!regEx.test(emailinput) && emailinput !== "") {
+      setEmailMessage("Email is Not Valid");
+    } else {
+      setEmailMessage("");
+    }
+  }
+
+  const [mobile, setmobile] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
+
+  const changePhone = (e) => {
+    setmobile(e.target.value);
+    phoneValidation()
+  }
+
+  const phoneValidation = () => {
+    const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
+    
+ 
+    if (PHONE_REGEX.test(mobile) && mobile.length === 9) {
+      setPhoneMessage("Phone no. is Valid");
+
+      setPhoneMessage("");
+    } else if(!PHONE_REGEX.test(mobile) && mobile !== "") {
+      setPhoneMessage("Invalid phone number.");
+    }
+    else if(PHONE_REGEX.test(mobile) && mobile.length > 9) {
+      setPhoneMessage("Invalid phone number. More Than 10 digits");
+    }
+    else if(PHONE_REGEX.test(mobile) && mobile.length < 9) {
+      setPhoneMessage("Invalid phone number. Less Than 10 digits");
+    }
+    else {
+      setPhoneMessage("");
+    }
+  }
+
+  const [titledrop, setTitledrop] = useState("Select Title");
+
+  const titledropdown = (name) => {
+    setAddOperator({ ...addOperator, ["title"]: name })
+    console.log(addOperator)
+  }
+
   return (
     <div className="container my-5 pt-5 table shadow  bg-light rounded-7 aded">
 
@@ -63,7 +126,7 @@ export default function AddOperator(props) {
             </h6>
           </label>
           <div class="col-sm-10">
-            <input
+            {/* <input
               type="id"
               class="form-control"
               id="inputId3"
@@ -71,7 +134,55 @@ export default function AddOperator(props) {
               name="title"
               value={addOperator?.title}
               onChange={(e) => onInputChange(e)}
-            />
+            /> */}
+
+            <Dropdown className="d-inline">
+                    <Dropdown.Toggle id="">
+                    {titledrop}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      
+                        <Dropdown.Item
+                          href="#"
+                          value="Mr"
+                          name="title"
+                          onClick={() =>{ 
+                          setTitledrop("Mr")
+                          ; titledropdown("Mr")
+                          }}
+                        >
+                         Mr
+                        </Dropdown.Item>
+
+                        <Dropdown.Item
+                          href="#"
+                          value="Mrs"
+                          name="title"
+                          onClick={() =>{ 
+                          setTitledrop("Mrs")
+                          ; titledropdown("Mrs")
+                          
+                          }}
+                        >
+                         Mrs
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          href="#"
+                          value="Ms"
+                          name="title"
+                          onClick={() =>{ 
+                          setTitledrop("Ms")
+                          ; titledropdown("Ms")
+                          }}
+                        >
+                         Ms
+                        </Dropdown.Item>
+                    
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+            
           </div>
         </div>
         <div class="form-group row">
@@ -107,8 +218,9 @@ export default function AddOperator(props) {
               placeholder="Username"
               name="email"
               value={addOperator?.email}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => {onInputChange(e); changeEmail(e)}}
             />
+            <o class="text-danger">{emailMessage}</o>
           </div>
         </div>
         <div class="form-group row">
@@ -119,14 +231,15 @@ export default function AddOperator(props) {
           </label>
           <div class="col-sm-10">
             <input
-              type="text"
+              type="tel"
               class="form-control"
-              id="inputPassword3"
+              id="phone"
               placeholder="Phone No."
               name="phoneNumber"
               value={addOperator?.phoneNumber}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => {onInputChange(e);changePhone(e)}}
             />
+             <o class="text-danger">{phoneMessage}</o>
           </div>
         </div>
 

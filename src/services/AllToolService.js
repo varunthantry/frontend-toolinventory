@@ -35,9 +35,20 @@ export const getAllMachineSelect = async () => {
   }
 };
 
-export const getAllToolTypeSelect = async (id) => {
+export const getAllToolTypeMachine = async (id) => {
   try {
     const response = await apiHelper.get(`/machines/${id}/available-toolTypes`);
+    return await Promise.resolve(response.data);
+  } catch (err) {
+    console.log("error while running", err);
+    return await Promise.reject(err);
+  }
+};
+
+
+export const getAllToolTypeSelect = async () => {
+  try {
+    const response = await apiHelper.get(`/toolTypes`);
     return await Promise.resolve(response.data);
   } catch (err) {
     console.log("error while running", err);

@@ -15,9 +15,11 @@ export default function NavbarOperator(props) {
   let navigate = useNavigate();
   const setOperator = props.setOperator;
 
-  const [loader, setLoader] = useState(true);
+  // const [loader, setLoader] = useState(true);
 
   const [name, setName] = useState("Operator");
+
+  // const []
 
   const notifyLogoutAdmin = () => {
     // toast("Logged Out Successfully 👍");

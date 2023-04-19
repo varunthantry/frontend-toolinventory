@@ -20,6 +20,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "../css/login.css"
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import Loader from "../../Loader/Loader";
 
 export function LoginFormUser(props) {
   const [loginloader, setloginloader] = useState(true);
@@ -106,6 +107,28 @@ export function LoginFormUser(props) {
     setShow(!show);
   };
 
+  const [emailinput, setEmailInput] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+
+  const changeEmail = (e) => {
+      setEmailInput(e.target.value)
+     
+      emailValidation()
+  }
+
+  const emailValidation = () => {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (regEx.test(emailinput)) {
+      setEmailMessage("Email is Valid");
+
+      setEmailMessage("");
+    } else if (!regEx.test(emailinput) && emailinput !== "") {
+      setEmailMessage("Email is Not Valid");
+    } else {
+      setEmailMessage("");
+    }
+  }
+
   return (
     <div>
       {loginloader ? (
@@ -117,8 +140,9 @@ export function LoginFormUser(props) {
                 name="username"
                 placeholder="Username"
                 value={login?.username}
-                onChange={(e) => onInputChange(e)}
+                onChange={(e) => {onInputChange(e); changeEmail(e)}}
               />
+              
               <Input
                 type={show ? "text" : "password"}
                 name="password"
@@ -127,6 +151,7 @@ export function LoginFormUser(props) {
                 onChange={(e) => onInputChange(e)}
               />
               <label className="eyebutton" onClick={handleShow}>{show ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}</label>
+              <o class="text-danger emailerror">{emailMessage}</o>
             </FormContainer>
             <Marginer direction="vertical" margin={5} />
 
@@ -153,12 +178,7 @@ export function LoginFormUser(props) {
           </BoxContainer>
         </form>
       ) : (
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+        <Loader />
       )}
     </div>
 

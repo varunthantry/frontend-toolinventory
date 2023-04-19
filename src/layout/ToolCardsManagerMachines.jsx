@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./css/cards.css";
 import { Modal, ModalBody, Col, Row } from "reactstrap";
 import { ModalHeader } from "reactstrap";
-import { getAllToolTypeSelect, getAddTool } from "../services/AllToolService";
+import { getAllToolTypeMachine, getAddTool, getAllToolTypeSelect } from "../services/AllToolService";
 import Dropdown from "react-bootstrap/Dropdown";
 import Loader from "../Loader/Loader";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,6 +17,8 @@ export default function CardsManagerMachines(props) {
   const [loader, setLoader] = useState(true);
 
   const [datatoolType, setDataToolType] = useState([]);
+
+  const [dropdownselecttools, setDropDownSelectTools] = useState([])
 
   const [toolInput, setToolInput] = useState({});
   const [addTool, setAddTool] = useState({
@@ -57,13 +59,30 @@ export default function CardsManagerMachines(props) {
   const changeStateAdd = () => {
     setmodal(true);
 
-    getToolType(machine_id);
+    // getToolType(machine_id);
+    dropdowntoolselect();
   };
+
+  const dropdowntoolselect = () => {
+    setLoader(false);
+    getAllToolTypeSelect()
+      .then((res) => {
+        setDropDownSelectTools(res);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(()=>{
+        setLoader(true);
+
+      })
+  }
 
   const getToolType = (machine_id) => {
 
     setLoader(false);
-    getAllToolTypeSelect(machine_id)
+    getAllToolTypeMachine(machine_id)
       .then((res) => {
         setDataToolType(res);
         console.log(res);
@@ -179,7 +198,7 @@ export default function CardsManagerMachines(props) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      {datatoolType.map((dat, index) => (
+                      {dropdownselecttools.map((dat, index) => (
                         <Dropdown.Item
                           href="#"
                           value={dat?.id}

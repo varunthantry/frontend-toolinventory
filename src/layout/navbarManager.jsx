@@ -98,8 +98,9 @@ export default function NavbarManager(props) {
 
   const notifyLogoutManager = () => {
     localStorage.clear();
-    toast.info("Logged Out");
     navigate("/");
+    toast.info("Logged Out");
+    
     
   };
 
@@ -117,7 +118,7 @@ export default function NavbarManager(props) {
       //   setLoader(true);
 
       // })
-  });
+  },[]);
 
   return (
     <div class="container">

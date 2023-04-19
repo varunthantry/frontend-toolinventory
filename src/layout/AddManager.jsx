@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAddManager } from "../services/AddManagerService";
 import Loader from "../Loader/Loader";
+import Dropdown from "react-bootstrap/Dropdown";
 
 export default function AddManager(props) {
   // const setAdmin = props.setAdmin;
@@ -28,6 +29,9 @@ export default function AddManager(props) {
 
   const onInputChange = (e) => {
     setAddManager({ ...addManager, [e.target.name]: e.target.value });
+
+    console.log(addManager)
+
   };
 
   const changestateCancel = () => {
@@ -68,6 +72,66 @@ export default function AddManager(props) {
       window.location.reload();
   };
 
+  const [emailinput, setEmailInput] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+
+  const changeEmail = (e) => {
+      setEmailInput(e.target.value)
+     
+      emailValidation()
+  }
+
+  const emailValidation = () => {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (regEx.test(emailinput)) {
+      setEmailMessage("Email is Valid");
+
+      setEmailMessage("");
+    } else if (!regEx.test(emailinput) && emailinput !== "") {
+      setEmailMessage("Email is Not Valid");
+    } else {
+      setEmailMessage("");
+    }
+  }
+
+  const [mobile, setmobile] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
+
+  const changephone = (e) => {
+    setmobile(e.target.value);
+    phoneValidation()
+  }
+
+  const phoneValidation = () => {
+    const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
+    
+ 
+    if (PHONE_REGEX.test(mobile) && mobile.length === 9) {
+      setPhoneMessage("Phone no. is Valid");
+
+      setPhoneMessage("");
+    } else if(!PHONE_REGEX.test(mobile) && mobile !== "") {
+      setPhoneMessage("Invalid phone number.");
+    }
+    else if(PHONE_REGEX.test(mobile) && mobile.length > 9) {
+      setPhoneMessage("Invalid phone number. More Than 10 digits");
+    }
+    else if(PHONE_REGEX.test(mobile) && mobile.length < 9) {
+      setPhoneMessage("Invalid phone number. Less Than 10 digits");
+    }
+    else {
+      setPhoneMessage("");
+    }
+  }
+
+  const [titledrop, setTitledrop] = useState("Select Title");
+
+  const titledropdown = (name) => {
+    setAddManager({ ...addManager, ["title"]: name })
+    console.log(addManager)
+  }
+
+
   return (
 
     
@@ -81,7 +145,7 @@ export default function AddManager(props) {
             </h6>
           </label>
           <div class="col-sm-10">
-            <input
+            {/* <input
               type="id"
               class="form-control"
               id="inputId3"
@@ -89,7 +153,54 @@ export default function AddManager(props) {
               name="title"
               value={addManager?.title}
               onChange={(e) => onInputChange(e)}
-            />
+            /> */}
+
+
+            <Dropdown className="d-inline">
+                    <Dropdown.Toggle id="">
+                    {titledrop}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      
+                        <Dropdown.Item
+                          href="#"
+                          value="Mr"
+                          name="title"
+                          onClick={() =>{ 
+                          setTitledrop("Mr")
+                          ; titledropdown("Mr")
+                          }}
+                        >
+                         Mr
+                        </Dropdown.Item>
+
+                        <Dropdown.Item
+                          href="#"
+                          value="Mrs"
+                          name="title"
+                          onClick={() =>{ 
+                          setTitledrop("Mrs")
+                          ; titledropdown("Mrs")
+                          
+                          }}
+                        >
+                         Mrs
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          href="#"
+                          value="Ms"
+                          name="title"
+                          onClick={() =>{ 
+                          setTitledrop("Ms")
+                          ; titledropdown("Ms")
+                          }}
+                        >
+                         Ms
+                        </Dropdown.Item>
+                    
+                    </Dropdown.Menu>
+                  </Dropdown>
           </div>
         </div>
         <div class="form-group row">
@@ -107,6 +218,7 @@ export default function AddManager(props) {
               name="name"
               value={addManager?.name}
               onChange={(e) => onInputChange(e)}
+              // required
             />
           </div>
         </div>
@@ -125,8 +237,10 @@ export default function AddManager(props) {
               placeholder="Email"
               name="email"
               value={addManager?.email}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => {onInputChange(e);changeEmail(e)}}
+              // required
             />
+           <o class="text-danger">{emailMessage}</o>
           </div>
         </div>
         <div class="form-group row">
@@ -137,14 +251,17 @@ export default function AddManager(props) {
           </label>
           <div class="col-sm-10">
             <input
-              type="text"
+              type="tel"
               class="form-control"
-              id="inputPassword3"
+              id="phone"
               placeholder="Phone No."
               name="phoneNumber"
               value={addManager?.phoneNumber}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => {onInputChange(e); changephone(e)}}
+
+              // required
             />
+            <o class="text-danger">{phoneMessage}</o>
           </div>
         </div>
 
