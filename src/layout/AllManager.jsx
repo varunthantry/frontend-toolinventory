@@ -90,6 +90,9 @@ export default function AllManager() {
                 <h5>S No.</h5>
               </th>
               <th scope="col">
+                <h5>Title</h5>
+              </th>
+              <th scope="col">
                 <h5>Manager Name</h5>
               </th>
               <th scope="col">
@@ -106,7 +109,13 @@ export default function AllManager() {
               .filter((dat) => {
                 if (searchTerm === "" && Role === dat.role) {
                   return dat;
-                } else if (
+                }else if (
+                  dat.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                  Role === dat.role
+                ) {
+                  return dat;
+                }
+                 else if (
                   dat.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
                   Role === dat.role
                 ) {
@@ -128,6 +137,9 @@ export default function AllManager() {
                   <th scope="row" key={index}>
                     <b>{index + 1}</b>
                   </th>
+                  <td>
+                    <b>{dat.title}</b>
+                  </td>
                   <td>
                     <b>{dat.name}</b>
                   </td>

@@ -123,7 +123,13 @@ export default function AllOperator(props) {
                   .filter((dat) => {
                     if (searchTerm === "" && Role === dat.role) {
                       return dat;
-                    } else if (
+                    }
+                    else if (
+                  dat.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                  Role === dat.role
+                ) {
+                  return dat;
+                } else if (
                       dat.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
                       Role === dat.role
                     ) {
