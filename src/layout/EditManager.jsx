@@ -66,6 +66,58 @@ export default function EditManager() {
       })
   };
 
+  const [emailinput, setEmailInput] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+
+  const changeEmail = (e) => {
+      setEmailInput(e.target.value)
+     
+      emailValidation()
+  }
+
+  const emailValidation = () => {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (regEx.test(emailinput)) {
+      setEmailMessage("Email is Valid");
+
+      setEmailMessage("");
+    } else if (!regEx.test(emailinput) && emailinput !== "") {
+      setEmailMessage("Email is Not Valid");
+    } else {
+      setEmailMessage("");
+    }
+  }
+
+  const [mobile, setmobile] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
+
+  const changephone = (e) => {
+    setmobile(e.target.value);
+    phoneValidation()
+  }
+
+  const phoneValidation = () => {
+    const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
+    
+ 
+    if (PHONE_REGEX.test(mobile) && mobile.length === 9) {
+      setPhoneMessage("Phone no. is Valid");
+
+      setPhoneMessage("");
+    } else if(!PHONE_REGEX.test(mobile) && mobile !== "") {
+      setPhoneMessage("Invalid phone number.");
+    }
+    else if(PHONE_REGEX.test(mobile) && mobile.length > 9) {
+      setPhoneMessage("Invalid phone number. More Than 10 digits");
+    }
+    else if(PHONE_REGEX.test(mobile) && mobile.length < 9) {
+      setPhoneMessage("Invalid phone number. Less Than 10 digits");
+    }
+    else {
+      setPhoneMessage("");
+    }
+  }
+
   return (
     <div>
 
@@ -127,8 +179,30 @@ export default function EditManager() {
                 placeholder="Username"
                 name="email"
                 value={editManager?.email}
-                onChange={(e) => onInputChange(e)}
+                onChange={(e) => {onInputChange(e); changeEmail(e)}}
               />
+              <o class="text-danger">{emailMessage}</o>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">
+              <h6 class="text-black">
+                <b>Phone No.</b>
+              </h6>
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="tel"
+                class="form-control"
+                id="inputUsername3"
+                placeholder="Phone No."
+                name="phoneNumber"
+                value={editManager?.phoneNumber}
+                onChange={(e) => {onInputChange(e); changephone(e)}}
+              />
+
+              <o class="text-danger">{phoneMessage}</o>
             </div>
           </div>
           
