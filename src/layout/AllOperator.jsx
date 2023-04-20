@@ -112,6 +112,9 @@ export default function AllOperator(props) {
                   <th scope="col">
                     <h5>Username</h5>
                   </th>
+                  <th scope="col">
+                    <h5>Phone No.</h5>
+                  </th>
 
                   <th scope="col">
                     <h5>Action</h5>
@@ -154,6 +157,10 @@ export default function AllOperator(props) {
                       </td>
                       <td>
                         <b>{dat.email}</b>
+                      </td>
+
+                      <td>
+                        <b>{dat.phoneNumber}</b>
                       </td>
 
                       <td>
