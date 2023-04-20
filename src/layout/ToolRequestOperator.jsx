@@ -211,7 +211,7 @@ export default function ToolRequestOperator() {
                     </label>
                     <div class="col-sm-10">
                       <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         placeholder=""
                         name={k}

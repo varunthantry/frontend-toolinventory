@@ -55,55 +55,72 @@ export default function AddOperator(props) {
   };
 
 
+  const [nameinput, setNameInput] = useState("")
+  const [nameMessage, setNameMessage] = useState("")
+
+  const NameValidation = (e) => {
+    setNameInput(e.target.value)
+
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    if (nameRegex.test(nameinput)) {
+      setNameMessage("");
+      setEnablesubmit(false)
+     
+    } else if(!nameRegex.test(nameinput) || nameinput === ""){
+      setNameMessage("Name is Not Valid. Use only space and alphabets");
+      setEnablesubmit(true)
+    } 
+  }
+  
+
+
   const [emailinput, setEmailInput] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
-  const changeEmail = (e) => {
+  const EmailValidation = (e) => {
       setEmailInput(e.target.value)
      
-      emailValidation()
+      const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+      if (regEx.test(emailinput)) {
+        setEmailMessage("");
+        setEnablesubmit(false)
+        
+      } else {
+        setEmailMessage("Email is Not Valid");
+        setEnablesubmit(true)
+      } 
   }
 
-  const emailValidation = () => {
-    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    if (regEx.test(emailinput)) {
-      setEmailMessage("Email is Valid");
-
-      setEmailMessage("");
-    } else if (!regEx.test(emailinput) && emailinput !== "") {
-      setEmailMessage("Email is Not Valid");
-    } else {
-      setEmailMessage("");
-    }
-  }
+  
 
   const [mobile, setmobile] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
-  const changePhone = (e) => {
+  const PhoneValidation = (e) => {
     setmobile(e.target.value);
-    phoneValidation()
-  }
 
-  const phoneValidation = () => {
     const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
     
  
     if (PHONE_REGEX.test(mobile) && mobile.length === 9) {
-      setPhoneMessage("Phone no. is Valid");
 
       setPhoneMessage("");
+      setEnablesubmit(false)
     } else if(!PHONE_REGEX.test(mobile) && mobile !== "") {
       setPhoneMessage("Invalid phone number.");
+      setEnablesubmit(true)
     }
     else if(PHONE_REGEX.test(mobile) && mobile.length > 9) {
       setPhoneMessage("Invalid phone number. More Than 10 digits");
+      setEnablesubmit(true)
     }
     else if(PHONE_REGEX.test(mobile) && mobile.length < 9) {
       setPhoneMessage("Invalid phone number. Less Than 10 digits");
+      setEnablesubmit(true)
     }
     else {
       setPhoneMessage("");
+      setEnablesubmit(false)
     }
   }
 
@@ -113,6 +130,8 @@ export default function AddOperator(props) {
     setAddOperator({ ...addOperator, ["title"]: name })
     console.log(addOperator)
   }
+
+  const [enablesubmit, setEnablesubmit] = useState(true)
 
   return (
     <div className="container my-5 pt-5 table shadow  bg-light rounded-7 aded">
@@ -199,8 +218,9 @@ export default function AddOperator(props) {
               placeholder="Name"
               name="name"
               value={addOperator?.name}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => {onInputChange(e); NameValidation(e)}}
             />
+            <o class="text-danger">{nameMessage}</o>
           </div>
         </div>
 
@@ -218,7 +238,7 @@ export default function AddOperator(props) {
               placeholder="Username"
               name="email"
               value={addOperator?.email}
-              onChange={(e) => {onInputChange(e); changeEmail(e)}}
+              onChange={(e) => {onInputChange(e); EmailValidation(e)}}
             />
             <o class="text-danger">{emailMessage}</o>
           </div>
@@ -231,13 +251,15 @@ export default function AddOperator(props) {
           </label>
           <div class="col-sm-10">
             <input
-              type="tel"
+              type="number"
               class="form-control"
+              // pattern="[0-9]*"
               id="phone"
               placeholder="Phone No."
+              maxlength="10"
               name="phoneNumber"
               value={addOperator?.phoneNumber}
-              onChange={(e) => {onInputChange(e);changePhone(e)}}
+              onChange={(e) => {onInputChange(e);PhoneValidation(e)}}
             />
              <o class="text-danger">{phoneMessage}</o>
           </div>
@@ -259,6 +281,7 @@ export default function AddOperator(props) {
               type="submit"
               class="btn btn-primary mx-2"
               onClick={AddOperator}
+              disabled={enablesubmit}
             >
               <b>Add</b>
             </button>

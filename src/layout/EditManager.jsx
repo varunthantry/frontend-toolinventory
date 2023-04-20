@@ -66,57 +66,73 @@ export default function EditManager() {
       })
   };
 
+  const [nameinput, setNameInput] = useState("")
+  const [nameMessage, setNameMessage] = useState("")
+
+  const NameValidation = (e) => {
+    setNameInput(e.target.value)
+    console.log(e.target.value)
+
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    if (nameRegex.test(nameinput)) {
+      setNameMessage("");
+      setEnablesubmit(false)
+     
+    } else if(!nameRegex.test(nameinput) || nameinput === "") {
+      setNameMessage("Name is Not Valid. Use only space and alphabets");
+      setEnablesubmit(true)
+    } 
+  }
+
   const [emailinput, setEmailInput] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
-  const changeEmail = (e) => {
+  const EmailValidation = (e) => {
       setEmailInput(e.target.value)
      
-      emailValidation()
+      const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+      if (regEx.test(emailinput)) {
+        setEmailMessage("");
+        setEnablesubmit(false)
+        
+      } else {
+        setEmailMessage("Email is Not Valid");
+        setEnablesubmit(true)
+      } 
   }
 
-  const emailValidation = () => {
-    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    if (regEx.test(emailinput)) {
-      setEmailMessage("Email is Valid");
-
-      setEmailMessage("");
-    } else if (!regEx.test(emailinput) && emailinput !== "") {
-      setEmailMessage("Email is Not Valid");
-    } else {
-      setEmailMessage("");
-    }
-  }
+ 
 
   const [mobile, setmobile] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
-  const changephone = (e) => {
+  const PhoneValidation = (e) => {
     setmobile(e.target.value);
-    phoneValidation()
-  }
-
-  const phoneValidation = () => {
     const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
     
- 
     if (PHONE_REGEX.test(mobile) && mobile.length === 9) {
-      setPhoneMessage("Phone no. is Valid");
 
       setPhoneMessage("");
+      setEnablesubmit(false)
     } else if(!PHONE_REGEX.test(mobile) && mobile !== "") {
       setPhoneMessage("Invalid phone number.");
+      setEnablesubmit(true)
     }
     else if(PHONE_REGEX.test(mobile) && mobile.length > 9) {
       setPhoneMessage("Invalid phone number. More Than 10 digits");
+      setEnablesubmit(true)
     }
     else if(PHONE_REGEX.test(mobile) && mobile.length < 9) {
       setPhoneMessage("Invalid phone number. Less Than 10 digits");
+      setEnablesubmit(true)
     }
     else {
       setPhoneMessage("");
+      setEnablesubmit(false)
     }
   }
+
+  const [enablesubmit, setEnablesubmit] = useState(false)
 
   return (
     <div>
@@ -160,8 +176,9 @@ export default function EditManager() {
                 placeholder="Name"
                 name="name"
                 value={editManager?.name}
-                onChange={(e) => onInputChange(e)}
+                onChange={(e) => {onInputChange(e); NameValidation(e)}}
               />
+              <o class="text-danger">{nameMessage}</o>
             </div>
           </div>
 
@@ -179,7 +196,7 @@ export default function EditManager() {
                 placeholder="Username"
                 name="email"
                 value={editManager?.email}
-                onChange={(e) => {onInputChange(e); changeEmail(e)}}
+                onChange={(e) => {onInputChange(e); EmailValidation(e)}}
               />
               <o class="text-danger">{emailMessage}</o>
             </div>
@@ -193,13 +210,14 @@ export default function EditManager() {
             </label>
             <div class="col-sm-10">
               <input
-                type="tel"
+                type="number"
                 class="form-control"
                 id="inputUsername3"
+                maxlength="10"
                 placeholder="Phone No."
                 name="phoneNumber"
                 value={editManager?.phoneNumber}
-                onChange={(e) => {onInputChange(e); changephone(e)}}
+                onChange={(e) => {onInputChange(e); PhoneValidation(e)}}
               />
 
               <o class="text-danger">{phoneMessage}</o>
@@ -221,6 +239,7 @@ export default function EditManager() {
                 type="submit"
                 class="btn btn-primary mx-2"
                 onClick={changeeditManager}
+                disabled={enablesubmit}
               >
                 <b>Edit</b>
               </button>

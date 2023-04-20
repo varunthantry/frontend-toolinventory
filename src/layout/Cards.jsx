@@ -34,6 +34,8 @@ export default function Cards(props) {
     const temp1 = { ...toolsrequest };
     temp1["toolTypeAndUnits"] = temp;
     setToolsRequest(temp1);
+
+    setEnableSubmit(false)
   };
 
   useEffect(() => {
@@ -113,6 +115,8 @@ export default function Cards(props) {
   //   setToolsRequest({ ...toolsrequest, ["toolTypeId"]: id });
   // };
 
+  const [enablesubmit, setEnableSubmit] = useState(true)
+
   return (
     <div>
 
@@ -170,7 +174,7 @@ export default function Cards(props) {
                     </label>
                     <div class="col-sm-10">
                       <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         placeholder=""
                         name={x?.id}
@@ -230,6 +234,7 @@ export default function Cards(props) {
               type="submit"
               class="btn navi toolselect text-black"
               onClick={OnRequestTools}
+              disabled={enablesubmit}
             >
               <b class="navbutton">submit</b>
             </button>
