@@ -82,24 +82,34 @@ export default function SelectTools() {
       })
   }, []);
 
+  const dataAvialable = data.length;
+  // console.log("ssss", dataAvialable)
+
   return (
+
     <div>
 
-{loader ? (
-      <Grid container spacing={4} className="car">
-        {data.map((data, id) => (
-          <Grid item xs={12} sm={6} md={4} key={data.id}>
-            <Cards
-              machine_id={data.id}
-              machine_name={data.name}
-              description={data.description}
-              available={data.available}
-              //   tool_used={data.tool_used}
-              //   image={data.image}
-            />
+    {loader ? (
+
+      <div>
+      {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+          <Grid container spacing={4} className="car">
+            {data.map((data, id) => (
+              <Grid item xs={12} sm={6} md={4} key={data.id}>
+                <Cards
+                  machine_id={data.id}
+                  machine_name={data.name}
+                  description={data.description}
+                  available={data.available}
+                  //   tool_used={data.tool_used}
+                  //   image={data.image}
+                />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+
+      )}
+     </div>
 
       ) : (
        <Loader />

@@ -54,100 +54,101 @@ export default function AllToolType(props) {
   // const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const dataAvialable = data.length;
+
   return (
     <div>
 
-{loader ? (
+    {loader ? (
 
-  <div>
-          <div>
-            <button
-              class="ml-2 btn btn-danger btn-sm pt-4 mt-5 mx-5"
-              onClick={() => setManager(<AddToolType setManager={setManager} />)}
-            >
-              <b>Add Tool Type</b>
-            </button>
+      <div>
+
+       
+              <div>
+                <button
+                  class="ml-2 btn btn-danger btn-sm pt-4 mt-5 mx-5"
+                  onClick={() => setManager(<AddToolType setManager={setManager} />)}
+                >
+                  <b>Add Tool Type</b>
+                </button>
+              </div>
+
+              {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+              <div>
+   
+
+                <div class="nav-link navi mx-1 my-4 text-black rounded-7">
+
+                  <input
+                    type="text"
+                    placeholder="Search...."
+                    class="rounded-7"
+                    onChange={(event) => {
+                      setSearchTerm(event.target.value);
+                    }}
+                  />
+                  <SearchIcon />
+                </div>
+
+                <h3 class="heading pt-3 text-black">Tool Type</h3>
+                <div className="py-4 mx-5">
+                  <table className="table  shadow bg-white rounded-7">
+                    <thead>
+                      <tr>
+                        <th scope="col">
+                          <h5>S No.</h5>
+                        </th>
+                        <th scope="col">
+                          <h5>Tool Type Name</h5>
+                        </th>
+                        <th scope="col">
+                          <h5>Action</h5>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data
+                        .filter((dat) => {
+                          if (searchTerm === "") {
+                            return dat;
+                          } else if (
+                            dat.name.toLowerCase().includes(searchTerm.toLowerCase())
+                          ) {
+                            return dat;
+                          }
+                        })
+                        .map((dat, index) => (
+                          <tr>
+                            <th scope="row" key={index}>
+                              <b>{index + 1}</b>
+                            </th>
+                            <td>
+                              <b>{dat.name}</b>
+                            </td>
+
+                            <td>
+                              
+                              <button
+                                className="btn btn-danger mx-2"
+                                onClick={() => deleteToolTypes(dat?.id)}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+
+             </div>
+          )} 
+           
           </div>
 
-          {/* search */}
-
-          <div class="nav-link navi mx-1 my-4 text-black rounded-7">
-            {/* <Searchbar /> */}
-
-            <input
-              type="text"
-              placeholder="Search...."
-              class="rounded-7"
-              onChange={(event) => {
-                setSearchTerm(event.target.value);
-              }}
-            />
-            <SearchIcon />
-          </div>
-
-          <h3 class="heading pt-3 text-black">Tool Type</h3>
-          <div className="py-4 mx-5">
-            <table className="table  shadow bg-white rounded-7">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    <h5>S No.</h5>
-                  </th>
-                  <th scope="col">
-                    <h5>Tool Type Name</h5>
-                  </th>
-                  <th scope="col">
-                    <h5>Action</h5>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data
-                  .filter((dat) => {
-                    if (searchTerm === "") {
-                      return dat;
-                    } else if (
-                      dat.name.toLowerCase().includes(searchTerm.toLowerCase())
-                    ) {
-                      return dat;
-                    }
-                  })
-                  .map((dat, index) => (
-                    <tr>
-                      <th scope="row" key={index}>
-                        <b>{index + 1}</b>
-                      </th>
-                      <td>
-                        <b>{dat.name}</b>
-                      </td>
-
-                      <td>
-                        {/* <Link className='btn btn-outline-primary mx-2'
-                                          to={`/edituser/${user.id}`}
-                                          >Edit</Link>
-                                          <button className='btn btn-danger mx-2'
-                                          onClick={()=>deleteUser(user.id)}>Delete</button> */}
-
-                        {/* <Link className='btn btn-outline-primary mx-2' 
-                                          onClick={() => {setManager(<EditTool setManager={setManager} />)}} 
-                                          >Edit</Link> */}
-                        <button
-                          className="btn btn-danger mx-2"
-                          onClick={() => deleteToolTypes(dat?.id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-      </div>
-
-      ) : (
-       <Loader />
-      )}
+          ) : (
+          <Loader />
+          )}
     </div>
   );
 }

@@ -105,28 +105,36 @@ export default function SelectTools() {
       })
   }, []);
 
+  const dataAvialable = datamachine.length;
+  //  console.log("ssss", dataAvialable)
+
   return (
+
     <div>
+    {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+        <div>
 
-{loginloader ? (
-      <Grid container spacing={4} className="car">
-        {datamachine.map((data, id) => (
-          <Grid item xs={12} sm={6} md={4} key={data.id}>
-            <CardsManagerMachines
-              machine_id={data.id}
-              machine_name={data.name}
-              description={data.description}
-              //   tool_used={data.tool_used}
-              //   image={data.image}
-              available={data.available}
-            />
+    {loginloader ? (
+          <Grid container spacing={4} className="car">
+            {datamachine.map((data, id) => (
+              <Grid item xs={12} sm={6} md={4} key={data.id}>
+                <CardsManagerMachines
+                  machine_id={data.id}
+                  machine_name={data.name}
+                  description={data.description}
+                  //   tool_used={data.tool_used}
+                  //   image={data.image}
+                  available={data.available}
+                />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
 
-      ) : (
-       <Loader />
-      )}
+          ) : (
+          <Loader />
+          )}
+        </div>
+    )}
     </div>
   );
 }
