@@ -107,26 +107,21 @@ export function LoginFormUser(props) {
     setShow(!show);
   };
 
-  const [emailinput, setEmailInput] = useState("");
+  // const [emailinput, setEmailInput] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
-  const changeEmail = (e) => {
-      setEmailInput(e.target.value)
+  const EmailValidation = (e) => {
+      // setEmailInput(e.target.value)
      
-      emailValidation()
-  }
-
-  const emailValidation = () => {
-    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    if (regEx.test(emailinput)) {
-      setEmailMessage("Email is Valid");
-
-      setEmailMessage("");
-    } else if (!regEx.test(emailinput) && emailinput !== "") {
-      setEmailMessage("Email is Not Valid");
-    } else {
-      setEmailMessage("");
-    }
+      const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+      if (regEx.test(e.target.value)) {
+        setEmailMessage("");
+        
+        
+      } else {
+        setEmailMessage("Email is Not Valid");
+       
+      } 
   }
 
   return (
@@ -140,7 +135,7 @@ export function LoginFormUser(props) {
                 name="username"
                 placeholder="Username"
                 value={login?.username}
-                onChange={(e) => {onInputChange(e); changeEmail(e)}}
+                onChange={(e) => {onInputChange(e); EmailValidation(e)}}
               />
               
               <Input

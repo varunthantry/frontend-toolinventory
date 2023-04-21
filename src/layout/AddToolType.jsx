@@ -45,19 +45,18 @@ export default function AddToolType(props) {
 
   const [enablesubmit, setEnablesubmit] = useState(true)
 
-  const [tooltypeinput, setToolTypeInput] = useState("")
+  // const [tooltypeinput, setToolTypeInput] = useState("")
   const [tooltypeMessage, settooltypeMessage] = useState("")
 
   const ToolTypeValidation = (e) => {
-    setToolTypeInput(e.target.value)
-    console.log("rrrrooo",e.target.value)
+    // setToolTypeInput(e.target.value)
 
     const nameRegex = /^[a-zA-Z\s]*$/;
-    if (nameRegex.test(tooltypeinput)) {
+    if (nameRegex.test(e.target.value)) {
       settooltypeMessage("");
       setEnablesubmit(false)
      
-    } else if(!nameRegex.test(tooltypeinput) || tooltypeinput === "") {
+    } else if(!nameRegex.test(e.target.value) || e.target.value === "") {
       settooltypeMessage("ToolType is Not Valid. Use only space and alphabets");
       setEnablesubmit(true)
     } 

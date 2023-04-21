@@ -66,32 +66,49 @@ export default function EditManager() {
       })
   };
 
-  const [nameinput, setNameInput] = useState("")
+  // const [titleinput, setTitleInput] = useState("")
+  const [titleMessage, setTitleMessage] = useState("")
+
+  const TitleValidation = (e) => {
+    // setTitleInput(e.target.value)
+
+    if(e.target.value === "Mr" || e.target.value === "Mrs" || e.target.value === "Ms"){
+      setTitleMessage("")
+      setEnablesubmit(false)
+    }
+    else{
+      setTitleMessage("Invalid Title. Only Mr, Mrs and Ms is allowed");
+      setEnablesubmit(true)
+    }
+  }
+
+  // const [nameinput, setNameInput] = useState("")
   const [nameMessage, setNameMessage] = useState("")
 
   const NameValidation = (e) => {
-    setNameInput(e.target.value)
-    console.log(e.target.value)
+    // setNameInput(e.target.value)
 
     const nameRegex = /^[a-zA-Z\s]*$/;
-    if (nameRegex.test(nameinput)) {
+    if (nameRegex.test(e.target.value)) {
       setNameMessage("");
       setEnablesubmit(false)
      
-    } else if(!nameRegex.test(nameinput) || nameinput === "") {
+    } else {
       setNameMessage("Name is Not Valid. Use only space and alphabets");
       setEnablesubmit(true)
     } 
   }
+  
 
-  const [emailinput, setEmailInput] = useState("");
+
+  // const [emailinput, setEmailInput] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
   const EmailValidation = (e) => {
-      setEmailInput(e.target.value)
+      // setEmailInput(e.target.value)
      
       const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-      if (regEx.test(emailinput)) {
+      if (regEx.test(e.target.value)) {
         setEmailMessage("");
         setEnablesubmit(false)
         
@@ -101,28 +118,30 @@ export default function EditManager() {
       } 
   }
 
- 
+  
 
-  const [mobile, setmobile] = useState("");
+  // const [mobile, setmobile] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
   const PhoneValidation = (e) => {
-    setmobile(e.target.value);
+    // setmobile(e.target.value);
+
     const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
     
-    if (PHONE_REGEX.test(mobile) && mobile.length === 9) {
+ 
+    if (PHONE_REGEX.test(e.target.value) && e.target.value.length === 10) {
 
       setPhoneMessage("");
       setEnablesubmit(false)
-    } else if(!PHONE_REGEX.test(mobile) && mobile !== "") {
+    } else if(!PHONE_REGEX.test(e.target.value) && e.target.value !== "") {
       setPhoneMessage("Invalid phone number.");
       setEnablesubmit(true)
     }
-    else if(PHONE_REGEX.test(mobile) && mobile.length > 9) {
+    else if(PHONE_REGEX.test(e.target.value) && e.target.value.length > 10) {
       setPhoneMessage("Invalid phone number. More Than 10 digits");
       setEnablesubmit(true)
     }
-    else if(PHONE_REGEX.test(mobile) && mobile.length < 9) {
+    else if(PHONE_REGEX.test(e.target.value) && e.target.value.length < 10) {
       setPhoneMessage("Invalid phone number. Less Than 10 digits");
       setEnablesubmit(true)
     }
@@ -158,8 +177,9 @@ export default function EditManager() {
                 placeholder="Title"
                 name="title"
                 value={editManager?.title}
-                onChange={(e) => onInputChange(e)}
+                onChange={(e) => {onInputChange(e); TitleValidation(e)}}
               />
+              <o class="text-danger">{titleMessage}</o>
             </div>
           </div>
           <div class="form-group row">

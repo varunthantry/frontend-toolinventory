@@ -110,11 +110,12 @@ export default function SelectTools() {
 
   return (
 
-    <div>
-    {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+   
         <div>
 
     {loginloader ? (
+      <div>
+      {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
           <Grid container spacing={4} className="car">
             {datamachine.map((data, id) => (
               <Grid item xs={12} sm={6} md={4} key={data.id}>
@@ -129,12 +130,15 @@ export default function SelectTools() {
               </Grid>
             ))}
           </Grid>
+          )}
+
+          </div>
 
           ) : (
           <Loader />
           )}
         </div>
-    )}
-    </div>
+    
+    
   );
 }
