@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getLedgerDetails, getSearchLedger } from "../services/LedgerService";
 import SearchIcon from "@mui/icons-material/Search";
 import Loader from "../Loader/Loader";
+import moment from "moment/moment";
 
 export default function Ledger() {
   // const [searchTerm, setSearchTerm] = useState("");
@@ -96,9 +97,9 @@ export default function Ledger() {
                         <th scope="col">
                             <h5>S No.</h5>
                           </th>
-                          <th scope="col">
+                          {/* <th scope="col">
                             <h5>Machine Id</h5>
-                          </th>
+                          </th> */}
                           <th scope="col">
                             <h5>Machine Name</h5>
                           </th>
@@ -115,11 +116,11 @@ export default function Ledger() {
                           <th scope="col">
                             <h5>In use</h5>
                           </th>
-                          <th scope="col">
+                          {/* <th scope="col">
                             <h5>Approval Id</h5>
-                          </th>
+                          </th> */}
                           <th scope="col">
-                            <h5>Take DateTime</h5>
+                            <h5>Start DateTime</h5>
                           </th>
                           <th scope="col">
                             <h5>Return DateTime</h5>
@@ -134,9 +135,9 @@ export default function Ledger() {
                             <td>
                                 <b>{index+1}</b>
                               </td>
-                              <th scope="row" key={index}>
+                              {/* <th scope="row" key={index}>
                                 <b>{dat.machineId}</b>
-                              </th>
+                              </th> */}
                               <td>
                                 <b>{dat.machineName}</b>
                               </td>
@@ -157,14 +158,14 @@ export default function Ledger() {
                               <td>
                                 <b>{String(dat.isInUse)}</b>
                               </td>
-                              <td>
+                              {/* <td>
                                 <b>{dat.approvalId}</b>
+                              </td> */}
+                              <td>
+                                <b>{dat.startDateTime.split("T")[0]} <br/> {moment(dat.startDateTime.split("T")[1].split(".")[0], "HH:mm:ss").format("hh:mm:ss A")}</b>
                               </td>
                               <td>
-                                <b>{dat.startDateTime}</b>
-                              </td>
-                              <td>
-                                <b>{dat.returnDateTime}</b>
+                                <b>{dat.returnDateTime.split("T")[0]} <br/> {moment(dat.returnDateTime.split("T")[1].split(".")[0], "HH:mm:ss").format("hh:mm:ss A")}</b>
                               </td>
                             </tr>
                           ))}
