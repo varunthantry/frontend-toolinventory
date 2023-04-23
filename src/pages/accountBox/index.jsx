@@ -7,6 +7,9 @@ import LoginFormAdmin from "./loginformAdmin";
 import { LoginFormManager } from "./loginformManager";
 import Carousel from 'react-bootstrap/Carousel';
 import "../css/style.css";
+// import MyContext from './MyContext';
+// import { useContext } from "react";
+
 // import { motion } from "framer-motion";
 
 const BoxContainer = styled.div`
@@ -40,13 +43,13 @@ const BackDrop = styled(motion.div)`
   flex-direction: column;
   border-radius: 50%;
   transform: rotate(60deg);
-  top: -290px;
+  top: -320px;
   left: -70px;
   ${"" /* background: #EDC7B7; background: linear-gradient(
     58deg,
     #0652DD
   );*/}
-  background-color: #0652DD;
+  background-color: #FFFFF7;
   
 `;
 
@@ -61,7 +64,7 @@ const BigHeaderText = styled.h2`
   font-size: 30px;
   font-weight: 600;
   line-height: 1.24;
-  color: #fff;
+  color: #595959;
   z-index: 10;
   margin-top: 0;
   padding-top: 0;
@@ -71,13 +74,13 @@ const HeaderText = styled.h2`
   font-size: 20px;
   font-weight: 600;
   line-height: 1.24;
-  color: #fff;
+  color: #595959;
   z-index: 10;
   margin: 0;
 `;
 
 const SmallText = styled.h5`
-  color: #fff;
+  color: #595959;
   font-weight: 500;
   font-size: 11px;
   z-index: 10;
@@ -169,11 +172,14 @@ export function AccountBox(props) {
 // // console.log(con);
 
   const [bgColor, setBgColor] = useState('#0652dd'); // set default background color
+  // const { myState, setMyState } = useContext(MyContext);
   const handleCarouselChange = (index) => {
     // change background color based on carousel index
     const colors = ['#0652dd', '#648ad0', '#3d5581'];
     setBgColor(colors[index]);
+    // setMyState(colors[index]);
   };
+  
 
 
 
@@ -211,7 +217,7 @@ export function AccountBox(props) {
 
     </div>
     <div className="second">
-      <BoxContainer>
+      <BoxContainer style={{ backgroundColor: bgColor }}>
         <TopContainer>
           <BackDrop
             initial={false}
@@ -220,7 +226,6 @@ export function AccountBox(props) {
             transition={expandingTransition}
             className="box"
             id="full"
-            style={{ backgroundColor: bgColor }}
           />
           <BigHeaderText>Tool Inventory</BigHeaderText>
           {active === "signinUser" && (

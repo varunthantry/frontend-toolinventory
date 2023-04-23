@@ -58,30 +58,37 @@ export default function AllManager() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
+  const dataAvialable = data.filter((dat) => {
+    if (Role === dat.role) {
+      return dat;
+    }}).length;
+ 
+
   return (
    
-   
-    <div>
+      <div>
 
-    {loader ? (
-     
-
+      {loader ? (
         <div>
+    {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+      
 
-        <div class="nav-link navi mx-1 my-4 text-black rounded-7">
-        
-          <input
-            type="text"
-            placeholder="Search...."
-            class="rounded-7"
-            onChange={(event) => {
-              setSearchTerm(event.target.value);
-            }}
-          />
-          <SearchIcon />
-        </div>
+          <div>
 
-      <h3 class="heading pt-3 text-white">Managers</h3>
+          <div class="nav-link navi mx-1 my-4 text-black rounded-7">
+          
+            <input
+              type="text"
+              placeholder="Search...."
+              class="rounded-7"
+              onChange={(event) => {
+                setSearchTerm(event.target.value);
+              }}
+            />
+            <SearchIcon />
+          </div>
+
+      <h3 class="heading pt-3 text-black">Managers</h3>
       <div className="py-4 mx-5">
         <table className="table heading shadow bg-white rounded-7">
           <thead>
@@ -137,30 +144,35 @@ export default function AllManager() {
                  
                   <td>
 
-                    <Link
-                      className="btn btn-outline-primary mx-2 blue-button"
-                      to={`/editManager?id=${dat?.id}`}
-                    >
-                      <b className="blue-button-name">Edit</b>
-                    </Link>
-                    <button
-                      className="btn btn-danger mx-2"
-                      onClick={() => deleteManager(dat?.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+                      <Link
+                        className="btn btn-outline-primary mx-2 blue-button"
+                        to={`/editManager?id=${dat?.id}`}
+                      >
+                        <b className="blue-button-name">Edit</b>
+                      </Link>
+                      <button
+                        className="btn btn-danger mx-2"
+                        onClick={() => deleteManager(dat?.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        )}
       </div>
 
-      ) : (
-       <Loader />
-      )}
-    </div>
+        ) : (
+        <Loader />
+        )}
+      </div>
+
+   
     
   );
 }

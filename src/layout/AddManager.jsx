@@ -72,57 +72,77 @@ export default function AddManager(props) {
       window.location.reload();
   };
 
-  const [emailinput, setEmailInput] = useState("");
+
+  // const [nameinput, setNameInput] = useState("")
+  const [nameMessage, setNameMessage] = useState("")
+
+  const NameValidation = (e) => {
+    // setNameInput(e.target.value)
+
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    if (nameRegex.test(e.target.value)) {
+      setNameMessage("");
+      setEnablesubmit(false)
+     
+    } else {
+      setNameMessage("Name is Not Valid. Use only space and alphabets");
+      setEnablesubmit(true)
+    } 
+  }
+  
+
+
+  // const [emailinput, setEmailInput] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
-  const changeEmail = (e) => {
-      setEmailInput(e.target.value)
+  const EmailValidation = (e) => {
+      // setEmailInput(e.target.value)
      
-      emailValidation()
+      const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+      if (regEx.test(e.target.value)) {
+        setEmailMessage("");
+        setEnablesubmit(false)
+        
+      } else {
+        setEmailMessage("Email is Not Valid");
+        setEnablesubmit(true)
+      } 
   }
 
-  const emailValidation = () => {
-    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    if (regEx.test(emailinput)) {
-      setEmailMessage("Email is Valid");
+  
 
-      setEmailMessage("");
-    } else if (!regEx.test(emailinput) && emailinput !== "") {
-      setEmailMessage("Email is Not Valid");
-    } else {
-      setEmailMessage("");
-    }
-  }
-
-  const [mobile, setmobile] = useState("");
+  // const [mobile, setmobile] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
-  const changephone = (e) => {
-    setmobile(e.target.value);
-    phoneValidation()
-  }
+  const PhoneValidation = (e) => {
+    // setmobile(e.target.value);
 
-  const phoneValidation = () => {
     const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
     
  
-    if (PHONE_REGEX.test(mobile) && mobile.length === 9) {
-      setPhoneMessage("Phone no. is Valid");
+    if (PHONE_REGEX.test(e.target.value) && e.target.value.length === 10) {
 
       setPhoneMessage("");
-    } else if(!PHONE_REGEX.test(mobile) && mobile !== "") {
+      setEnablesubmit(false)
+    } else if(!PHONE_REGEX.test(e.target.value) && e.target.value !== "") {
       setPhoneMessage("Invalid phone number.");
+      setEnablesubmit(true)
     }
-    else if(PHONE_REGEX.test(mobile) && mobile.length > 9) {
+    else if(PHONE_REGEX.test(e.target.value) && e.target.value.length > 10) {
       setPhoneMessage("Invalid phone number. More Than 10 digits");
+      setEnablesubmit(true)
     }
-    else if(PHONE_REGEX.test(mobile) && mobile.length < 9) {
+    else if(PHONE_REGEX.test(e.target.value) && e.target.value.length < 10) {
       setPhoneMessage("Invalid phone number. Less Than 10 digits");
+      setEnablesubmit(true)
     }
     else {
       setPhoneMessage("");
+      setEnablesubmit(false)
     }
   }
+
+  
 
   const [titledrop, setTitledrop] = useState("Select Title");
 
@@ -130,6 +150,8 @@ export default function AddManager(props) {
     setAddManager({ ...addManager, ["title"]: name })
     console.log(addManager)
   }
+
+  const [enablesubmit, setEnablesubmit] = useState(true)
 
 
   return (
@@ -217,9 +239,10 @@ export default function AddManager(props) {
               placeholder="Name"
               name="name"
               value={addManager?.name}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => {onInputChange(e); NameValidation(e)}}
               // required
             />
+             <o class="text-danger">{nameMessage}</o>
           </div>
         </div>
 
@@ -237,7 +260,7 @@ export default function AddManager(props) {
               placeholder="Email"
               name="email"
               value={addManager?.email}
-              onChange={(e) => {onInputChange(e);changeEmail(e)}}
+              onChange={(e) => {onInputChange(e);EmailValidation(e)}}
               // required
             />
            <o class="text-danger">{emailMessage}</o>
@@ -251,13 +274,14 @@ export default function AddManager(props) {
           </label>
           <div class="col-sm-10">
             <input
-              type="tel"
+              type="number"
               class="form-control"
               id="phone"
               placeholder="Phone No."
+              maxlength="10"
               name="phoneNumber"
               value={addManager?.phoneNumber}
-              onChange={(e) => {onInputChange(e); changephone(e)}}
+              onChange={(e) => {onInputChange(e); PhoneValidation(e)}}
 
               // required
             />
@@ -279,6 +303,7 @@ export default function AddManager(props) {
               type="submit"
               class="btn btn-primary mx-2"
               onClick={changestateAdd}
+              disabled={enablesubmit}
             >
               <b>Add</b>
             </button>

@@ -43,6 +43,25 @@ export default function AddToolType(props) {
       })
   };
 
+  const [enablesubmit, setEnablesubmit] = useState(true)
+
+  // const [tooltypeinput, setToolTypeInput] = useState("")
+  const [tooltypeMessage, settooltypeMessage] = useState("")
+
+  const ToolTypeValidation = (e) => {
+    // setToolTypeInput(e.target.value)
+
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    if (nameRegex.test(e.target.value)) {
+      settooltypeMessage("");
+      setEnablesubmit(false)
+     
+    } else if(!nameRegex.test(e.target.value) || e.target.value === "") {
+      settooltypeMessage("ToolType is Not Valid. Use only space and alphabets");
+      setEnablesubmit(true)
+    } 
+  }
+
   return (
     <div className="container my-5 pt-5 table shadow  bg-light rounded-7 aded">
 
@@ -62,8 +81,9 @@ export default function AddToolType(props) {
               placeholder="Tool Type"
               name="name"
               value={addtooltype?.name}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => {onInputChange(e); ToolTypeValidation(e)}}
             />
+            <o class="text-danger">{tooltypeMessage}</o>
           </div>
         </div>
 
@@ -83,6 +103,7 @@ export default function AddToolType(props) {
               type="submit"
               class="btn btn-primary mx-2"
               onClick={AddTooltype}
+              disabled={enablesubmit}
             >
               <b>Add</b>
             </button>

@@ -12,6 +12,7 @@ import { AccountContext } from "./accountContext";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import MyContext from './MyContext';
 
 import { getUserLogin, getUserMe } from "../../services/LoginService";
 
@@ -107,33 +108,23 @@ export function LoginFormUser(props) {
     setShow(!show);
   };
 
-  const [emailinput, setEmailInput] = useState("");
+  // const [emailinput, setEmailInput] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
-  const changeEmail = (e) => {
-      setEmailInput(e.target.value)
+  const EmailValidation = (e) => {
+      // setEmailInput(e.target.value)
      
-      emailValidation()
+      const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+      if (regEx.test(e.target.value)) {
+        setEmailMessage("");
+        
+        
+      } else {
+        setEmailMessage("Email is Not Valid");
+       
+      } 
   }
-
-  const emailValidation = () => {
-    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    if (regEx.test(emailinput)) {
-      setEmailMessage("Email is Valid");
-
-      setEmailMessage("");
-    } else if (!regEx.test(emailinput) && emailinput !== "") {
-      setEmailMessage("Email is Not Valid");
-    } else {
-      setEmailMessage("");
-    }
-  }
-  const [bgColor, setBgColor] = useState('#0652dd');
-  const handleCarouselChange = (index) => {
-    // change background color based on carousel index
-    const colors = ['#0652dd', '#648ad0', '#3d5581'];
-    setBgColor(colors[index]);
-  };
+  // const [myState, setMyState] = useState('#0652dd');
 
   return (
     <div>
@@ -146,7 +137,7 @@ export function LoginFormUser(props) {
                 name="username"
                 placeholder="Username"
                 value={login?.username}
-                onChange={(e) => {onInputChange(e); changeEmail(e)}}
+                onChange={(e) => {onInputChange(e); EmailValidation(e)}}
               />
               
               <Input
@@ -163,7 +154,7 @@ export function LoginFormUser(props) {
 
           
             <Marginer direction="vertical" margin="1.6em" />
-            <SubmitButton type="button" onClick={notifyOperatorLogin} style={{ backgroundColor: bgColor }}>
+            <SubmitButton type="button" onClick={notifyOperatorLogin}>
               Signin
             </SubmitButton>
             <ToastContainer />

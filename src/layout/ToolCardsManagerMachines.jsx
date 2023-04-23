@@ -50,6 +50,8 @@ export default function CardsManagerMachines(props) {
     const temp1 = { ...addTool };
     temp1["tools"] = temp;
     setAddTool(temp1);
+
+    setEnableSubmit(false)
   };
 
   useEffect(() => {
@@ -99,6 +101,8 @@ export default function CardsManagerMachines(props) {
   const selectToolType = (name, id) => {
     settooltypeebutton(name);
     setToolIdd(id);
+
+    setEnableUnit(false);
   };
 
   const added = () => {
@@ -123,6 +127,12 @@ export default function CardsManagerMachines(props) {
 
       })
   };
+
+  const [enablesubmit, setEnableSubmit] = useState(true)
+
+  const [enableunit, setEnableUnit] = useState(true)
+
+  
 
   return (
     <div>
@@ -220,7 +230,7 @@ export default function CardsManagerMachines(props) {
                 </label>
                 <div class="col-sm-10">
                   <input
-                    type="numeric"
+                    type="number"
                     class="form-control"
                     id="input3"
                     placeholder="Units"
@@ -229,6 +239,8 @@ export default function CardsManagerMachines(props) {
                       console.log(e, "ggg");
                       onValueChange(e.target.name, e.target.value);
                     }}
+
+                    disabled={enableunit}
                   />
                 </div>
               </div>
@@ -237,6 +249,7 @@ export default function CardsManagerMachines(props) {
               type="submit"
               class="btn navi toolselect text-black"
               onClick={added}
+              disabled={enablesubmit}
             >
               <b class="navbutton">submit</b>
             </button>

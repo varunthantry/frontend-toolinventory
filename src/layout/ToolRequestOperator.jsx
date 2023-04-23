@@ -123,120 +123,142 @@ export default function ToolRequestOperator() {
 
   const Status = "APPROVED";
 
-  return (
-    <div>
-
-
-      <h3 class="heading pt-5 text-white">Return Tool</h3>
-
-      {loader ? (
-
-      <div className="py-4 mx-5">
-        <table className="table heading shadow bg-white rounded-7">
-          <thead>
-            <tr>
-              <th scope="col">
-                <h5>S No.</h5>
-              </th>
-              <th scope="col">
-                <h5>Machine Name</h5>
-              </th>
-              <th scope="col">
-                <h5>Tool Name : Units</h5>
-              </th>
-
-              <th scope="col">
-                <h5>Return Requests</h5>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data
+  const dataAvialable = data
               .filter((dat) => {
                 if (Status === dat.status && userid === dat?.userId) {
                   return dat;
                 }
-              })
-              .map((dat, index) => (
-                <tr>
-                  <th scope="row" key={index}>
-                    <b>{index + 1}</b>
-                  </th>
-                  <td>
-                    <b>{dat.machineName}</b>
-                  </td>
+              }).length;
 
-                  <td>
-                    {Object.keys(dat?.toolTypeNameAndUnits).map((k) => (
-                      <b>
-                        {k + " : " + dat?.toolTypeNameAndUnits[k]} <br />
-                      </b>
-                    ))}
-                  </td>
-                  
 
-                  <td>
-                    <button
-                      className="btn btn-outline-primary mx-2 blue-button"
-                      onClick={() => {changeStateReturnTool(dat?.toolIdAndName, dat?.id)}}
-                    >
-                      <b className="blue-button-name">Return</b>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
 
-      ) : (
-       <Loader />
-      )}
+  return (
+    // <div>
+    //  {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+    <div>
 
-      <Modal size="lg" isOpen={modal} toggle={() => setmodal(!modal)}>
-        <ModalHeader toggle={() => setmodal(!modal)}>
-          Enter No. of times Tool used
-        </ModalHeader>
-        <ModalBody>
-          {/* <form> */}
-          {Object.keys(toolIdName).map((k) => (
-              <Row>
-                <Col lg={12}>
-                  <div class="form-group row">
-                    <label for="inputName3" class="col-sm-2 col-form-label">
-                      <h6 class="text-black">
-                        <b>{toolIdName[k]}</b>
+
+      <h3 class="heading pt-5 text-black">Return Tool</h3>
+
+        {loader ? (
+
+<div>
+{dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+
+            <div className="py-4 mx-5">
+              <table className="table heading shadow bg-white rounded-7">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <h5>S No.</h5>
+                    </th>
+                    <th scope="col">
+                      <h5>Machine Name</h5>
+                    </th>
+                    <th scope="col">
+                      <h5>Tool Name : Units</h5>
+                    </th>
+
+                    <th scope="col">
+                      <h5>Return Requests</h5>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data
+                    .filter((dat) => {
+                      if (Status === dat.status && userid === dat?.userId) {
+                        return dat;
+                      }
+                    })
+                    .map((dat, index) => (
+                      <tr>
+                        <th scope="row" key={index}>
+                          <b>{index + 1}</b>
+                        </th>
+                        <td>
+                          <b>{dat.machineName}</b>
+                        </td>
+
+                        <td>
+                          {Object.keys(dat?.toolTypeNameAndUnits).map((k) => (
+                            <b>
+                              {k + " : " + dat?.toolTypeNameAndUnits[k]} <br />
+                            </b>
+                          ))}
+                        </td>
                         
-                      </h6>
-                    </label>
-                    <div class="col-sm-10">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder=""
-                        name={k}
-                        onChange={(e) => {
-                          // console.log(e, "ggggg");
-                          onValueChange(e.target.name, e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            ))}
 
-            <button
-              type="submit"
-              class="btn navi toolselect text-black"
-              onClick={onSumitReturnTools}
-            >
-              <b class="navbutton">submit</b>
-            </button>
-            <ToastContainer />
-          {/* </form> */}
-        </ModalBody>
-      </Modal>
+                        <td>
+                          <button
+                            className="btn btn-outline-primary mx-2 blue-button"
+                            onClick={() => {changeStateReturnTool(dat?.toolIdAndName, dat?.id)}}
+                          >
+                            <b className="blue-button-name">Return</b>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+
+        )}
+        </div>
+
+        ) : (
+        <Loader />
+        )}
+
+      
+
+        <Modal size="lg" isOpen={modal} toggle={() => setmodal(!modal)}>
+          <ModalHeader toggle={() => setmodal(!modal)}>
+            Enter No. of times Tool used
+          </ModalHeader>
+          <ModalBody>
+            {/* <form> */}
+            {Object.keys(toolIdName).map((k) => (
+                <Row>
+                  <Col lg={12}>
+                    <div class="form-group row">
+                      <label for="inputName3" class="col-sm-2 col-form-label">
+                        <h6 class="text-black">
+                          <b>{toolIdName[k]}</b>
+                          
+                        </h6>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder=""
+                          name={k}
+                          onChange={(e) => {
+                            // console.log(e, "ggggg");
+                            onValueChange(e.target.name, e.target.value);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              ))}
+
+              <button
+                type="submit"
+                class="btn navi toolselect text-black"
+                onClick={onSumitReturnTools}
+              >
+                <b class="navbutton">submit</b>
+              </button>
+              <ToastContainer />
+            {/* </form> */}
+          </ModalBody>
+        </Modal>
+     
+      
     </div>
+    
   );
 }
