@@ -129,59 +129,6 @@ export default function ToolRequestOperator() {
                   return dat;
                 }
               }).length;
-<<<<<<< HEAD
-
-
-
-  return (
-    // <div>
-    //  {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
-    <div>
-
-
-      <h3 class="heading pt-5 text-black">Return Tool</h3>
-
-        {loader ? (
-
-<div>
-{dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
-
-            <div className="py-4 mx-5">
-              <table className="table heading shadow bg-white rounded-7">
-                <thead>
-                  <tr>
-                    <th scope="col">
-                      <h5>S No.</h5>
-                    </th>
-                    <th scope="col">
-                      <h5>Machine Name</h5>
-                    </th>
-                    <th scope="col">
-                      <h5>Tool Name : Units</h5>
-                    </th>
-
-                    <th scope="col">
-                      <h5>Return Requests</h5>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data
-                    .filter((dat) => {
-                      if (Status === dat.status && userid === dat?.userId) {
-                        return dat;
-                      }
-                    })
-                    .map((dat, index) => (
-                      <tr>
-                        <th scope="row" key={index}>
-                          <b>{index + 1}</b>
-                        </th>
-                        <td>
-                          <b>{dat.machineName}</b>
-                        </td>
-
-=======
 
 
 
@@ -233,7 +180,6 @@ export default function ToolRequestOperator() {
                           <b>{dat.machineName}</b>
                         </td>
 
->>>>>>> a9c69335bb5bbceabcdfff1b807ce2b0fdb7107a
                         <td>
                           {Object.keys(dat?.toolTypeNameAndUnits).map((k) => (
                             <b>

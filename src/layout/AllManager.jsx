@@ -87,85 +87,6 @@ export default function AllManager() {
             />
             <SearchIcon />
           </div>
-<<<<<<< HEAD
-
-      <h3 class="heading pt-3 text-black">Managers</h3>
-      <div className="py-4 mx-5">
-        <table className="table heading shadow bg-white rounded-7">
-          <thead>
-            <tr>
-              <th scope="col">
-                <h5>S No.</h5>
-              </th>
-              <th scope="col">
-                <h5>Manager Name</h5>
-              </th>
-              <th scope="col">
-                <h5>Username</h5>
-              </th>
-           
-              <th scope="col">
-                <h5>Action</h5>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data
-              .filter((dat) => {
-                if (searchTerm === "" && Role === dat.role) {
-                  return dat;
-                } else if (
-                  dat.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                  Role === dat.role
-                ) {
-                  return dat;
-                } else if (
-                  dat.email.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                  Role === dat.role
-                ) {
-                  return dat;
-                } else if (
-                  dat.id.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                  Role === dat.role
-                ) {
-                  return dat;
-                }
-              })
-              .map((dat, index) => (
-                <tr>
-                  <th scope="row" key={index}>
-                    <b>{index + 1}</b>
-                  </th>
-                  <td>
-                    <b>{dat.name}</b>
-                  </td>
-                  <td>
-                    <b>{dat.email}</b>
-                  </td>
-                 
-                  <td>
-
-                      <Link
-                        className="btn btn-outline-primary mx-2 blue-button"
-                        to={`/editManager?id=${dat?.id}`}
-                      >
-                        <b className="blue-button-name">Edit</b>
-                      </Link>
-                      <button
-                        className="btn btn-danger mx-2"
-                        onClick={() => deleteManager(dat?.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-        </div>
-
-=======
 
         <h3 class="heading pt-3 text-black">Managers</h3>
         <div className="py-4 mx-5">
@@ -263,7 +184,6 @@ export default function AllManager() {
         </div>
         </div>
 
->>>>>>> a9c69335bb5bbceabcdfff1b807ce2b0fdb7107a
         )}
       </div>
 
