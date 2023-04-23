@@ -76,9 +76,9 @@ const ManagerApproval = () => {
                     <th scope="col">
                       <h5>User Name</h5>
                     </th>
-                    <th scope="col">
+                    {/* <th scope="col">
                       <h5>Machine Id</h5>
-                    </th>
+                    </th> */}
                     <th scope="col">
                       <h5>Machine Name</h5>
                     </th>
@@ -128,9 +128,9 @@ const ManagerApproval = () => {
                           <b>{dat.userName}</b>
                         </td>
 
-                        <td>
+                        {/* <td>
                           <b>{dat.machineId}</b>
-                        </td>
+                        </td> */}
                         <td>
                           <b>{dat.machineName}</b>
                         </td>
@@ -149,11 +149,7 @@ const ManagerApproval = () => {
                         </td>
 
                         <td>
-                          {/* <Link className='btn btn-outline-primary mx-2'
-                                              to={`/edituser/${user.id}`}
-                                              >Edit</Link>
-                                              <button className='btn btn-danger mx-2'
-                                              onClick={()=>deleteUser(user.id)}>Delete</button> */}
+                          
 
                           <Modal data={dat} />
                         </td>

@@ -165,7 +165,7 @@ export default function Ledger() {
                                 <b>{dat.startDateTime.split("T")[0]} <br/> {moment(dat.startDateTime.split("T")[1].split(".")[0], "HH:mm:ss").format("hh:mm:ss A")}</b>
                               </td>
                               <td>
-                                <b>{dat.returnDateTime.split("T")[0]} <br/> {moment(dat.returnDateTime.split("T")[1].split(".")[0], "HH:mm:ss").format("hh:mm:ss A")}</b>
+                                {dat.returnDateTime ? (<b>{dat.returnDateTime.split("T")[0]} <br/> {moment(dat.returnDateTime.split("T")[1].split(".")[0], "HH:mm:ss").format("hh:mm:ss A")}</b>) : (<b>{""}</b>)}
                               </td>
                             </tr>
                           ))}
