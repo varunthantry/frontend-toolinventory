@@ -94,7 +94,7 @@ export default function AllOperator(props) {
             <SearchIcon />
           </div>
 
-          <h3 class="heading pt-3 text-black">Operators</h3>
+          <h3 class="heading pt-3 text-white">Operators</h3>
 
           <div className="py-4 mx-5">
             <table className="table  shadow bg-white rounded-7">

@@ -15,7 +15,8 @@ const AppContainer = styled.div`
   justify-content: center;
   padding: 60px;
   ${'' /* background-color: #EEE2DC; */}
-  background-image: url("https://www.adanipower.com/-/media/Project/Power/AboutUs/AboutUs3.jpg?la=en&hash=F5661E3D5CCF37C5D9F56E03E2ED8F7E");
+  background-size:2500px 2500px;
+  background-image: url("https://media.istockphoto.com/id/1153938533/photo/abstract-blurred-blue-background-with-double-exposure-of-bokeh-circle-glitter-for-design.jpg?b=1&s=170667a&w=0&k=20&c=vX2x3Ds5VTDN0sARhTgcT7c5Ux1u63rs3-OKGyUgR6w=");
 `;
 
 function Login() {

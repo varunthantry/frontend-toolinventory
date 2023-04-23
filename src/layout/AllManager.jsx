@@ -81,7 +81,7 @@ export default function AllManager() {
           <SearchIcon />
         </div>
 
-      <h3 class="heading pt-3 text-black">Managers</h3>
+      <h3 class="heading pt-3 text-white">Managers</h3>
       <div className="py-4 mx-5">
         <table className="table heading shadow bg-white rounded-7">
           <thead>

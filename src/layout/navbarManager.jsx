@@ -154,7 +154,7 @@ export default function NavbarManager(props) {
 
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStateTool}
                 >
                   <ConstructionIcon />
@@ -168,7 +168,7 @@ export default function NavbarManager(props) {
 
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStateLedger}
                 >
                   <BookIcon />
@@ -182,7 +182,7 @@ export default function NavbarManager(props) {
 
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStateOperator}
                 >
                   <PersonIcon />
@@ -197,7 +197,7 @@ export default function NavbarManager(props) {
 
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStatehome}
                 >
                   <HomeRepairServiceIcon />
@@ -208,7 +208,7 @@ export default function NavbarManager(props) {
               <li class="nav-item">
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStatetooltype}
                 >
                   <b class="navbutton">Tool Type</b>
@@ -233,7 +233,7 @@ export default function NavbarManager(props) {
               <li class="nav-item">
                 <button
                   type="submit"
-                  class="nav-link btn navi text-black"
+                  class="nav-link btn navi text-white"
                   onClick={notifyLogoutManager}
                 >
                   <LogoutIcon />

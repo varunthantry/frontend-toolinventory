@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useState } from 'react';
 import {
   BoldLink,
   BoxContainer,
@@ -24,7 +25,12 @@ export function LoginFormManager(props) {
         navigate("/Manager")
       },2000);
   }
-
+  const [bgColor, setBgColor] = useState('#0652dd');
+  const handleCarouselChange = (index) => {
+    // change background color based on carousel index
+    const colors = ['#0652dd', '#648ad0', '#3d5581'];
+    setBgColor(colors[index]);
+  };
   return (
     <BoxContainer>
       <FormContainer>
@@ -35,7 +41,7 @@ export function LoginFormManager(props) {
     
       {/* <MutedLink href="#">Forget your password?</MutedLink> */}
       <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit" onClick={notifyLoginManager}>Signin</SubmitButton>
+      <SubmitButton type="submit" onClick={notifyLoginManager} style={{ backgroundColor: bgColor }}>Signin</SubmitButton>
       <ToastContainer />
 
       <Marginer direction="vertical" margin="1em" />

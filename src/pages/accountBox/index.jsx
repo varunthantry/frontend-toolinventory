@@ -5,10 +5,12 @@ import { AccountContext } from "./accountContext";
 import { LoginFormUser } from "./loginform";
 import LoginFormAdmin from "./loginformAdmin";
 import { LoginFormManager } from "./loginformManager";
+import Carousel from 'react-bootstrap/Carousel';
+import "../css/style.css";
 // import { motion } from "framer-motion";
 
 const BoxContainer = styled.div`
-  width: 280px;
+  width: 380px;
   min-height: 550px;
   display: flex;
   flex-direction: column;
@@ -17,11 +19,12 @@ const BoxContainer = styled.div`
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
   position: relative;
   overflow: hidden;
+  margin-left:15em;
 `;
 
 const TopContainer = styled.div`
   width: 100%;
-  height: 250px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -31,7 +34,7 @@ const TopContainer = styled.div`
 
 const BackDrop = styled(motion.div)`
   width: 160%;
-  height: 550px;
+  height: 650px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -39,23 +42,19 @@ const BackDrop = styled(motion.div)`
   transform: rotate(60deg);
   top: -290px;
   left: -70px;
-  background: rgb(241, 196, 15);
-  ${"" /* background: #EDC7B7; */}
-  background: linear-gradient(
+  ${"" /* background: #EDC7B7; background: linear-gradient(
     58deg,
-    rgba(241, 196, 15, 1) 20%,
-    rgba(243, 172, 18, 1) 100%
-    ${
-    "" /* #EDC7B7 20%,
-    #EDC7B7 100% */
-  }
-  );
+    #0652DD
+  );*/}
+  background-color: #0652DD;
+  
 `;
 
 const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top:45px;
 `;
 
 const BigHeaderText = styled.h2`
@@ -114,6 +113,8 @@ const expandingTransition = {
   stiffness: 30,
 };
 
+
+
 export function AccountBox(props) {
   const [isExpanded, setExpanded] = useState(false);
 
@@ -147,10 +148,69 @@ export function AccountBox(props) {
     }, 400);
   };
 
+//   var div = document.getElementsByClassName('box');
+//   // var div2 = document.getElementsByClassName('requiredimages');
+//   let con = 0;
+
+// function getRandomColor() {
+//     return con++%3;
+// }
+
+// function changeColor(){
+//   div[0].style.background = colors[getRandomColor()];
+//   // div2[0].style. = colors[getRandomColor()];
+// }
+
+// setInterval(changeColor,5000);
+
+// let img = ["firstslide.png", "secondslide.png", "thirdslide.png"];
+// let colors = ["","#648ad0","#3d5581"];
+// // let con = 0;
+// // console.log(con);
+
+  const [bgColor, setBgColor] = useState('#0652dd'); // set default background color
+  const handleCarouselChange = (index) => {
+    // change background color based on carousel index
+    const colors = ['#0652dd', '#648ad0', '#3d5581'];
+    setBgColor(colors[index]);
+  };
+
+
+
+
   const contextValue = { switchToManager, switchToUser, switchToAdmin };
 
   return (
     <AccountContext.Provider value={contextValue}>
+      <div className="parent" >
+      <div className="first">
+       
+      <Carousel indicators={false} interval={null} onSelect={handleCarouselChange} >
+      <Carousel.Item >
+        <img
+          className="requiredimages w-100 d-block carousel "
+          src="firstslide.png"
+          alt="First slide"
+        />
+      </Carousel.Item>
+      <Carousel.Item >
+        <img
+          className="requiredimages w-100 d-block carousel"
+          src="secondslide.png"
+          alt="Second slide"
+        />
+      </Carousel.Item>
+      <Carousel.Item >
+        <img
+          className="requiredimages w-100 d-block carousel "
+          src="thirdslide.png"
+          alt="Third slide"
+        />
+      </Carousel.Item>
+    </Carousel>
+
+    </div>
+    <div className="second">
       <BoxContainer>
         <TopContainer>
           <BackDrop
@@ -158,6 +218,9 @@ export function AccountBox(props) {
             animate={isExpanded ? "expanded" : "collapsed"}
             variants={backdropVariants}
             transition={expandingTransition}
+            className="box"
+            id="full"
+            style={{ backgroundColor: bgColor }}
           />
           <BigHeaderText>Tool Inventory</BigHeaderText>
           {active === "signinUser" && (
@@ -188,6 +251,10 @@ export function AccountBox(props) {
           {active === "signinAdmin" && <LoginFormAdmin />}
         </InnerContainer>
       </BoxContainer>
+      </div>
+    </div>
     </AccountContext.Provider>
   );
+  
 }
+

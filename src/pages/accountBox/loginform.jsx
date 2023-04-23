@@ -128,6 +128,12 @@ export function LoginFormUser(props) {
       setEmailMessage("");
     }
   }
+  const [bgColor, setBgColor] = useState('#0652dd');
+  const handleCarouselChange = (index) => {
+    // change background color based on carousel index
+    const colors = ['#0652dd', '#648ad0', '#3d5581'];
+    setBgColor(colors[index]);
+  };
 
   return (
     <div>
@@ -157,7 +163,7 @@ export function LoginFormUser(props) {
 
           
             <Marginer direction="vertical" margin="1.6em" />
-            <SubmitButton type="button" onClick={notifyOperatorLogin}>
+            <SubmitButton type="button" onClick={notifyOperatorLogin} style={{ backgroundColor: bgColor }}>
               Signin
             </SubmitButton>
             <ToastContainer />

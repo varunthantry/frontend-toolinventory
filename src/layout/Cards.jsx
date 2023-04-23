@@ -139,7 +139,7 @@ export default function Cards(props) {
           </p>
           <button
             type="submit"
-            class="btn navi  text-black"
+            class="btn navi  text-white"
             disabled={!available}
           >
             <b class="navbutton" onClick={changeStateRequestTool}>

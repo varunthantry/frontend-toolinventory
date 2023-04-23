@@ -78,7 +78,7 @@ export default function NavbarOperator(props) {
               <li class="nav-item active">
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStateReturn}
                 >
                   <HomeIcon />
@@ -89,7 +89,7 @@ export default function NavbarOperator(props) {
               <li class="nav-item">
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStateReturn}
                 >
                   <b class="navbutton">Return Tool</b>
@@ -99,7 +99,7 @@ export default function NavbarOperator(props) {
               <li class="nav-item">
                 <button
                   type="submit"
-                  class="nav-link btn navi mx-1 my-4 text-black"
+                  class="nav-link btn navi mx-1 my-4 text-white"
                   onClick={changeStateRequest}
                 >
                   <b class="navbutton">Request Tool</b>
@@ -116,7 +116,7 @@ export default function NavbarOperator(props) {
               <li class="nav-item">
                 <button
                   type="submit"
-                  class="nav-link btn navi text-black"
+                  class="nav-link btn navi text-white"
                   onClick={notifyLogoutAdmin}
                 >
                   <LogoutIcon />

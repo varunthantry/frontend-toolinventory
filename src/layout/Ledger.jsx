@@ -79,7 +79,7 @@ export default function Ledger() {
             />
             <SearchIcon />
           </div>
-          <h3 class="heading pt-3 text-black">Tool Ledger</h3>
+          <h3 class="heading pt-3 text-white">Tool Ledger</h3>
           <div className="py-4 mx-5">
             <table className="table  shadow bg-white rounded-7">
               <thead>

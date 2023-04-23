@@ -1,7 +1,8 @@
 body{
-    background: rgb(240, 202, 53);
-    /* background-image: url("./background_tools2.png"); */
+    background: #0652DD;
+    /* background-image: url("./OIP.png");
     /* font-family: “Comic Sans MS”, “Comic Sans”, cursive; */
+    /* background-size: 1200px; */
     font-family: 'Josefin Sans', sans-serif;
 }
 
@@ -16,12 +17,12 @@ body{
 }
 
 .navi {
-    background: rgb(240, 202, 53);
+    background: #0652DD;
     font-size: 15px;
 }
 
 .navi:hover{
-    background: white;
+    background: black;
 }
 
 .navbutton{
@@ -31,6 +32,30 @@ body{
 
 .name{
     margin-top: 200px;
+}
+.first{
+    
+    margin-left: 0;
+}
+.parent{
+    display: flex;
+}
+.requiredimages{
+    border-radius: 25px;
+    height: 600px;
+    width: 100%;
+}
+.box{
+  transition-property: background-color;
+  transition-timing-function: ease-in-out;
+  transition-duration: 3s;
+  background-color: #0652DD;
+}
+.transformed-state {
+    transition-property: background-color;
+    transition-timing-function: ease-in-out;
+    transition-duration: 3s;
+    background-color: red;
 }
 
 

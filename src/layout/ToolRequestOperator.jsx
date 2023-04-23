@@ -127,7 +127,7 @@ export default function ToolRequestOperator() {
     <div>
 
 
-      <h3 class="heading pt-5 text-black">Return Tool</h3>
+      <h3 class="heading pt-5 text-white">Return Tool</h3>
 
       {loader ? (
 
