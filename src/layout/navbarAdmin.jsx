@@ -79,7 +79,7 @@ export default function Navbar(props) {
 
                     <button
                       type="submit"
-                      class="nav-link btn navi mx-1 my-4 text-white"
+                      class="nav-link btn navi mx-1 my-4 text-black"
                       onClick={changeStateAdmin}
                     >
                       <HomeIcon />
@@ -92,7 +92,7 @@ export default function Navbar(props) {
 
                     <button
                       type="submit"
-                      class="nav-link btn navi mx-1 my-4 text-white"
+                      class="nav-link btn navi mx-1 my-4 text-black"
                       onClick={changeStateAdmin}
                     >
                       <PersonIcon />
@@ -111,7 +111,7 @@ export default function Navbar(props) {
                   <li class="nav-item">
                     <button
                       type="submit"
-                      class="nav-link btn navi text-white"
+                      class="nav-link btn navi text-black"
                       onClick={notifyLogoutAdmin}
                     >
                       <LogoutIcon />

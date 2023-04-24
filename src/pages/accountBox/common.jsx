@@ -47,14 +47,14 @@ export const Input = styled.input`
   }
   &:focus {
     outline: none;
-    border-bottom: 2px solid #0652DD;
+    border-bottom: 2px solid rgb(240, 202, 53);
   }
 `;
 
 export const SubmitButton = styled.button`
   width: 100%;
   padding: 11px 40%;
-  color: black;
+  color: white;
   font-size: 20px;
   font-weight: 600;
   border: none;

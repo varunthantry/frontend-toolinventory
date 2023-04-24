@@ -74,13 +74,13 @@ const HeaderText = styled.h2`
   font-size: 20px;
   font-weight: 600;
   line-height: 1.24;
-  color: black;
+  color: white;
   z-index: 10;
   margin: 0;
 `;
 
 const SmallText = styled.h5`
-  color: black;
+  color: white;
   font-weight: 500;
   font-size: 11px;
   z-index: 10;
