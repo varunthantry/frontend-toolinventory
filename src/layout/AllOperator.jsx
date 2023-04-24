@@ -1,49 +1,40 @@
-import React, { useEffect, useState } from "react";
-import AllOperator from "./AllOperator";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "../pages/css/style.css";
-import { getAddOperator } from "../services/AddOperatorService";
-import Loader from "../Loader/Loader";
-import Dropdown from "react-bootstrap/Dropdown";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { getAllOperator, getDeleteOperator } from "../services/OperatorService";
+import SearchIcon from "@mui/icons-material/Search";
+import "./css/button.css"
 
-export default function AddOperator(props) {
+import AddOperator from "./AddOperator";
+import EditOperator from "./EditOperator";
+import Loader from "../Loader/Loader";
+
+export default function AllOperator(props) {
   const setManager = props.setManager;
+  // const data = getAllOperator();
 
   const [loader, setLoader] = useState(true);
 
-  const [addOperator, setAddOperator] = useState({
-    title: "",
-    name: "",
-    email: "",
-    phoneNumber: "",
-  });
+  const [data, setData] = useState([]);
 
-  // useEffect(()=>{
-  //   console.log(addOperator)
-  // }, [])
+  useEffect(() => {
+    // getAllOperator().then((res)=>{
+    //     setData(res);
+    //     console.log(res);
+    // }).catch((err)=>{
+    //     console.log(err);
+    // })
 
-  const onInputChange = (e) => {
-    setAddOperator({ ...addOperator, [e.target.name]: e.target.value });
+    loadOperator();
+  }, []);
 
-    console.log(addOperator)
-  };
-
-  const AddOperator = () => {
-    // toast("New Operator Created 👍");
-    // setTimeout(()=>{
-    //   setManager(<AllOperator setManager={setManager} />)
-    // },3000);
+  const deleteOperator = (id) => {
 
     setLoader(false);
-
-    getAddOperator(addOperator)
+    getDeleteOperator(id)
       .then((res) => {
-        // localStorage.setItem("token", res?.accessToken);
-        toast.info("New Operator Created 👍");
-        console.log("successfully add Operator");
-
-        setManager(<AllOperator setManager={setManager} />);
+        console.log("successfully Deleted Operator");
+        // navigate("/Admin")
+        loadOperator();
       })
       .catch((err) => {
         console.log("erroor login", err);
@@ -54,245 +45,170 @@ export default function AddOperator(props) {
       })
   };
 
+  const loadOperator = () => {
 
-  // const [nameinput, setNameInput] = useState("")
-  const [nameMessage, setNameMessage] = useState("")
+    setLoader(false);
+    getAllOperator()
+      .then((res) => {
+        setData(res);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(()=>{
+        setLoader(true);
 
-  const NameValidation = (e) => {
-    // setNameInput(e.target.value)
+      })
+  };
 
-    const nameRegex = /^[a-zA-Z\s]*$/;
-    if (nameRegex.test(e.target.value)) {
-      setNameMessage("");
-      setEnablesubmit(false)
-     
-    } else {
-      setNameMessage("Name is Not Valid. Use only space and alphabets");
-      setEnablesubmit(true)
-    } 
-  }
-  
+  const Role = "OPERATOR";
 
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // const [emailinput, setEmailInput] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-
-  const EmailValidation = (e) => {
-      // setEmailInput(e.target.value)
-     
-      const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-      if (regEx.test(e.target.value)) {
-        setEmailMessage("");
-        setEnablesubmit(false)
-        
-      } else {
-        setEmailMessage("Email is Not Valid");
-        setEnablesubmit(true)
-      } 
-  }
-
-  
-
-  // const [mobile, setmobile] = useState("");
-  const [phoneMessage, setPhoneMessage] = useState("");
-
-  const PhoneValidation = (e) => {
-    // setmobile(e.target.value);
-
-    const PHONE_REGEX = new RegExp(/^[0-9\b]+$/);
-    
- 
-    if (PHONE_REGEX.test(e.target.value) && e.target.value.length === 10) {
-
-      setPhoneMessage("");
-      setEnablesubmit(false)
-    } else if(!PHONE_REGEX.test(e.target.value) && e.target.value !== "") {
-      setPhoneMessage("Invalid phone number.");
-      setEnablesubmit(true)
-    }
-    else if(PHONE_REGEX.test(e.target.value) && e.target.value.length > 10) {
-      setPhoneMessage("Invalid phone number. More Than 10 digits");
-      setEnablesubmit(true)
-    }
-    else if(PHONE_REGEX.test(e.target.value) && e.target.value.length < 10) {
-      setPhoneMessage("Invalid phone number. Less Than 10 digits");
-      setEnablesubmit(true)
-    }
-    else {
-      setPhoneMessage("");
-      setEnablesubmit(false)
-    }
-  }
-
-  const [titledrop, setTitledrop] = useState("Select Title");
-
-  const titledropdown = (name) => {
-    setAddOperator({ ...addOperator, ["title"]: name })
-    console.log(addOperator)
-  }
-
-  const [enablesubmit, setEnablesubmit] = useState(true)
+  const dataAvialable = data.filter((dat) => {
+    if (Role === dat.role) {
+      return dat;
+    }}).length;
 
   return (
-    <div className="container my-5 pt-5 table shadow  bg-light rounded-7 aded">
 
-{loader ? (
-      <form>
-        <div class="form-group row">
-          <label for="inputId3" class="col-sm-2 col-form-label">
-            <h6 class="text-black">
-              <b>Title</b>
-            </h6>
-          </label>
-          <div class="col-sm-10">
-            {/* <input
-              type="id"
-              class="form-control"
-              id="inputId3"
-              placeholder="Title"
-              name="title"
-              value={addOperator?.title}
-              onChange={(e) => onInputChange(e)}
-            /> */}
-
-            <Dropdown className="d-inline">
-                    <Dropdown.Toggle id="">
-                    {titledrop}
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      
-                        <Dropdown.Item
-                          href="#"
-                          value="Mr"
-                          name="title"
-                          onClick={() =>{ 
-                          setTitledrop("Mr")
-                          ; titledropdown("Mr")
-                          }}
-                        >
-                         Mr
-                        </Dropdown.Item>
-
-                        <Dropdown.Item
-                          href="#"
-                          value="Mrs"
-                          name="title"
-                          onClick={() =>{ 
-                          setTitledrop("Mrs")
-                          ; titledropdown("Mrs")
-                          
-                          }}
-                        >
-                         Mrs
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          href="#"
-                          value="Ms"
-                          name="title"
-                          onClick={() =>{ 
-                          setTitledrop("Ms")
-                          ; titledropdown("Ms")
-                          }}
-                        >
-                         Ms
-                        </Dropdown.Item>
-                    
-                    </Dropdown.Menu>
-                  </Dropdown>
-
-            
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputName3" class="col-sm-2 col-form-label">
-            <h6 class="text-black">
-              <b>Name</b>
-            </h6>
-          </label>
-          <div class="col-sm-10">
-            <input
-              type="name"
-              class="form-control"
-              id="inputName3"
-              placeholder="Name"
-              name="name"
-              value={addOperator?.name}
-              onChange={(e) => {onInputChange(e); NameValidation(e)}}
-            />
-            <o class="text-danger">{nameMessage}</o>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">
-            <h6 class="text-black">
-              <b>Username</b>
-            </h6>
-          </label>
-          <div class="col-sm-10">
-            <input
-              type="email"
-              class="form-control"
-              id="inputEmail3"
-              placeholder="Username"
-              name="email"
-              value={addOperator?.email}
-              onChange={(e) => {onInputChange(e); EmailValidation(e)}}
-            />
-            <o class="text-danger">{emailMessage}</o>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword3" class="col-sm-2 col-form-label">
-            <h6 class="text-black">
-              <b>Phone No.</b>
-            </h6>
-          </label>
-          <div class="col-sm-10">
-            <input
-              type="number"
-              class="form-control"
-              // pattern="[0-9]*"
-              id="phone"
-              placeholder="Phone No."
-              maxlength="10"
-              name="phoneNumber"
-              value={addOperator?.phoneNumber}
-              onChange={(e) => {onInputChange(e);PhoneValidation(e)}}
-            />
-             <o class="text-danger">{phoneMessage}</o>
-          </div>
-        </div>
-
-        <div class="form-group row my-5">
+   
           <div>
-            <button
-              type="submit"
-              class="btn btn-danger mx-2"
-              onClick={() =>
-                setManager(<AllOperator setManager={setManager} />)
-              }
-            >
-              <b>Cancel</b>
-            </button>
 
-            <button
-              type="submit"
-              class="btn btn-primary mx-2"
-              onClick={AddOperator}
-              disabled={enablesubmit}
-            >
-              <b>Add</b>
-            </button>
-            <ToastContainer />
+      {loader ? (
+        <div>
+        {dataAvialable === 0 ? (<h3 class="heading pt-5 text-black">No Data Available</h3>) : (
+        <div>
+                <div>
+                  <button
+                    class="ml-2 btn btn-danger btn-sm pt-4 mt-5 mx-5"
+                    onClick={() => setManager(<AddOperator setManager={setManager} />)}
+                  >
+                    <b>Add New Operator</b>
+                  </button>
+                </div>
+
+                <div class="nav-link navi mx-1 my-4 text-black rounded-7">
+
+                  <input
+                    type="text"
+                    placeholder="Search...."
+                    class="rounded-7"
+                    onChange={(event) => {
+                      setSearchTerm(event.target.value);
+                    }}
+                  />
+                  <SearchIcon />
+                </div>
+
+                <h3 class="heading pt-3 text-black">Operators</h3>
+
+                <div className="py-4 mx-5">
+                  <table className="table  shadow bg-white rounded-7">
+                    <thead>
+                      <tr>
+                        <th scope="col">
+                          <h5>S No.</h5>
+                        </th>
+                        <th scope="col">
+                          <h5>Title</h5>
+                        </th>
+                        <th scope="col">
+                          <h5>Name</h5>
+                        </th>
+                        <th scope="col">
+                          <h5>Username</h5>
+                        </th>
+                        <th scope="col">
+                          <h5>Phone No.</h5>
+                        </th>
+
+                        <th scope="col">
+                          <h5>Action</h5>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data
+                        .filter((dat) => {
+                          if (searchTerm === "" && Role === dat.role) {
+                            return dat;
+                          }
+                          else if (
+                        dat.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                        Role === dat.role
+                      ) {
+                        return dat;
+                      } else if (
+                            dat.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                            Role === dat.role
+                          ) {
+                            return dat;
+                          } else if (
+                            dat.email.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                            Role === dat.role
+                          ) {
+                            return dat;
+                          }
+                        })
+                        .map((dat, index) => (
+                          <tr>
+                            <th scope="row" key={index}>
+                              <b>{index + 1}</b>
+                            </th>
+                            <td>
+                              <b>{dat.title}</b>
+                            </td>
+                            <td>
+                              <b>{dat.name}</b>
+                            </td>
+                            <td>
+                              <b>{dat.email}</b>
+                            </td>
+
+                            <td>
+                              <b>{dat.phoneNumber}</b>
+                            </td>
+
+                            <td>
+                              {/* <Link className='btn btn-outline-primary mx-2'
+                                              to={`/edituser/${user.id}`}
+                                              >Edit</Link>
+                                              <button className='btn btn-danger mx-2'
+                                              onClick={()=>deleteUser(user.id)}>Delete</button> */}
+
+                              <button
+                                className="btn btn-outline-primary mx-2 blue-button"
+                                onClick={() =>
+                                  setManager(
+                                    <EditOperator setManager={setManager} id={dat.id} />
+                                  )
+                                }
+                              >
+                                <b className="blue-button-name">Edit</b>
+                              </button>
+
+                              <button
+                                className="btn btn-danger mx-2"
+                                onClick={() => deleteOperator(dat?.id)}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+            )}
+            </div>
+
+            ) : (
+            <Loader />
+            )}
           </div>
-        </div>
-      </form>
-
-      ) : (
-       <Loader />
-      )}
-    </div>
+    
   );
 }
