@@ -49,7 +49,7 @@ const BackDrop = styled(motion.div)`
     58deg,
     #0652DD
   );*/}
-  background-color: #FFFFF7;
+  background-color: rgb(240, 202, 53);
   
 `;
 
@@ -64,7 +64,7 @@ const BigHeaderText = styled.h2`
   font-size: 30px;
   font-weight: 600;
   line-height: 1.24;
-  color: #595959;
+  color: white;
   z-index: 10;
   margin-top: 0;
   padding-top: 0;
@@ -74,13 +74,13 @@ const HeaderText = styled.h2`
   font-size: 20px;
   font-weight: 600;
   line-height: 1.24;
-  color: #595959;
+  color: black;
   z-index: 10;
   margin: 0;
 `;
 
 const SmallText = styled.h5`
-  color: #595959;
+  color: black;
   font-weight: 500;
   font-size: 11px;
   z-index: 10;
@@ -171,14 +171,14 @@ export function AccountBox(props) {
 // // let con = 0;
 // // console.log(con);
 
-  const [bgColor, setBgColor] = useState('#0652dd'); // set default background color
-  // const { myState, setMyState } = useContext(MyContext);
-  const handleCarouselChange = (index) => {
-    // change background color based on carousel index
-    const colors = ['#0652dd', '#648ad0', '#3d5581'];
-    setBgColor(colors[index]);
-    // setMyState(colors[index]);
-  };
+  // const [bgColor, setBgColor] = useState('#0652dd'); // set default background color
+  // // const { myState, setMyState } = useContext(MyContext);
+  // const handleCarouselChange = (index) => {
+  //   // change background color based on carousel index
+  //   const colors = ['#E3FD40', '#D5C004', '#C9EF5D'];
+  //   setBgColor(colors[index]);
+  //   // setMyState(colors[index]);
+  // };
   
 
 
@@ -191,7 +191,7 @@ export function AccountBox(props) {
       <div className="parent" >
       <div className="first">
        
-      <Carousel indicators={false} interval={null} onSelect={handleCarouselChange} >
+      <Carousel /*indicators={false} interval={null} onSelect={handleCarouselChange}*/ fade interval={4000} indicators={false}>
       <Carousel.Item >
         <img
           className="requiredimages w-100 d-block carousel "
@@ -217,7 +217,7 @@ export function AccountBox(props) {
 
     </div>
     <div className="second">
-      <BoxContainer style={{ backgroundColor: bgColor }}>
+      <BoxContainer /*style={{ backgroundColor: bgColor }}*/ >
         <TopContainer>
           <BackDrop
             initial={false}

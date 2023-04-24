@@ -1,5 +1,5 @@
 body{
-    background: #0652DD;
+    background:rgb(240, 202, 53);
     /* background-image: url("./OIP.png");
     /* font-family: “Comic Sans MS”, “Comic Sans”, cursive; */
     /* background-size: 1200px; */
@@ -17,7 +17,7 @@ body{
 }
 
 .navi {
-    background: #0652DD;
+    background: rgb(240, 202, 53);;
     font-size: 15px;
 }
 
