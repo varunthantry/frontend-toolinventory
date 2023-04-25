@@ -5,6 +5,7 @@ import { getAllApprovalRequest } from "../services/AllManagerApproval";
 // import Searchbar from './Searchbar';
 import SearchIcon from "@mui/icons-material/Search";
 import Loader from "../Loader/Loader";
+import moment from "moment/moment";
 
 // const data = getAllManagerApproval();
 
@@ -145,7 +146,7 @@ const ManagerApproval = () => {
                           ))}
                         </td>
                         <td>
-                          <b>{dat.requestAt}</b>
+                          <b>{dat.requestAt.split("T")[0]}  <br/> {moment(dat.requestAt.split("T")[1].split(".")[0], "HH:mm:ss").format("hh:mm:ss A")}</b>
                         </td>
 
                         <td>
